@@ -1,0 +1,29 @@
+'use client'
+
+import { Header } from "./header"
+import { Sidebar } from "./sidebar"
+import type { Session } from 'next-auth'
+
+interface DashboardLayoutProps {
+  children: React.ReactNode
+  title?: string
+  session?: Session | null
+}
+
+export function DashboardLayout({ children, title = "Dashboard", session }: DashboardLayoutProps) {
+  return (
+    <div className="flex h-screen overflow-hidden">
+      <div className="hidden lg:block">
+        <Sidebar />
+      </div>
+
+      <div className="flex flex-1 flex-col overflow-hidden">
+        <Header title={title} session={session} />
+        
+        <main className="flex-1 overflow-y-auto bg-zinc-50 dark:bg-zinc-900">
+          {children}
+        </main>
+      </div>
+    </div>
+  )
+}

@@ -1,0 +1,214 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ==========================================
+// ENUMS
+// ==========================================
+
+enum Role {
+  CLIENT
+  ADMIN
+}
+
+enum ChatStatus {
+  OPEN
+  CLOSED
+}
+
+enum TripStatus {
+  PENDING
+  IN_PROGRESS
+  PROPOSED
+  APPROVED
+  REJECTED
+}
+
+enum SenderRole {
+  USER
+  ASSISTANT
+}
+
+enum ActivityType {
+  FLIGHT
+  HOTEL
+  TRANSPORT
+  REST
+  EVENT
+}
+
+// ==========================================
+// MODELOS CORE DEL NEGOCIO
+// ==========================================
+
+model User {
+  id                 String        @id @default(uuid())
+  name               String?
+  email              String?       @unique
+  emailVerified      DateTime?
+  image              String?
+  role               Role          @default(CLIENT)
+  password           String?
+  
+  accounts           Account[]
+  sessions           Session[]
+  chatSessions       ChatSession[]
+  
+  managedItineraries Itinerary[]   @relation("AdminItineraries")
+
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+}
+
+model ChatSession {
+  id           String        @id @default(uuid())
+  status       ChatStatus    @default(OPEN)
+  
+  userId       String?
+  user         User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  messages     ChatMessage[]
+  tripRequest  TripRequest?
+
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model ChatMessage {
+  id            String      @id @default(uuid())
+  chatSessionId String
+  chatSession   ChatSession @relation(fields: [chatSessionId], references: [id], onDelete: Cascade)
+  
+  sender        SenderRole  
+  content       String      @db.Text
+  
+  createdAt     DateTime    @default(now())
+
+  @@index([chatSessionId])
+}
+
+model TripRequest {
+  id            String      @id @default(uuid())
+  chatSessionId String      @unique
+  chatSession   ChatSession @relation(fields: [chatSessionId], references: [id], onDelete: Cascade)
+  
+  status        TripStatus  @default(PENDING)
+  
+  destination   String?
+  budgetMin     Float?
+  budgetMax     Float?
+  startDate     DateTime?
+  endDate       DateTime?
+  rawPreferences Json?
+  clientEmail   String?
+
+  itineraries   Itinerary[]
+
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([status])
+}
+
+// ==========================================
+// ESTRUCTURA DEL ITINERARIO
+// ==========================================
+
+model Itinerary {
+  id                  String          @id @default(uuid())
+  tripRequestId       String          
+  tripRequest         TripRequest     @relation(fields: [tripRequestId], references: [id], onDelete: Cascade)
+  
+  createdByAdminId    String?
+  createdByAdmin      User?           @relation("AdminItineraries", fields: [createdByAdminId], references: [id])
+  
+  version             Int             @default(1)
+  isActive            Boolean         @default(true)
+  
+  title               String
+  totalEstimatedPrice Float           @default(0.0)
+  notes               String?         @db.Text
+
+  days                ItineraryDay[]
+
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+
+  @@index([tripRequestId])
+}
+
+model ItineraryDay {
+  id          String              @id @default(uuid())
+  itineraryId String
+  itinerary   Itinerary           @relation(fields: [itineraryId], references: [id], onDelete: Cascade)
+  
+  dayNumber   Int                 
+  description String?             @db.Text
+
+  activities  ItineraryActivity[]
+
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  @@unique([itineraryId, dayNumber]) 
+}
+
+model ItineraryActivity {
+  id             String       @id @default(uuid())
+  itineraryDayId String
+  itineraryDay   ItineraryDay @relation(fields: [itineraryDayId], references: [id], onDelete: Cascade)
+  
+  type           ActivityType
+  title          String
+  description    String?      @db.Text
+  startTime      String?      
+  endTime        String?
+  estimatedPrice Float?       @default(0.0)
+  bookingLink    String?      @db.Text 
+
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+// ==========================================
+// TABLAS DE SOPORTE PARA AUTH.JS
+// ==========================================
+
+model Account {
+  id                 String  @id @default(uuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
