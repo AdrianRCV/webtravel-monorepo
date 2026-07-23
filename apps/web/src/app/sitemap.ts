@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const BASE_URL = process.env.FRONTEND_URL || "http://localhost:3000";
+const BASE_URL = process.env.FRONTEND_URL || "https://www.youragencytoday.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
