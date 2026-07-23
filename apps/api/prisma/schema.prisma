@@ -1,5 +1,6 @@
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -169,6 +170,11 @@ model ItineraryActivity {
   endTime        String?
   estimatedPrice Float?       @default(0.0)
   bookingLink    String?      @db.Text 
+  bookingLinkText String?
+
+  company        String?
+  address        String?
+  referenceNumber String?
 
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt

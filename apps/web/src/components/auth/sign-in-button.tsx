@@ -10,7 +10,7 @@ export function SignInButton() {
   const handleSignIn = async () => {
     setIsLoading(true);
     try {
-      await signIn('google', { callbackUrl: '/' });
+      await signIn('google', { callbackUrl: '/chat' });
     } catch (error) {
       console.error('Error signing in:', error);
       setIsLoading(false);

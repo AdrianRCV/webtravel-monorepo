@@ -1,10 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { TripStatus } from '@webtravel/shared-types';
+import { TripStatus } from '@prisma/client';
+import { NotificationsService } from '../notifications/notifications.service';
 
 @Injectable()
 export class TripRequestsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly notificationsService: NotificationsService,
+  ) {}
 
   async findAll(status?: TripStatus) {
     return this.prisma.tripRequest.findMany({
@@ -57,14 +61,78 @@ export class TripRequestsService {
   }
 
   async updateStatus(id: string, status: TripStatus) {
+    const existingTripRequest = await this.prisma.tripRequest.findUnique({
+      where: { id },
+      select: {
+        status: true,
+        clientEmail: true,
+        destination: true,
+        startDate: true,
+        endDate: true,
+      },
+    });
+
+    if (!existingTripRequest) {
+      throw new NotFoundException(`Trip request with ID ${id} not found`);
+    }
+
+    const previousStatus = existingTripRequest.status;
+
     try {
-      return await this.prisma.tripRequest.update({
+      const updatedTripRequest = await this.prisma.tripRequest.update({
         where: { id },
         data: { status },
         include: {
-          chatSession: true,
+          chatSession: {
+            include: {
+              user: true,
+            },
+          },
         },
       });
+
+      const shouldNotify =
+        (previousStatus === 'PENDING' && status === 'IN_PROGRESS') ||
+        (previousStatus === 'IN_PROGRESS' && status === 'PROPOSED');
+
+      if (shouldNotify && updatedTripRequest.clientEmail) {
+        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+
+        await this.notificationsService.sendStatusUpdateEmail(
+          updatedTripRequest.clientEmail,
+          {
+            recipientName:
+              updatedTripRequest.chatSession?.user?.name || 'Cliente',
+            destination: updatedTripRequest.destination || 'tu destino',
+            previousStatus,
+            newStatus: status,
+            tripRequestId: updatedTripRequest.id,
+            frontendUrl,
+            startDate: updatedTripRequest.startDate
+              ? new Date(updatedTripRequest.startDate).toLocaleDateString(
+                  'es-ES',
+                  {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  },
+                )
+              : undefined,
+            endDate: updatedTripRequest.endDate
+              ? new Date(updatedTripRequest.endDate).toLocaleDateString(
+                  'es-ES',
+                  {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  },
+                )
+              : undefined,
+          },
+        );
+      }
+
+      return updatedTripRequest;
     } catch {
       throw new NotFoundException(`Trip request with ID ${id} not found`);
     }

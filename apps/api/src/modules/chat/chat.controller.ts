@@ -1,7 +1,9 @@
 import { Controller, Post, Get, Body, Param } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { SendMessageDto } from './dto/send-message.dto';
+import { Public } from '../auth/public.decorator';
 
+@Public()
 @Controller('chat')
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}

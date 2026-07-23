@@ -1,5 +1,5 @@
 import { IsEnum, IsNotEmpty } from 'class-validator';
-import { TripStatus } from '@webtravel/shared-types';
+import { TripStatus } from '@prisma/client';
 
 export class UpdateTripRequestStatusDto {
   @IsEnum(TripStatus)

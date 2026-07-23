@@ -16,6 +16,10 @@ interface HeaderProps {
 export function Header({ title, session }: HeaderProps) {
   const [open, setOpen] = useState(false)
 
+  if (!session?.user || session.user.role !== 'ADMIN') {
+    return null
+  }
+
   return (
     <header className="flex h-16 items-center justify-between border-b border-zinc-200 bg-white px-6 dark:border-zinc-800 dark:bg-zinc-900">
       <div className="flex items-center gap-4">
@@ -31,7 +35,7 @@ export function Header({ title, session }: HeaderProps) {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-64 p-0">
-            <Sidebar />
+            <Sidebar session={session} />
           </SheetContent>
         </Sheet>
         
@@ -41,7 +45,7 @@ export function Header({ title, session }: HeaderProps) {
       </div>
 
       <div className="flex items-center gap-4">
-        {session?.user && <UserMenu session={session} />}
+        <UserMenu session={session} />
       </div>
     </header>
   )

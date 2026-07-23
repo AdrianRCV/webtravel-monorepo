@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { TripRequestsService } from './trip-requests.service';
 import { UpdateTripRequestStatusDto } from './dto/update-trip-request-status.dto';
-import { TripStatus } from '@webtravel/shared-types';
+import { TripStatus } from '@prisma/client';
 
 @Controller('trip-requests')
 export class TripRequestsController {

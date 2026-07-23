@@ -1,16 +1,8 @@
 import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
-import { PrismaPg } from '@prisma/adapter-pg';
-import { Pool } from 'pg';
 import * as bcrypt from 'bcryptjs';
 
-const DEFAULT_DATABASE_URL =
-  'postgresql://postgres:postgres@localhost:5432/webtravel?schema=public';
-
-const connectionString = process.env.DATABASE_URL || DEFAULT_DATABASE_URL;
-const pool = new Pool({ connectionString });
-const adapter = new PrismaPg(pool);
-const prisma = new PrismaClient({ adapter });
+const prisma = new PrismaClient();
 
 async function main() {
   const email = process.env.ADMIN_EMAIL;
@@ -30,9 +22,18 @@ async function main() {
   });
 
   if (existingAdmin) {
-    console.log(`⚠️  Administrador ya existe con email: ${email}`);
-    console.log(`   ID: ${existingAdmin.id}`);
-    console.log(`   Role: ${existingAdmin.role}`);
+    if (!existingAdmin.password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      await prisma.user.update({
+        where: { email },
+        data: { password: hashedPassword },
+      });
+      console.log(`🔑 Contraseña actualizada para: ${email}`);
+    } else {
+      console.log(`⚠️  Administrador ya existe con email: ${email}`);
+      console.log(`   ID: ${existingAdmin.id}`);
+      console.log(`   Role: ${existingAdmin.role}`);
+    }
     return;
   }
 
@@ -63,5 +64,4 @@ main()
   })
   .finally(async () => {
     await prisma.$disconnect();
-    await pool.end();
   });

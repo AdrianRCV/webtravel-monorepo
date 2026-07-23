@@ -11,10 +11,14 @@ interface DashboardLayoutProps {
 }
 
 export function DashboardLayout({ children, title = "Dashboard", session }: DashboardLayoutProps) {
+  if (!session?.user || session.user.role !== 'ADMIN') {
+    return null
+  }
+
   return (
     <div className="flex h-screen overflow-hidden">
       <div className="hidden lg:block">
-        <Sidebar />
+        <Sidebar session={session} />
       </div>
 
       <div className="flex flex-1 flex-col overflow-hidden">

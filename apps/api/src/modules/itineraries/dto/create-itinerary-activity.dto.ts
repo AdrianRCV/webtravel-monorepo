@@ -1,4 +1,4 @@
-import { ActivityType } from '@webtravel/shared-types';
+import { ActivityType } from '@prisma/client';
 import {
   IsEnum,
   IsString,
@@ -36,4 +36,20 @@ export class CreateItineraryActivityDto {
   @IsString()
   @IsOptional()
   bookingLink?: string;
+
+  @IsString()
+  @IsOptional()
+  bookingLinkText?: string;
+
+  @IsString()
+  @IsOptional()
+  company?: string;
+
+  @IsString()
+  @IsOptional()
+  address?: string;
+
+  @IsString()
+  @IsOptional()
+  referenceNumber?: string;
 }

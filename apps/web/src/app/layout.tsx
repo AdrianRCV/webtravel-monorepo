@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { DashboardLayout } from "@/components/layout/dashboard-layout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "WebTravel Admin",
-  description: "Panel de administración para WebTravel",
+  title: "WebTravel",
+  description: "Planifica tu próximo viaje con WebTravel",
 };
 
 export default function RootLayout({
@@ -25,11 +24,11 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="h-full">
-        <DashboardLayout>{children}</DashboardLayout>
+        {children}
       </body>
     </html>
   );

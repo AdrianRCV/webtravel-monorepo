@@ -1,0 +1,26 @@
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
+import { DashboardLayout } from '@/components/layout/dashboard-layout';
+
+export const metadata = {
+  title: "Panel de Administración | WebTravel",
+  description: "Panel de administración para WebTravel",
+};
+
+export default async function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const session = await auth();
+  
+  if (!session?.user) {
+    redirect('/admin/login');
+  }
+  
+  if (session.user.role !== 'ADMIN') {
+    redirect('/unauthorized');
+  }
+
+  return <DashboardLayout session={session}>{children}</DashboardLayout>;
+}

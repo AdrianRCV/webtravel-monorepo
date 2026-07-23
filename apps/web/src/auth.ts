@@ -28,7 +28,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
 
         try {
-          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/validate-credentials`, {
+          const isServer = typeof window === 'undefined';
+          const apiUrl = isServer 
+            ? (process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001')
+            : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001');
+          
+          const response = await fetch(`${apiUrl}/auth/validate-credentials`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -49,6 +54,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             name: result.user.name,
             role: result.user.role,
             image: result.user.image,
+            accessToken: result.accessToken,
           };
         } catch (error) {
           console.error('Error validating credentials:', error);
@@ -76,6 +82,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         token.userId = user.id;
         token.role = user.role || (account?.provider === "google" ? "CLIENT" : undefined);
+        token.accessToken = user.accessToken;
       }
       
       return token;
@@ -85,6 +92,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (session.user) {
         session.user.id = token.userId as string;
         session.user.role = token.role as "CLIENT" | "ADMIN";
+        session.accessToken = token.accessToken as string;
       }
       return session;
     }
@@ -94,6 +102,4 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     strategy: "jwt" as const,
     maxAge: 30 * 24 * 60 * 60,
   },
-  
-  trustHost: true,
-} as any);
+});

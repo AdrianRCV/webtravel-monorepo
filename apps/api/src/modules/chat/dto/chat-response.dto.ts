@@ -1,4 +1,4 @@
-import { ChatMessage, TripRequest } from '@webtravel/shared-types';
+import { ChatMessage, TripRequest } from '@prisma/client';
 
 export interface SendMessageResponseDto {
   userMessage: ChatMessage;

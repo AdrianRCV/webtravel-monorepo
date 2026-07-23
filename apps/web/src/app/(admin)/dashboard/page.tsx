@@ -4,11 +4,12 @@ import { HomeContent } from './content';
 
 export default async function Home() {
   const session = await auth();
+  const accessToken = session?.accessToken;
   let tripRequests = [];
   let error: string | null = null;
 
   try {
-    tripRequests = await getTripRequests();
+    tripRequests = await getTripRequests(accessToken);
   } catch (err) {
     console.error('Error al obtener solicitudes:', err);
     error = 'No se pudo conectar con el servidor';

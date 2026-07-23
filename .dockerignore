@@ -1,0 +1,47 @@
+# Dependencies
+node_modules
+**/node_modules
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Build outputs
+dist
+build
+.next
+out
+*.local
+
+# Tests
+coverage
+.nyc_output
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Environment
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+
+# Misc
+*.md
+!README.md
+.prettierrc
+.eslintrc*
+tsconfig.tsbuildinfo

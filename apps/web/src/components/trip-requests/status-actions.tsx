@@ -10,6 +10,7 @@ import { Check, X, Clock, FileText } from 'lucide-react';
 interface StatusActionsProps {
   requestId: string;
   currentStatus: TripStatus;
+  accessToken?: string;
 }
 
 const statusTransitions: Record<TripStatus, TripStatus[]> = {
@@ -48,7 +49,7 @@ const statusConfig: Record<TripStatus, { label: string; icon: any; variant: 'def
   },
 };
 
-export function StatusActions({ requestId, currentStatus }: StatusActionsProps) {
+export function StatusActions({ requestId, currentStatus, accessToken }: StatusActionsProps) {
   const router = useRouter();
   const [loading, setLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -68,7 +69,7 @@ export function StatusActions({ requestId, currentStatus }: StatusActionsProps) 
     setError(null);
 
     try {
-      await updateTripRequestStatus(requestId, newStatus);
+      await updateTripRequestStatus(requestId, newStatus, accessToken);
       router.refresh();
     } catch (err) {
       console.error('Error al actualizar estado:', err);

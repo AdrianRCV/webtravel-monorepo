@@ -4,18 +4,20 @@ import { TripRequestDetailContent } from './content';
 import { notFound } from 'next/navigation';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function TripRequestDetailPage({ params }: PageProps) {
   const session = await auth();
+  const accessToken = session?.accessToken;
+  const { id } = await params;
   let tripRequest = null;
   let error: string | null = null;
 
   try {
-    tripRequest = await getTripRequestById(params.id);
+    tripRequest = await getTripRequestById(id, accessToken);
   } catch (err: any) {
     console.error('Error al obtener solicitud:', err);
     
@@ -35,6 +37,7 @@ export default async function TripRequestDetailPage({ params }: PageProps) {
       tripRequest={tripRequest} 
       error={error} 
       session={session} 
+      accessToken={accessToken}
     />
   );
 }

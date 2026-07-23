@@ -1,6 +1,5 @@
 "use client"
 
-import { DashboardLayout } from '@/components/layout/dashboard-layout';
 import { StatusBadge } from '@/components/trip-requests/status-badge';
 import { StatusActions } from '@/components/trip-requests/status-actions';
 import { ChatHistory } from '@/components/trip-requests/chat-history';
@@ -13,6 +12,7 @@ interface TripRequestDetailContentProps {
   tripRequest: TripRequestDetail | null;
   error: string | null;
   session: Session | null;
+  accessToken?: string;
 }
 
 function formatDate(date: Date | string | null | undefined) {
@@ -32,27 +32,25 @@ function formatBudget(min: number | null | undefined, max: number | null | undef
   return '-';
 }
 
-export function TripRequestDetailContent({ tripRequest, error, session }: TripRequestDetailContentProps) {
+export function TripRequestDetailContent({ tripRequest, error, session, accessToken }: TripRequestDetailContentProps) {
   if (error) {
     return (
-      <DashboardLayout title="Detalle de Solicitud" session={session}>
-        <div className="p-6">
-          <div className="mx-auto max-w-[1200px]">
-            <div className="mb-6">
-              <Link
-                href="/solicitudes"
-                className="inline-flex items-center gap-2 text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Volver a solicitudes
-              </Link>
-            </div>
-            <div className="rounded-lg border border-red-200 bg-red-50 p-8 text-center dark:border-red-800 dark:bg-red-900/20">
-              <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
-            </div>
+      <div className="p-6">
+        <div className="mx-auto max-w-[1200px]">
+          <div className="mb-6">
+            <Link
+              href="/solicitudes"
+              className="inline-flex items-center gap-2 text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Volver a solicitudes
+            </Link>
+          </div>
+          <div className="rounded-lg border border-red-200 bg-red-50 p-8 text-center dark:border-red-800 dark:bg-red-900/20">
+            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
           </div>
         </div>
-      </DashboardLayout>
+      </div>
     );
   }
 
@@ -63,8 +61,7 @@ export function TripRequestDetailContent({ tripRequest, error, session }: TripRe
   const itinerariesCount = tripRequest.itineraries?.length || 0;
 
   return (
-    <DashboardLayout title="Detalle de Solicitud" session={session}>
-      <div className="p-6">
+    <div className="p-6">
         <div className="mx-auto max-w-[1200px] space-y-6">
           <div className="mb-6">
             <Link
@@ -120,7 +117,7 @@ export function TripRequestDetailContent({ tripRequest, error, session }: TripRe
                       Email Cliente
                     </p>
                     <p className="mt-1 text-sm text-zinc-900 dark:text-zinc-100 truncate">
-                      {tripRequest.chatSession?.user?.email || 'No disponible'}
+                      {tripRequest.clientEmail || tripRequest.chatSession?.user?.email || 'No disponible'}
                     </p>
                   </div>
                 </div>
@@ -192,6 +189,7 @@ export function TripRequestDetailContent({ tripRequest, error, session }: TripRe
                 <StatusActions
                   requestId={tripRequest.id}
                   currentStatus={tripRequest.status}
+                  accessToken={accessToken}
                 />
               </div>
 
@@ -211,19 +209,26 @@ export function TripRequestDetailContent({ tripRequest, error, session }: TripRe
                       )}
                     </p>
                   </div>
-                  <Link
-                    href="/itinerarios"
-                    className="inline-flex items-center gap-2 rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200 transition-colors"
-                  >
-                    <Map className="h-4 w-4" />
-                    Gestionar Itinerarios
-                  </Link>
+                  <div className="flex items-center gap-3">
+                    <Link
+                      href={`/itinerarios/editor?tripRequestId=${tripRequest.id}`}
+                      className="inline-flex items-center gap-2 rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200 transition-colors"
+                    >
+                      <Map className="h-4 w-4" />
+                      Crear Itinerario
+                    </Link>
+                    <Link
+                      href="/itinerarios"
+                      className="inline-flex items-center gap-2 rounded-lg border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700 transition-colors"
+                    >
+                      Ver Todos
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </DashboardLayout>
   );
 }

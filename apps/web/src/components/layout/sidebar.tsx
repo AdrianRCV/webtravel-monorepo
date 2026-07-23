@@ -1,14 +1,16 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { LayoutDashboard, Plane, Map, Settings } from "lucide-react"
+import { usePathname, useRouter } from "next/navigation"
+import { useEffect } from "react"
+import { LayoutDashboard, Plane, Map } from "lucide-react"
 import { cn } from "@/lib/utils"
+import type { Session } from 'next-auth'
 
 const routes = [
   {
     name: "Dashboard",
-    href: "/",
+    href: "/dashboard",
     icon: LayoutDashboard,
   },
   {
@@ -21,15 +23,25 @@ const routes = [
     href: "/itinerarios",
     icon: Map,
   },
-  {
-    name: "Configuración",
-    href: "/configuracion",
-    icon: Settings,
-  },
 ]
 
-export function Sidebar() {
+interface SidebarProps {
+  session?: Session | null
+}
+
+export function Sidebar({ session }: SidebarProps) {
   const pathname = usePathname()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!session?.user || session.user.role !== 'ADMIN') {
+      router.push('/unauthorized')
+    }
+  }, [session, router])
+
+  if (!session?.user || session.user.role !== 'ADMIN') {
+    return null
+  }
 
   return (
     <aside className="flex h-full w-64 flex-col bg-zinc-950 text-zinc-100">

@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { SenderRole } from '@webtravel/shared-types';
-import type { TripRequest } from '@prisma/client';
+import { SenderRole, TripRequest } from '@prisma/client';
 
 interface ExtractedIntent {
   destination?: string;
