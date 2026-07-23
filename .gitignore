@@ -39,3 +39,5 @@ docker-compose.override.yml
 # Configuración local de opencode
 opencode.json
 agent.md
+UX_AUDIT_COMPLETED.md
+.env.example
