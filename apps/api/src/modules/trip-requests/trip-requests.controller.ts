@@ -24,6 +24,15 @@ export class TripRequestsController {
     return this.tripRequestsService.findAll(status);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('my-requests')
+  getMyRequests(
+    @CurrentUser() user: any,
+    @Query('status') status?: TripStatus,
+  ) {
+    return this.tripRequestsService.getMyRequests(user.id, status);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.tripRequestsService.findOne(id);
@@ -35,15 +44,6 @@ export class TripRequestsController {
     @Body(ValidationPipe) updateStatusDto: UpdateTripRequestStatusDto,
   ) {
     return this.tripRequestsService.updateStatus(id, updateStatusDto.status);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('my-requests')
-  getMyRequests(
-    @CurrentUser() user: any,
-    @Query('status') status?: TripStatus,
-  ) {
-    return this.tripRequestsService.getMyRequests(user.id, status);
   }
 
   @UseGuards(JwtAuthGuard)
