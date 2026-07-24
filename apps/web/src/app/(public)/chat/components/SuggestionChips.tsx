@@ -13,13 +13,14 @@ interface Props {
 export function SuggestionChips({ onSelect, disabled }: Props) {
   return (
     <div className="flex flex-wrap justify-center gap-2 max-w-2xl mx-auto mt-6">
-      {SUGGESTIONS.map((text) => (
+      {SUGGESTIONS.map((text, i) => (
         <button
           key={text}
           type="button"
           onClick={() => onSelect(text)}
           disabled={disabled}
-          className="rounded-full border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 hover:border-blue-400 hover:bg-blue-50 hover:text-blue-700 transition-colors disabled:cursor-not-allowed disabled:opacity-60"
+          style={{ animationDelay: `${i * 80}ms` }}
+          className="animate-in fade-in-0 slide-in-from-bottom-2 fill-mode-both motion-reduce:animate-none rounded-full border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 hover:border-blue-400 hover:bg-blue-50 hover:text-blue-700 transition-colors disabled:cursor-not-allowed disabled:opacity-60"
         >
           {text}
         </button>

@@ -21,7 +21,7 @@ export function Header({ title, session }: HeaderProps) {
   }
 
   return (
-    <header className="flex h-16 items-center justify-between border-b border-zinc-200 bg-white px-6 dark:border-zinc-800 dark:bg-zinc-900">
+    <header className="flex h-16 items-center justify-between border-b border-border bg-card px-6">
       <div className="flex items-center gap-4">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
@@ -39,7 +39,7 @@ export function Header({ title, session }: HeaderProps) {
           </SheetContent>
         </Sheet>
         
-        <h1 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">
+        <h1 className="text-xl font-semibold text-foreground">
           {title}
         </h1>
       </div>

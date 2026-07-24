@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import { toast } from 'sonner';
 import { Loader2, Eye, EyeOff } from 'lucide-react';
 
 interface PasswordStrength {
@@ -32,7 +33,6 @@ export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -51,12 +51,10 @@ export function RegisterForm() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    setError('');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
     setIsLoading(true);
 
     try {
@@ -92,7 +90,7 @@ export function RegisterForm() {
         throw new Error('Error al establecer la sesión');
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error en el registro');
+      toast.error(err instanceof Error ? err.message : 'Error en el registro');
     } finally {
       setIsLoading(false);
     }
@@ -100,12 +98,6 @@ export function RegisterForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {error && (
-        <div className="rounded-lg bg-red-50 p-4 text-sm text-red-700 border border-red-200">
-          {error}
-        </div>
-      )}
-
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
           Correo electrónico

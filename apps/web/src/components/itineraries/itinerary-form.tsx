@@ -3,6 +3,11 @@
 import { useState } from 'react';
 import { Plus, Trash2, GripVertical } from 'lucide-react';
 import type { CreateItineraryPayload } from '@/lib/api';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface ItineraryFormProps {
   initialData?: Partial<CreateItineraryPayload>;
@@ -20,6 +25,10 @@ const ACTIVITY_TYPES: { value: ActivityType; label: string }[] = [
   { value: 'EVENT', label: 'Actividad' },
   { value: 'REST', label: 'Descanso' },
 ];
+
+const selectClassName = cn(
+  "flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+);
 
 export function ItineraryForm({ initialData, tripRequestId, onSubmit, isLoading }: ItineraryFormProps) {
   const [title, setTitle] = useState(initialData?.title || '');
@@ -95,7 +104,7 @@ export function ItineraryForm({ initialData, tripRequestId, onSubmit, isLoading 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const payload: CreateItineraryPayload = {
       tripRequestId,
       title,
@@ -116,50 +125,41 @@ export function ItineraryForm({ initialData, tripRequestId, onSubmit, isLoading 
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-        <h3 className="mb-4 text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+      <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
+        <h3 className="mb-4 text-lg font-semibold text-foreground">
           Información General
         </h3>
-        
+
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-              Título del Itinerario *
-            </label>
-            <input
+            <Label className="mb-2 block">Título del Itinerario *</Label>
+            <Input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
-              className="w-full rounded-lg border border-zinc-300 bg-white px-4 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
               placeholder="Ej: Aventura en París - 5 días"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-              Presupuesto Total Estimado ($)
-            </label>
-            <input
+            <Label className="mb-2 block">Presupuesto Total Estimado ($)</Label>
+            <Input
               type="number"
               value={totalEstimatedPrice || ''}
               onChange={(e) => setTotalEstimatedPrice(e.target.value ? parseFloat(e.target.value) : undefined)}
               min="0"
               step="0.01"
-              className="w-full rounded-lg border border-zinc-300 bg-white px-4 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
               placeholder="2500.00"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-              Notas Adicionales
-            </label>
-            <textarea
+            <Label className="mb-2 block">Notas Adicionales</Label>
+            <Textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               rows={3}
-              className="w-full rounded-lg border border-zinc-300 bg-white px-4 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
               placeholder="Información adicional sobre el itinerario..."
             />
           </div>
@@ -170,17 +170,17 @@ export function ItineraryForm({ initialData, tripRequestId, onSubmit, isLoading 
         {days.map((day, dayIndex) => (
           <div
             key={dayIndex}
-            className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+            className="rounded-lg border border-border bg-card p-6 shadow-sm"
           >
             <div className="mb-4 flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+              <h3 className="text-lg font-semibold text-foreground">
                 Día {day.dayNumber}
               </h3>
               {days.length > 1 && (
                 <button
                   type="button"
                   onClick={() => removeDay(dayIndex)}
-                  className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+                  className="text-destructive hover:text-destructive/80"
                 >
                   <Trash2 className="h-5 w-5" />
                 </button>
@@ -188,44 +188,43 @@ export function ItineraryForm({ initialData, tripRequestId, onSubmit, isLoading 
             </div>
 
             <div className="mb-4">
-              <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                Descripción del Día
-              </label>
-              <textarea
+              <Label className="mb-2 block">Descripción del Día</Label>
+              <Textarea
                 value={day.description}
                 onChange={(e) => updateDay(dayIndex, 'description', e.target.value)}
                 rows={2}
-                className="w-full rounded-lg border border-zinc-300 bg-white px-4 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
                 placeholder="Resumen general del día..."
               />
             </div>
 
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h4 className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+                <h4 className="text-sm font-medium text-muted-foreground">
                   Actividades
                 </h4>
-                <button
+                <Button
                   type="button"
+                  variant="secondary"
+                  size="sm"
                   onClick={() => addActivity(dayIndex)}
-                  className="inline-flex items-center gap-2 rounded-lg bg-zinc-100 px-3 py-1.5 text-sm font-medium text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700"
+                  className="gap-2"
                 >
                   <Plus className="h-4 w-4" />
                   Agregar Actividad
-                </button>
+                </Button>
               </div>
 
               {day.activities.map((activity, activityIndex) => (
                 <div
                   key={activityIndex}
-                  className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-700 dark:bg-zinc-800/50"
+                  className="rounded-lg border border-border bg-muted/50 p-4"
                 >
                   <div className="mb-3 flex items-center justify-between">
-                    <GripVertical className="h-5 w-5 text-zinc-400" />
+                    <GripVertical className="h-5 w-5 text-muted-foreground" />
                     <button
                       type="button"
                       onClick={() => removeActivity(dayIndex, activityIndex)}
-                      className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+                      className="text-destructive hover:text-destructive/80"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
@@ -233,14 +232,12 @@ export function ItineraryForm({ initialData, tripRequestId, onSubmit, isLoading 
 
                   <div className="grid gap-4 md:grid-cols-2">
                     <div>
-                      <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">
-                        Tipo *
-                      </label>
+                      <Label className="mb-1 block text-xs">Tipo *</Label>
                       <select
                         value={activity.type}
                         onChange={(e) => updateActivity(dayIndex, activityIndex, 'type', e.target.value)}
                         required
-                        className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+                        className={selectClassName}
                       >
                         {ACTIVITY_TYPES.map((type) => (
                           <option key={type.value} value={type.value}>
@@ -251,74 +248,57 @@ export function ItineraryForm({ initialData, tripRequestId, onSubmit, isLoading 
                     </div>
 
                     <div>
-                      <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">
-                        Título *
-                      </label>
-                      <input
+                      <Label className="mb-1 block text-xs">Título *</Label>
+                      <Input
                         type="text"
                         value={activity.title}
                         onChange={(e) => updateActivity(dayIndex, activityIndex, 'title', e.target.value)}
                         required
-                        className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
                         placeholder="Ej: Vuelo Madrid - París"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">
-                        Compañía / Hotel
-                      </label>
-                      <input
+                      <Label className="mb-1 block text-xs">Compañía / Hotel</Label>
+                      <Input
                         type="text"
                         value={activity.company || ''}
                         onChange={(e) => updateActivity(dayIndex, activityIndex, 'company', e.target.value)}
-                        className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
                         placeholder="Ej: Iberia, Hotel Ritz"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">
-                        Dirección
-                      </label>
-                      <input
+                      <Label className="mb-1 block text-xs">Dirección</Label>
+                      <Input
                         type="text"
                         value={activity.address || ''}
                         onChange={(e) => updateActivity(dayIndex, activityIndex, 'address', e.target.value)}
-                        className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
                         placeholder="Dirección del hotel o lugar"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">
-                        Hora Inicio
-                      </label>
-                      <input
+                      <Label className="mb-1 block text-xs">Hora Inicio</Label>
+                      <Input
                         type="time"
                         value={activity.startTime || ''}
                         onChange={(e) => updateActivity(dayIndex, activityIndex, 'startTime', e.target.value)}
-                        className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">
-                        Hora Fin
-                      </label>
-                      <input
+                      <Label className="mb-1 block text-xs">Hora Fin</Label>
+                      <Input
                         type="time"
                         value={activity.endTime || ''}
                         onChange={(e) => updateActivity(dayIndex, activityIndex, 'endTime', e.target.value)}
-                        className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">
-                        Precio ($)
-                      </label>
-                      <input
+                      <Label className="mb-1 block text-xs">Precio ($)</Label>
+                      <Input
                         type="number"
                         value={activity.estimatedPrice || ''}
                         onChange={(e) =>
@@ -331,58 +311,45 @@ export function ItineraryForm({ initialData, tripRequestId, onSubmit, isLoading 
                         }
                         min="0"
                         step="0.01"
-                        className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">
-                        Nº Referencia
-                      </label>
-                      <input
+                      <Label className="mb-1 block text-xs">Nº Referencia</Label>
+                      <Input
                         type="text"
                         value={activity.referenceNumber || ''}
                         onChange={(e) => updateActivity(dayIndex, activityIndex, 'referenceNumber', e.target.value)}
-                        className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
                         placeholder="Localizador, confirmación..."
                       />
                     </div>
 
                     <div className="md:col-span-2">
-                      <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">
-                        Descripción
-                      </label>
-                      <textarea
+                      <Label className="mb-1 block text-xs">Descripción</Label>
+                      <Textarea
                         value={activity.description || ''}
                         onChange={(e) => updateActivity(dayIndex, activityIndex, 'description', e.target.value)}
                         rows={2}
-                        className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
                         placeholder="Detalles de la actividad..."
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">
-                        Enlace de Reserva / Billete
-                      </label>
-                      <input
+                      <Label className="mb-1 block text-xs">Enlace de Reserva / Billete</Label>
+                      <Input
                         type="url"
                         value={activity.bookingLink || ''}
                         onChange={(e) => updateActivity(dayIndex, activityIndex, 'bookingLink', e.target.value)}
-                        className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
                         placeholder="https://..."
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">
-                        Texto del Botón
-                      </label>
-                      <input
+                      <Label className="mb-1 block text-xs">Texto del Botón</Label>
+                      <Input
                         type="text"
                         value={activity.bookingLinkText || ''}
                         onChange={(e) => updateActivity(dayIndex, activityIndex, 'bookingLinkText', e.target.value)}
-                        className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
                         placeholder="Ej: Descargar Tarjeta de Embarque"
                       />
                     </div>
@@ -391,7 +358,7 @@ export function ItineraryForm({ initialData, tripRequestId, onSubmit, isLoading 
               ))}
 
               {day.activities.length === 0 && (
-                <p className="py-8 text-center text-sm text-zinc-500 dark:text-zinc-400">
+                <p className="py-8 text-center text-sm text-muted-foreground">
                   No hay actividades. Agrega una para comenzar.
                 </p>
               )}
@@ -401,22 +368,14 @@ export function ItineraryForm({ initialData, tripRequestId, onSubmit, isLoading 
       </div>
 
       <div className="flex items-center justify-between">
-        <button
-          type="button"
-          onClick={addDay}
-          className="inline-flex items-center gap-2 rounded-lg border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700"
-        >
+        <Button type="button" variant="outline" onClick={addDay} className="gap-2">
           <Plus className="h-4 w-4" />
           Agregar Día
-        </button>
+        </Button>
 
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="inline-flex items-center gap-2 rounded-lg bg-zinc-900 px-6 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:opacity-50 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
-        >
+        <Button type="submit" disabled={isLoading}>
           {isLoading ? 'Guardando...' : 'Guardar Itinerario'}
-        </button>
+        </Button>
       </div>
     </form>
   );

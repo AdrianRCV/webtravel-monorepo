@@ -20,7 +20,7 @@ export function ChatHistory({ messages }: ChatHistoryProps) {
   if (!messages || messages.length === 0) {
     return (
       <div className="text-center py-8">
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">
+        <p className="text-sm text-muted-foreground">
           No hay mensajes en esta conversación
         </p>
       </div>
@@ -31,17 +31,17 @@ export function ChatHistory({ messages }: ChatHistoryProps) {
     <div className="space-y-4 max-h-[600px] overflow-y-auto">
       {messages.map((message) => {
         const isUser = message.role === 'user';
-        
+
         return (
           <div
             key={message.id}
-            className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}
+            className={`flex ${isUser ? 'justify-end' : 'justify-start'} animate-in fade-in-0 slide-in-from-bottom-1 duration-300 motion-reduce:animate-none`}
           >
             <div
               className={`max-w-[80%] rounded-lg px-4 py-3 ${
                 isUser
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-muted text-foreground'
               }`}
             >
               <div className="text-sm whitespace-pre-wrap break-words">
@@ -49,9 +49,7 @@ export function ChatHistory({ messages }: ChatHistoryProps) {
               </div>
               <div
                 className={`mt-2 text-xs ${
-                  isUser
-                    ? 'text-blue-100'
-                    : 'text-zinc-500 dark:text-zinc-400'
+                  isUser ? 'text-primary-foreground/70' : 'text-muted-foreground'
                 }`}
               >
                 {formatTimestamp(message.createdAt)}
