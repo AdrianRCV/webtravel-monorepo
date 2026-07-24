@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Loader2, LogOut, Menu, X } from 'lucide-react';
-import { signOut } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { TripRequestsTable } from '@/components/client/trip-requests-table';
 
 interface TripRequest {
@@ -24,19 +24,20 @@ interface TripRequest {
 
 export default function DashboardPage() {
   const router = useRouter();
+  const { data: session, status } = useSession();
   const [requests, setRequests] = useState<TripRequest[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const fetchRequests = async () => {
+  const fetchRequests = async (token: string) => {
     try {
       setIsLoading(true);
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/trip-requests/my-requests`,
         {
           headers: {
-            Authorization: `Bearer ${getCookie('authToken')}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -55,11 +56,14 @@ export default function DashboardPage() {
   };
 
   useEffect(() => {
-    fetchRequests();
-  }, []);
+    if (status === 'authenticated' && session?.accessToken) {
+      fetchRequests(session.accessToken);
+    } else if (status === 'unauthenticated') {
+      router.push('/login?callbackUrl=/client/dashboard');
+    }
+  }, [status, session, router]);
 
   const handleLogout = async () => {
-    document.cookie = 'authToken=; max-age=0; path=/';
     await signOut({ redirect: true, callbackUrl: '/login' });
   };
 
@@ -143,17 +147,14 @@ export default function DashboardPage() {
           <div className="flex items-center justify-center py-12">
             <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
           </div>
-        ) : (
-          <TripRequestsTable requests={requests} onUpdate={fetchRequests} />
-        )}
+        ) : session?.accessToken ? (
+          <TripRequestsTable
+            requests={requests}
+            token={session.accessToken}
+            onUpdate={() => session?.accessToken && fetchRequests(session.accessToken)}
+          />
+        ) : null}
       </main>
     </div>
   );
-}
-
-function getCookie(name: string): string {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop()?.split(';').shift() || '';
-  return '';
 }

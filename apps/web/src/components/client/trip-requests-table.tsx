@@ -15,6 +15,7 @@ interface TripRequestWithChat extends TripRequest {
 
 interface Props {
   requests: TripRequestWithChat[];
+  token: string;
   onUpdate?: () => void;
 }
 
@@ -159,6 +160,7 @@ export function TripRequestsTable({ requests, onUpdate }: Props) {
       {editingRequest && (
         <TripRequestEditForm
           request={editingRequest}
+          token={token}
           onClose={() => setEditingRequest(null)}
           onUpdate={onUpdate}
         />

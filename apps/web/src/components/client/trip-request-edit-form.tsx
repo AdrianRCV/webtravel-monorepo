@@ -10,6 +10,7 @@ interface TripRequestWithChat extends TripRequest {
 
 interface Props {
   request: TripRequestWithChat;
+  token: string;
   onClose: () => void;
   onUpdate?: () => void;
 }
@@ -64,7 +65,7 @@ export function TripRequestEditForm({ request, onClose, onUpdate }: Props) {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${getCookie('authToken')}`,
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(updateData),
         }
@@ -206,11 +207,4 @@ export function TripRequestEditForm({ request, onClose, onUpdate }: Props) {
       </div>
     </div>
   );
-}
-
-function getCookie(name: string): string {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop()?.split(';').shift() || '';
-  return '';
 }
