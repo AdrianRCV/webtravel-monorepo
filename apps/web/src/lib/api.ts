@@ -69,6 +69,11 @@ export async function getTripRequests(accessToken?: string): Promise<TripRequest
   return fetchAPI<TripRequest[]>('/trip-requests', { accessToken });
 }
 
+export async function getUsersCount(accessToken?: string): Promise<number> {
+  const { count } = await fetchAPI<{ count: number }>('/users/count', { accessToken });
+  return count;
+}
+
 export async function getTripRequestById(id: string, accessToken?: string): Promise<TripRequestDetail> {
   return fetchAPI<TripRequestDetail>(`/trip-requests/${id}`, { accessToken });
 }
