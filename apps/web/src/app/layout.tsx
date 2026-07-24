@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "WebTravel",
-  description: "Planifica tu próximo viaje con WebTravel",
+  title: "YourAgencyToday",
+  description: "Planifica tu próximo viaje con YourAgencyToday",
 };
 
 export default function RootLayout({

@@ -25,7 +25,7 @@ export default async function RegisterPage({
             <Plane className="h-10 w-10 text-white" />
           </div>
           <h1 className="mt-6 text-4xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-            WebTravel
+            YourAgencyToday
           </h1>
           <p className="mt-4 text-base text-zinc-600">
             Planifica tu próximo viaje de manera inteligente

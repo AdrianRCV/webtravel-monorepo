@@ -108,7 +108,7 @@ export default function LandingPage() {
 
       <footer className="border-t border-slate-800 py-8">
         <div className="max-w-6xl mx-auto px-6 text-center text-slate-500 text-sm">
-          © 2026 WebTravel. Todos los derechos reservados.
+          © 2026 YourAgencyToday. Todos los derechos reservados.
         </div>
       </footer>
     </div>

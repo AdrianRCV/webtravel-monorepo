@@ -17,7 +17,7 @@ export const baseTemplate = (content: string, data: BaseEmailData): string => {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="x-apple-disable-message-reformatting">
-  <title>WebTravel</title>
+  <title>YourAgencyToday</title>
   <style>
     body {
       margin: 0;
@@ -91,14 +91,14 @@ export const baseTemplate = (content: string, data: BaseEmailData): string => {
   <div class="wrapper">
     <div class="container">
       <div class="header">
-        <div class="logo">✈️ WebTravel</div>
+        <div class="logo">✈️ YourAgencyToday</div>
       </div>
       <div class="content">
         ${escapedRecipientName ? `<p style="font-size: 16px; color: #333; margin-bottom: 20px;">Hola ${escapedRecipientName},</p>` : ''}
         ${content}
       </div>
       <div class="footer">
-        <p style="margin: 0 0 10px 0;">WebTravel - Tu agencia de viajes de confianza</p>
+        <p style="margin: 0 0 10px 0;">YourAgencyToday - Tu agencia de viajes de confianza</p>
         <p style="margin: 0; font-size: 13px; color: #999;">
           Este es un correo automático, por favor no responder directamente.
         </p>
