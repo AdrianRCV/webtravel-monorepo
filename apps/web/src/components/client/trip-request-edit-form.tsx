@@ -15,7 +15,7 @@ interface Props {
   onUpdate?: () => void;
 }
 
-export function TripRequestEditForm({ request, onClose, onUpdate }: Props) {
+export function TripRequestEditForm({ request, token, onClose, onUpdate }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
