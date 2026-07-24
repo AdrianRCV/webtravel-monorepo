@@ -66,13 +66,23 @@ export default async function LoginPage({
               Chatea con nuestro asistente de viajes y obtén itinerarios personalizados en minutos
             </p>
           </div>
+
+          <p className="text-center text-sm text-zinc-600">
+            ¿No tienes cuenta?{' '}
+            <a
+              href="/register"
+              className="font-medium text-blue-600 hover:text-blue-500 transition-colors"
+            >
+              Regístrate aquí
+            </a>
+          </p>
         </div>
 
         <div className="text-center pt-4">
           <p className="text-xs text-zinc-400">
             ¿Eres administrador? {' '}
-            <a 
-              href="/admin/login" 
+            <a
+              href="/admin/login"
               className="font-medium text-blue-600 hover:text-blue-500 transition-colors"
             >
               Accede aquí
