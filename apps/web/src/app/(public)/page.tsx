@@ -6,7 +6,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900">
       <header className="absolute top-0 right-0 p-6 z-10">
-        <Link href="/admin/login">
+        <Link href="/login">
           <Button variant="ghost" className="text-white/80 hover:text-white hover:bg-white/10">
             Iniciar Sesión
           </Button>
