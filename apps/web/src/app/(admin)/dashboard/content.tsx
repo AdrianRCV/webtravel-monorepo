@@ -6,6 +6,7 @@ import type { Session } from 'next-auth';
 interface HomeContentProps {
   tripRequests: TripRequest[];
   pendingCount: number;
+  usersCount: number;
   error: string | null;
   session: Session | null;
 }
@@ -51,7 +52,7 @@ function formatBudget(min: number | null | undefined, max: number | null | undef
   return '-';
 }
 
-export function HomeContent({ tripRequests, pendingCount, error, session }: HomeContentProps) {
+export function HomeContent({ tripRequests, pendingCount, usersCount, error, session }: HomeContentProps) {
   return (
     <div className="p-8">
       <div className="mx-auto max-w-7xl">
@@ -94,7 +95,7 @@ export function HomeContent({ tripRequests, pendingCount, error, session }: Home
               Total de Usuarios
             </h3>
             <p className="mt-2 text-3xl font-bold text-zinc-900 dark:text-zinc-100">
-              0
+              {usersCount}
             </p>
             <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
               Registrados en el sistema
