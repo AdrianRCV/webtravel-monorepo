@@ -76,7 +76,7 @@ export class ChatService {
     });
   }
 
-  async getChatSession(sessionId: string) {
+  async getChatSession(sessionId: string, userId?: string) {
     const session = await this.prisma.chatSession.findUnique({
       where: { id: sessionId },
       include: {
@@ -87,7 +87,7 @@ export class ChatService {
       },
     });
 
-    if (!session) {
+    if (!session || (session.userId && session.userId !== userId)) {
       throw new NotFoundException(
         `Chat session with ID ${sessionId} not found`,
       );
@@ -107,7 +107,7 @@ export class ChatService {
       },
     });
 
-    if (!session) {
+    if (!session || (session.userId && session.userId !== userId)) {
       throw new NotFoundException(
         `Chat session with ID ${sessionId} not found`,
       );

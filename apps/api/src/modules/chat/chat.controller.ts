@@ -22,8 +22,12 @@ export class ChatController {
 
   @Public()
   @Get('sessions/:id')
-  async getSession(@Param('id') id: string) {
-    return this.chatService.getChatSession(id);
+  async getSession(
+    @Param('id') id: string,
+    @Headers('authorization') authHeader?: string,
+  ) {
+    const userId = this.chatService.extractUserId(authHeader);
+    return this.chatService.getChatSession(id, userId);
   }
 
   @Public()
