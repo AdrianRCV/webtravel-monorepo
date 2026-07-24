@@ -4,7 +4,7 @@ import { Sparkles, MessageCircle, Users, Plane } from 'lucide-react';
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-teal-950 via-slate-950 to-indigo-950">
       <header className="absolute top-0 right-0 p-6 z-10">
         <Link href="/login">
           <Button variant="ghost" className="text-white/80 hover:text-white hover:bg-white/10">
@@ -16,14 +16,14 @@ export default function LandingPage() {
       <main className="relative">
         <section className="flex flex-col items-center justify-center min-h-screen px-6 text-center">
           <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in-0 slide-in-from-bottom-4 duration-700 motion-reduce:animate-none">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/20 text-purple-300 text-sm font-medium backdrop-blur-sm border border-purple-500/30">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/20 text-teal-300 text-sm font-medium backdrop-blur-sm border border-teal-500/30">
               <Sparkles className="w-4 h-4" />
               <span>Asistente inteligente, diseño 100% humano</span>
             </div>
 
             <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight">
               Tu próximo viaje,{' '}
-              <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-teal-400 to-indigo-400 bg-clip-text text-transparent">
                 diseñado a medida por expertos
               </span>
             </h1>
@@ -34,7 +34,7 @@ export default function LandingPage() {
 
             <div className="pt-4">
               <Link href="/chat">
-                <Button size="lg" className="text-lg px-8 py-6 h-auto bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 shadow-lg shadow-purple-500/30 transition-all duration-300 hover:scale-105">
+                <Button size="lg" className="text-lg px-8 py-6 h-auto bg-gradient-to-r from-brand to-brand-accent hover:opacity-90 shadow-lg shadow-brand/30 transition-all duration-300 hover:scale-105">
                   Iniciar Chat de Viajes
                   <MessageCircle className="w-5 h-5 ml-2" />
                 </Button>
@@ -52,10 +52,10 @@ export default function LandingPage() {
             <div className="grid md:grid-cols-3 gap-8">
               <div
                 style={{ animationDelay: '0ms' }}
-                className="animate-in fade-in-0 slide-in-from-bottom-2 fill-mode-both motion-reduce:animate-none duration-500 bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50 hover:border-purple-500/50 transition-all"
+                className="animate-in fade-in-0 slide-in-from-bottom-2 fill-mode-both motion-reduce:animate-none duration-500 bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50 hover:border-teal-500/50 transition-all"
               >
-                <div className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center mb-6">
-                  <MessageCircle className="w-6 h-6 text-purple-400" />
+                <div className="w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center mb-6">
+                  <MessageCircle className="w-6 h-6 text-teal-400" />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-3">
                   1. Cuéntanos qué buscas
@@ -67,10 +67,10 @@ export default function LandingPage() {
 
               <div
                 style={{ animationDelay: '120ms' }}
-                className="animate-in fade-in-0 slide-in-from-bottom-2 fill-mode-both motion-reduce:animate-none duration-500 bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50 hover:border-blue-500/50 transition-all"
+                className="animate-in fade-in-0 slide-in-from-bottom-2 fill-mode-both motion-reduce:animate-none duration-500 bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50 hover:border-indigo-500/50 transition-all"
               >
-                <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center mb-6">
-                  <Users className="w-6 h-6 text-blue-400" />
+                <div className="w-12 h-12 rounded-full bg-indigo-500/20 flex items-center justify-center mb-6">
+                  <Users className="w-6 h-6 text-indigo-400" />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-3">
                   2. Diseño artesanal y humano
@@ -82,10 +82,10 @@ export default function LandingPage() {
 
               <div
                 style={{ animationDelay: '240ms' }}
-                className="animate-in fade-in-0 slide-in-from-bottom-2 fill-mode-both motion-reduce:animate-none duration-500 bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50 hover:border-green-500/50 transition-all"
+                className="animate-in fade-in-0 slide-in-from-bottom-2 fill-mode-both motion-reduce:animate-none duration-500 bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50 hover:border-amber-500/50 transition-all"
               >
-                <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center mb-6">
-                  <Plane className="w-6 h-6 text-green-400" />
+                <div className="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center mb-6">
+                  <Plane className="w-6 h-6 text-amber-400" />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-3">
                   3. Disfruta tu viaje
@@ -107,7 +107,7 @@ export default function LandingPage() {
               Sin registros complicados. Sin esperas. Solo tu viaje perfecto.
             </p>
             <Link href="/chat">
-              <Button size="lg" className="text-lg px-8 py-6 h-auto bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 shadow-lg shadow-purple-500/30 transition-all duration-300 hover:scale-105">
+              <Button size="lg" className="text-lg px-8 py-6 h-auto bg-gradient-to-r from-brand to-brand-accent hover:opacity-90 shadow-lg shadow-brand/30 transition-all duration-300 hover:scale-105">
                 Empezar ahora
               </Button>
             </Link>

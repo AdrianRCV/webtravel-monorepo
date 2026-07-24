@@ -38,13 +38,13 @@ export default async function LoginPage({
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 via-white to-cyan-50 px-4 py-12">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-teal-50 via-white to-indigo-50 px-4 py-12">
       <div className="w-full max-w-md space-y-8 rounded-2xl border border-zinc-200 bg-white/80 backdrop-blur-sm p-10 shadow-2xl">
         <div className="text-center">
-          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg">
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-brand to-brand-accent shadow-lg">
             <Plane className="h-10 w-10 text-white" />
           </div>
-          <h1 className="mt-6 text-4xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+          <h1 className="mt-6 text-4xl font-bold tracking-tight bg-gradient-to-r from-brand to-brand-accent bg-clip-text text-transparent">
             YourAgencyToday
           </h1>
           <p className="mt-4 text-base text-zinc-600">
@@ -72,7 +72,7 @@ export default async function LoginPage({
             ¿No tienes cuenta?{' '}
             <a
               href="/register"
-              className="font-medium text-blue-600 hover:text-blue-500 transition-colors"
+              className="font-medium text-brand hover:text-brand-accent transition-colors"
             >
               Regístrate aquí
             </a>
@@ -84,7 +84,7 @@ export default async function LoginPage({
             ¿Eres administrador? {' '}
             <a
               href="/admin/login"
-              className="font-medium text-blue-600 hover:text-blue-500 transition-colors"
+              className="font-medium text-brand hover:text-brand-accent transition-colors"
             >
               Accede aquí
             </a>

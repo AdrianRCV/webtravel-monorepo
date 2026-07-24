@@ -2,6 +2,7 @@ import { Controller, Post, Body, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ValidateCredentialsDto } from './dto/validate-credentials.dto';
 import { RegisterDto } from './dto/register.dto';
+import { VerifyEmailDto } from './dto/verify-email.dto';
 import { Public } from './public.decorator';
 
 @Controller('auth')
@@ -22,5 +23,11 @@ export class AuthController {
       dto.password,
       dto.passwordConfirm,
     );
+  }
+
+  @Public()
+  @Post('verify-email')
+  async verifyEmail(@Body(ValidationPipe) dto: VerifyEmailDto) {
+    return this.authService.verifyEmail(dto.token);
   }
 }

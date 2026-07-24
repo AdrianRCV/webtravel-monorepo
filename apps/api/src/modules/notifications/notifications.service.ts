@@ -9,6 +9,7 @@ import {
   itineraryCreatedTemplate,
   ItineraryCreatedEmailData,
 } from './templates/itinerary-created.template';
+import { verifyEmailTemplate, VerifyEmailData } from './templates/verify-email.template';
 
 @Injectable()
 export class NotificationsService {
@@ -113,6 +114,44 @@ export class NotificationsService {
       const err = error as Error;
       this.logger.error(
         `Failed to send itinerary created email to ${to}: ${err.message}`,
+        err.stack,
+      );
+    }
+  }
+
+  async sendVerificationEmail(
+    to: string,
+    data: Omit<VerifyEmailData, 'previewText'>,
+  ): Promise<void> {
+    if (!this.enabled || !this.resend) {
+      this.logger.warn('Email sending skipped: service not enabled');
+      return;
+    }
+
+    if (!to || !this.isValidEmail(to)) {
+      this.logger.warn(`Invalid email address: ${to}`);
+      return;
+    }
+
+    try {
+      const emailData: VerifyEmailData = {
+        ...data,
+        previewText: 'Confirma tu correo electrónico para activar tu cuenta',
+      };
+      const html = verifyEmailTemplate(emailData);
+
+      await this.resend.emails.send({
+        from: this.from,
+        to,
+        subject: 'Confirma tu correo electrónico - YourAgencyToday',
+        html,
+      });
+
+      this.logger.log(`Verification email sent to ${to}`);
+    } catch (error) {
+      const err = error as Error;
+      this.logger.error(
+        `Failed to send verification email to ${to}: ${err.message}`,
         err.stack,
       );
     }

@@ -54,7 +54,7 @@ export function ClientLoginForm({ callbackUrl = '/client/dashboard' }: Props) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2.5 text-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
           placeholder="tu@email.com"
         />
       </div>
@@ -70,7 +70,7 @@ export function ClientLoginForm({ callbackUrl = '/client/dashboard' }: Props) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2.5 pr-11 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2.5 pr-11 text-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
             placeholder="••••••••"
           />
           <button
@@ -87,7 +87,7 @@ export function ClientLoginForm({ callbackUrl = '/client/dashboard' }: Props) {
       <button
         type="submit"
         disabled={isLoading}
-        className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 px-4 py-3 text-sm font-medium text-white transition-all hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
+        className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-brand to-brand-accent px-4 py-3 text-sm font-medium text-white transition-all hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isLoading ? (
           <>

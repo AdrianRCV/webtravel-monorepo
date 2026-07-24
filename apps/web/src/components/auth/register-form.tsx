@@ -84,6 +84,9 @@ export function RegisterForm() {
       });
 
       if (signInResult?.ok) {
+        toast.success(
+          'Cuenta creada. Revisa tu correo para verificarla y recuperar tu historial de conversaciones previas.'
+        );
         // Redirigir al dashboard
         router.push('/client/dashboard');
       } else {
@@ -109,7 +112,7 @@ export function RegisterForm() {
           value={formData.email}
           onChange={handleChange}
           required
-          className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+          className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
           placeholder="tu@email.com"
         />
       </div>
@@ -125,7 +128,7 @@ export function RegisterForm() {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 pr-12 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+            className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 pr-12 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
             placeholder="Mínimo 8 caracteres"
           />
           <button
@@ -176,7 +179,7 @@ export function RegisterForm() {
             name="passwordConfirm"
             value={formData.passwordConfirm}
             onChange={handleChange}
-            className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 pr-12 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+            className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 pr-12 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
             placeholder="Repite tu contraseña"
           />
           <button
@@ -202,7 +205,7 @@ export function RegisterForm() {
       <button
         type="submit"
         disabled={isLoading || !isValidated}
-        className="w-full rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 px-4 py-3 text-white font-medium transition-all hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
+        className="w-full rounded-lg bg-gradient-to-r from-brand to-brand-accent px-4 py-3 text-white font-medium transition-all hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isLoading ? (
           <>

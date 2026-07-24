@@ -145,10 +145,14 @@ export class TripRequestsService {
   async getMyRequests(userId: string, status?: TripStatus) {
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
-      select: { email: true },
+      select: { email: true, emailVerified: true },
     });
 
-    if (user?.email) {
+    // Solo se reasignan sesiones de chat anónimas por email si el usuario
+    // verificó que ese correo le pertenece — de lo contrario cualquiera
+    // podría registrarse con el email de otra persona y heredar sus
+    // conversaciones/solicitudes de viaje sin haber demostrado ser su dueño.
+    if (user?.email && user.emailVerified) {
       await this.prisma.chatSession.updateMany({
         where: {
           userId: null,
