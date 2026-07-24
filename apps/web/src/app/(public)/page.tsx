@@ -14,8 +14,18 @@ export default function LandingPage() {
       </header>
 
       <main className="relative">
-        <section className="flex flex-col items-center justify-center min-h-screen px-6 text-center">
-          <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in-0 slide-in-from-bottom-4 duration-700 motion-reduce:animate-none">
+        <section className="relative flex flex-col items-center justify-center min-h-screen px-6 text-center overflow-hidden">
+          <Plane
+            aria-hidden="true"
+            strokeWidth={0.6}
+            className="absolute -right-32 -top-16 w-[520px] h-[520px] md:w-[720px] md:h-[720px] rotate-[35deg] text-teal-400/[0.06] pointer-events-none select-none"
+          />
+          <Plane
+            aria-hidden="true"
+            strokeWidth={0.6}
+            className="absolute -left-40 bottom-0 w-[380px] h-[380px] md:w-[520px] md:h-[520px] -rotate-[35deg] text-indigo-400/[0.05] pointer-events-none select-none"
+          />
+          <div className="relative z-10 max-w-4xl mx-auto space-y-8 animate-in fade-in-0 slide-in-from-bottom-4 duration-700 motion-reduce:animate-none">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/20 text-teal-300 text-sm font-medium backdrop-blur-sm border border-teal-500/30">
               <Sparkles className="w-4 h-4" />
               <span>Asistente inteligente, diseño 100% humano</span>
