@@ -131,10 +131,16 @@ export function HomeContent({ tripRequests, pendingCount, error, session }: Home
                       ID
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                      Origen
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
                       Destino
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
                       Fechas
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                      Personas
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
                       Presupuesto
@@ -151,10 +157,16 @@ export function HomeContent({ tripRequests, pendingCount, error, session }: Home
                         {request.id.substring(0, 8)}
                       </td>
                       <td className="whitespace-nowrap px-6 py-4 text-sm text-zinc-700 dark:text-zinc-300">
+                        {request.origin || '-'}
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-4 text-sm text-zinc-700 dark:text-zinc-300">
                         {request.destination || '-'}
                       </td>
                       <td className="whitespace-nowrap px-6 py-4 text-sm text-zinc-700 dark:text-zinc-300">
                         {formatDate(request.startDate)} - {formatDate(request.endDate)}
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-4 text-sm text-zinc-700 dark:text-zinc-300">
+                        {request.numberOfPeople ?? '-'}
                       </td>
                       <td className="whitespace-nowrap px-6 py-4 text-sm text-zinc-700 dark:text-zinc-300">
                         {formatBudget(request.budgetMin, request.budgetMax)}

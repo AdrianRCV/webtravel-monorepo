@@ -72,10 +72,16 @@ export function SolicitudesContent({ tripRequests, error, session, accessToken }
                       Chat
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                      Origen
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
                       Destino
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
                       Fechas Viaje
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                      Personas
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
                       Presupuesto
@@ -104,10 +110,16 @@ export function SolicitudesContent({ tripRequests, error, session, accessToken }
                         {request.chatSessionId.substring(0, 8)}
                       </td>
                       <td className="px-4 py-4 text-sm text-zinc-700 dark:text-zinc-300">
+                        {request.origin || '-'}
+                      </td>
+                      <td className="px-4 py-4 text-sm text-zinc-700 dark:text-zinc-300">
                         {request.destination || '-'}
                       </td>
                       <td className="whitespace-nowrap px-4 py-4 text-sm text-zinc-700 dark:text-zinc-300">
                         {formatDate(request.startDate)} - {formatDate(request.endDate)}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-4 text-sm text-zinc-700 dark:text-zinc-300">
+                        {request.numberOfPeople ?? '-'}
                       </td>
                       <td className="whitespace-nowrap px-4 py-4 text-sm text-zinc-700 dark:text-zinc-300">
                         {formatBudget(request.budgetMin, request.budgetMax)}

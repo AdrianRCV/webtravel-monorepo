@@ -193,6 +193,8 @@ export class TripRequestsService {
 
   async update(id: string, userId: string, data: {
     destination?: string;
+    origin?: string;
+    numberOfPeople?: number;
     startDate?: Date;
     endDate?: Date;
     budgetMin?: number;

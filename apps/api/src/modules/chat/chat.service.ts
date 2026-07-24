@@ -5,6 +5,8 @@ import { SenderRole, TripRequest } from '@prisma/client';
 
 interface ExtractedIntent {
   destination?: string;
+  origin?: string;
+  numberOfPeople?: number;
   startDate?: Date;
   endDate?: Date;
   budgetMin?: number;
@@ -140,6 +142,8 @@ export class ChatService {
               chatSessionId: sessionId,
               status: 'PENDING',
               destination: extractedIntent.destination,
+              origin: extractedIntent.origin,
+              numberOfPeople: extractedIntent.numberOfPeople,
               startDate: extractedIntent.startDate,
               endDate: extractedIntent.endDate,
               budgetMin: extractedIntent.budgetMin,
@@ -153,6 +157,9 @@ export class ChatService {
             data: {
               destination:
                 extractedIntent.destination || tripRequest.destination,
+              origin: extractedIntent.origin || tripRequest.origin,
+              numberOfPeople:
+                extractedIntent.numberOfPeople || tripRequest.numberOfPeople,
               startDate: extractedIntent.startDate || tripRequest.startDate,
               endDate: extractedIntent.endDate || tripRequest.endDate,
               budgetMin: extractedIntent.budgetMin || tripRequest.budgetMin,
@@ -203,6 +210,33 @@ export class ChatService {
           intent.hasIntent = true;
           break;
         }
+      }
+    }
+
+    const originPatterns = [
+      /(?:desde|saliendo desde|salgo de|salimos de|partiendo de|origen)[:\s]+([a-záéíóúñ\s]+?)(?:\.|,|$|\s+(?:a|hacia|el|en|con|por|para))/i,
+    ];
+
+    for (const pattern of originPatterns) {
+      const match = message.match(pattern);
+      if (match && match[1]) {
+        const origin = match[1].trim();
+        if (origin.length > 2 && origin.length < 50) {
+          intent.origin = origin.charAt(0).toUpperCase() + origin.slice(1);
+          intent.hasIntent = true;
+          break;
+        }
+      }
+    }
+
+    const travelersPattern =
+      /(?:somos|seremos|viajamos)\s+(\d+)|(\d+)\s*(?:personas?|viajeros?|pasajeros?|adultos?)/i;
+    const travelersMatch = message.match(travelersPattern);
+    if (travelersMatch) {
+      const count = parseInt(travelersMatch[1] || travelersMatch[2] || '0');
+      if (count > 0) {
+        intent.numberOfPeople = count;
+        intent.hasIntent = true;
       }
     }
 
@@ -297,6 +331,16 @@ export class ChatService {
       responses.push(`¡**${intent.destination}** es un destino fantástico!`);
     }
 
+    if (intent.origin) {
+      responses.push(`Perfecto, partiendo desde **${intent.origin}**.`);
+    }
+
+    if (intent.numberOfPeople) {
+      responses.push(
+        `Anotado: viajaréis **${intent.numberOfPeople}** persona${intent.numberOfPeople > 1 ? 's' : ''}.`,
+      );
+    }
+
     if (intent.startDate && intent.endDate) {
       const days = Math.ceil(
         (intent.endDate.getTime() - intent.startDate.getTime()) /
@@ -327,8 +371,14 @@ export class ChatService {
       const missing: string[] = [];
       if (!tripRequest.destination && !intent.destination)
         missing.push('destino');
+      if (!tripRequest.origin && !intent.origin)
+        missing.push('ciudad de origen');
       if (!tripRequest.startDate && !intent.startDate)
         missing.push('fecha de inicio');
+      if (!tripRequest.endDate && !intent.endDate)
+        missing.push('fecha de regreso');
+      if (!tripRequest.numberOfPeople && !intent.numberOfPeople)
+        missing.push('número de personas');
       if (!tripRequest.budgetMax && !intent.budgetMax)
         missing.push('presupuesto');
       if (!tripRequest.clientEmail && !intent.clientEmail)

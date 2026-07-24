@@ -20,6 +20,8 @@ export function TripRequestEditForm({ request, token, onClose, onUpdate }: Props
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     destination: request.destination || '',
+    origin: request.origin || '',
+    numberOfPeople: request.numberOfPeople?.toString() || '',
     startDate: request.startDate
       ? new Date(request.startDate).toISOString().split('T')[0]
       : '',
@@ -45,6 +47,12 @@ export function TripRequestEditForm({ request, token, onClose, onUpdate }: Props
       const updateData: any = {};
       if (formData.destination !== request.destination) {
         updateData.destination = formData.destination;
+      }
+      if (formData.origin !== request.origin) {
+        updateData.origin = formData.origin;
+      }
+      if (formData.numberOfPeople) {
+        updateData.numberOfPeople = parseInt(formData.numberOfPeople, 10);
       }
       if (formData.startDate) {
         updateData.startDate = formData.startDate;
@@ -106,18 +114,51 @@ export function TripRequestEditForm({ request, token, onClose, onUpdate }: Props
             </div>
           )}
 
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="origin" className="block text-sm font-medium text-gray-900">
+                Origen
+              </label>
+              <input
+                type="text"
+                id="origin"
+                name="origin"
+                value={formData.origin}
+                onChange={handleChange}
+                className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                placeholder="Ciudad de origen"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="destination" className="block text-sm font-medium text-gray-900">
+                Destino
+              </label>
+              <input
+                type="text"
+                id="destination"
+                name="destination"
+                value={formData.destination}
+                onChange={handleChange}
+                className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                placeholder="Destino de tu viaje"
+              />
+            </div>
+          </div>
+
           <div>
-            <label htmlFor="destination" className="block text-sm font-medium text-gray-900">
-              Destino
+            <label htmlFor="numberOfPeople" className="block text-sm font-medium text-gray-900">
+              Número de personas
             </label>
             <input
-              type="text"
-              id="destination"
-              name="destination"
-              value={formData.destination}
+              type="number"
+              id="numberOfPeople"
+              name="numberOfPeople"
+              value={formData.numberOfPeople}
               onChange={handleChange}
               className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
-              placeholder="Destino de tu viaje"
+              placeholder="Ej. 2"
+              min="1"
             />
           </div>
 

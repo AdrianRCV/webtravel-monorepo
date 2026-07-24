@@ -55,6 +55,8 @@ export class TripRequestsController {
   ) {
     const data: any = {};
     if (updateDto.destination !== undefined) data.destination = updateDto.destination;
+    if (updateDto.origin !== undefined) data.origin = updateDto.origin;
+    if (updateDto.numberOfPeople !== undefined) data.numberOfPeople = updateDto.numberOfPeople;
     if (updateDto.startDate !== undefined) data.startDate = new Date(updateDto.startDate);
     if (updateDto.endDate !== undefined) data.endDate = new Date(updateDto.endDate);
     if (updateDto.budgetMin !== undefined) data.budgetMin = updateDto.budgetMin;
