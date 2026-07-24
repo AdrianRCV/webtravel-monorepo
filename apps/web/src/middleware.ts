@@ -7,6 +7,7 @@ const VALID_REDIRECT_PATHS = [
   '/itinerarios',
   '/chat',
   '/admin/login',
+  '/client/dashboard',
 ];
 
 function isValidRedirectPath(path: string): boolean {
@@ -17,18 +18,18 @@ function isValidRedirectPath(path: string): boolean {
 
 export default auth((req) => {
   const { pathname } = req.nextUrl;
-  
-  const publicRoutes = ['/', '/login', '/unauthorized', '/chat'];
+
+  const publicRoutes = ['/', '/login', '/register', '/unauthorized', '/chat'];
   const isPublicRoute = publicRoutes.some(route => pathname === route || pathname.startsWith(route + '/'));
   const isAuthRoute = pathname.startsWith('/api/auth');
   const isAdminLoginRoute = pathname.startsWith('/admin/login');
   
   if (isPublicRoute || isAuthRoute) {
-    if (req.auth?.user && pathname === '/login') {
+    if (req.auth?.user && (pathname === '/login' || pathname === '/register')) {
       if (req.auth.user.role === 'ADMIN') {
         return NextResponse.redirect(new URL('/dashboard', req.url));
       }
-      return NextResponse.redirect(new URL('/chat', req.url));
+      return NextResponse.redirect(new URL('/client/dashboard', req.url));
     }
     return NextResponse.next();
   }
@@ -57,14 +58,23 @@ export default auth((req) => {
   }
   
   const adminRoutes = ['/dashboard', '/solicitudes', '/itinerarios'];
-  const isAdminRoute = adminRoutes.some(route => 
+  const isAdminRoute = adminRoutes.some(route =>
     pathname === route || pathname.startsWith(`${route}/`)
   );
-  
+
   if (isAdminRoute && req.auth.user?.role !== 'ADMIN') {
     return NextResponse.redirect(new URL('/unauthorized', req.url));
   }
-  
+
+  const clientRoutes = ['/client'];
+  const isClientRoute = clientRoutes.some(route =>
+    pathname === route || pathname.startsWith(`${route}/`)
+  );
+
+  if (isClientRoute && req.auth.user?.role !== 'CLIENT') {
+    return NextResponse.redirect(new URL('/unauthorized', req.url));
+  }
+
   return NextResponse.next();
 });
 

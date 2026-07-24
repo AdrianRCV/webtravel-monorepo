@@ -29,10 +29,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         try {
           const isServer = typeof window === 'undefined';
-          const apiUrl = isServer 
+          const apiUrl = isServer
             ? (process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001')
             : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001');
-          
+
           const response = await fetch(`${apiUrl}/auth/validate-credentials`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -44,9 +44,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           if (!response.ok) return null;
           const result = await response.json();
-          
+
           if (!result.valid || !result.user) return null;
-          if (result.user.role !== 'ADMIN') return null;
 
           return {
             id: result.user.id,

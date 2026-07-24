@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { TripStatus } from '@prisma/client';
 import { NotificationsService } from '../notifications/notifications.service';
@@ -136,5 +140,92 @@ export class TripRequestsService {
     } catch {
       throw new NotFoundException(`Trip request with ID ${id} not found`);
     }
+  }
+
+  async getMyRequests(userId: string, status?: TripStatus) {
+    return this.prisma.tripRequest.findMany({
+      where: {
+        chatSession: {
+          userId,
+        },
+        ...(status && { status }),
+      },
+      include: {
+        chatSession: {
+          include: {
+            messages: {
+              orderBy: { createdAt: 'asc' },
+            },
+          },
+        },
+        itineraries: {
+          where: { isActive: true },
+          include: {
+            days: {
+              include: {
+                activities: true,
+              },
+              orderBy: { dayNumber: 'asc' },
+            },
+          },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async update(id: string, userId: string, data: {
+    destination?: string;
+    startDate?: Date;
+    endDate?: Date;
+    budgetMin?: number;
+    budgetMax?: number;
+  }) {
+    const tripRequest = await this.prisma.tripRequest.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        chatSession: {
+          select: {
+            userId: true,
+          },
+        },
+      },
+    });
+
+    if (!tripRequest) {
+      throw new NotFoundException(`Trip request with ID ${id} not found`);
+    }
+
+    if (tripRequest.chatSession.userId !== userId) {
+      throw new ForbiddenException(
+        'No tienes permiso para editar esta solicitud',
+      );
+    }
+
+    return this.prisma.tripRequest.update({
+      where: { id },
+      data,
+      include: {
+        chatSession: {
+          include: {
+            messages: {
+              orderBy: { createdAt: 'asc' },
+            },
+          },
+        },
+        itineraries: {
+          where: { isActive: true },
+          include: {
+            days: {
+              include: {
+                activities: true,
+              },
+              orderBy: { dayNumber: 'asc' },
+            },
+          },
+        },
+      },
+    });
   }
 }
