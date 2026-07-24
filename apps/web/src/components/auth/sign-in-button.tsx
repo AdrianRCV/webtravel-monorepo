@@ -4,13 +4,17 @@ import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { Loader2 } from 'lucide-react';
 
-export function SignInButton() {
+interface Props {
+  callbackUrl?: string;
+}
+
+export function SignInButton({ callbackUrl = '/chat' }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSignIn = async () => {
     setIsLoading(true);
     try {
-      await signIn('google', { callbackUrl: '/chat' });
+      await signIn('google', { callbackUrl });
     } catch (error) {
       console.error('Error signing in:', error);
       setIsLoading(false);

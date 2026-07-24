@@ -56,6 +56,26 @@ export class ChatService {
     });
   }
 
+  async getMySessions(userId: string) {
+    return this.prisma.chatSession.findMany({
+      where: { userId },
+      include: {
+        tripRequest: {
+          select: {
+            id: true,
+            destination: true,
+            status: true,
+          },
+        },
+        messages: {
+          orderBy: { createdAt: 'desc' },
+          take: 1,
+        },
+      },
+      orderBy: { updatedAt: 'desc' },
+    });
+  }
+
   async getChatSession(sessionId: string) {
     const session = await this.prisma.chatSession.findUnique({
       where: { id: sessionId },
@@ -274,7 +294,7 @@ export class ChatService {
     const responses: string[] = [];
 
     if (intent.destination) {
-      responses.push(`¡${intent.destination} es un destino fantástico!`);
+      responses.push(`¡**${intent.destination}** es un destino fantástico!`);
     }
 
     if (intent.startDate && intent.endDate) {
@@ -283,17 +303,17 @@ export class ChatService {
           (1000 * 60 * 60 * 24),
       );
       responses.push(
-        `He anotado tu viaje del ${intent.startDate.toLocaleDateString('es-ES')} al ${intent.endDate.toLocaleDateString('es-ES')} (${days} días).`,
+        `He anotado tu viaje del **${intent.startDate.toLocaleDateString('es-ES')}** al **${intent.endDate.toLocaleDateString('es-ES')}** (${days} días).`,
       );
     } else if (intent.startDate) {
       responses.push(
-        `Perfecto, he registrado tu fecha de inicio: ${intent.startDate.toLocaleDateString('es-ES')}.`,
+        `Perfecto, he registrado tu fecha de inicio: **${intent.startDate.toLocaleDateString('es-ES')}**.`,
       );
     }
 
     if (intent.budgetMin && intent.budgetMax) {
       responses.push(
-        `Tu presupuesto estimado es entre ${intent.budgetMin}€ y ${intent.budgetMax}€.`,
+        `Tu presupuesto estimado es entre **${intent.budgetMin}€** y **${intent.budgetMax}€**.`,
       );
     }
 
@@ -315,8 +335,9 @@ export class ChatService {
         missing.push('email');
 
       if (missing.length > 0) {
+        const missingList = missing.map((item) => `- ${item}`).join('\n');
         responses.push(
-          `Para completar tu solicitud, me falta: ${missing.join(', ')}. ¿Puedes proporcionármelo?`,
+          `Para completar tu solicitud, me falta:\n${missingList}\n\n¿Puedes proporcionármelo?`,
         );
       } else {
         responses.push(
