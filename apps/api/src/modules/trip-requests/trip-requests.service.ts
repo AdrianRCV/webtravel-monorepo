@@ -143,6 +143,23 @@ export class TripRequestsService {
   }
 
   async getMyRequests(userId: string, status?: TripStatus) {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { email: true },
+    });
+
+    if (user?.email) {
+      await this.prisma.chatSession.updateMany({
+        where: {
+          userId: null,
+          tripRequest: {
+            clientEmail: { equals: user.email, mode: 'insensitive' },
+          },
+        },
+        data: { userId },
+      });
+    }
+
     return this.prisma.tripRequest.findMany({
       where: {
         chatSession: {

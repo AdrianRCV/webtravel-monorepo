@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Body, Param } from '@nestjs/common';
+import { Controller, Post, Get, Body, Param, Headers } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { SendMessageDto } from './dto/send-message.dto';
 import { Public } from '../auth/public.decorator';
@@ -9,8 +9,9 @@ export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
   @Post('sessions')
-  async createSession() {
-    return this.chatService.createChatSession();
+  async createSession(@Headers('authorization') authHeader?: string) {
+    const userId = this.chatService.extractUserId(authHeader);
+    return this.chatService.createChatSession(userId);
   }
 
   @Get('sessions/:id')
@@ -22,7 +23,9 @@ export class ChatController {
   async sendMessage(
     @Param('id') id: string,
     @Body() sendMessageDto: SendMessageDto,
+    @Headers('authorization') authHeader?: string,
   ) {
-    return this.chatService.sendMessage(id, sendMessageDto.content);
+    const userId = this.chatService.extractUserId(authHeader);
+    return this.chatService.sendMessage(id, sendMessageDto.content, userId);
   }
 }
