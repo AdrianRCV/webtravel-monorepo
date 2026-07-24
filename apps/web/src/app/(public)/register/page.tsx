@@ -18,13 +18,13 @@ export default async function RegisterPage({
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 via-white to-cyan-50 px-4">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-teal-50 via-white to-indigo-50 px-4">
       <div className="w-full max-w-md space-y-8 rounded-2xl border border-zinc-200 bg-white/80 backdrop-blur-sm p-10 shadow-2xl">
         <div className="text-center">
-          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg">
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-brand to-brand-accent shadow-lg">
             <Plane className="h-10 w-10 text-white" />
           </div>
-          <h1 className="mt-6 text-4xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+          <h1 className="mt-6 text-4xl font-bold tracking-tight bg-gradient-to-r from-brand to-brand-accent bg-clip-text text-transparent">
             YourAgencyToday
           </h1>
           <p className="mt-4 text-base text-zinc-600">
@@ -38,7 +38,7 @@ export default async function RegisterPage({
             href="/register?tab=register"
             className={`flex-1 py-3 px-4 text-center text-sm font-medium transition-colors ${
               tab === 'register'
-                ? 'border-b-2 border-blue-600 text-blue-600'
+                ? 'border-b-2 border-brand text-brand'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -48,7 +48,7 @@ export default async function RegisterPage({
             href="/login"
             className={`flex-1 py-3 px-4 text-center text-sm font-medium transition-colors ${
               tab === 'login'
-                ? 'border-b-2 border-blue-600 text-blue-600'
+                ? 'border-b-2 border-brand text-brand'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -76,7 +76,7 @@ export default async function RegisterPage({
             </>
           ) : (
             <>
-              <div className="rounded-lg bg-gradient-to-br from-blue-50 to-cyan-50 p-6 text-center">
+              <div className="rounded-lg bg-gradient-to-br from-teal-50 to-indigo-50 p-6 text-center">
                 <p className="text-sm text-zinc-700 leading-relaxed">
                   Inicia sesión con Google para continuar
                 </p>
@@ -91,7 +91,7 @@ export default async function RegisterPage({
             ¿Eres administrador? {' '}
             <a
               href="/admin/login"
-              className="font-medium text-blue-600 hover:text-blue-500 transition-colors"
+              className="font-medium text-brand hover:text-brand-accent transition-colors"
             >
               Accede aquí
             </a>

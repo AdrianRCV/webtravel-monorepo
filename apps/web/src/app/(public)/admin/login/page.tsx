@@ -40,7 +40,7 @@ export default async function AdminLoginPage({
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-zinc-900 to-zinc-950 px-4">
       <div className="w-full max-w-md space-y-8 rounded-xl border border-zinc-800 bg-zinc-900 p-8 shadow-2xl">
         <div className="text-center">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-blue-600">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand">
             <Lock className="h-8 w-8 text-white" />
           </div>
           <h1 className="mt-6 text-3xl font-bold tracking-tight text-zinc-100">
@@ -58,7 +58,7 @@ export default async function AdminLoginPage({
             ¿Eres un cliente? {' '}
             <a 
               href="/login" 
-              className="font-medium text-blue-400 hover:text-blue-300 transition-colors"
+              className="font-medium text-brand hover:text-brand-accent transition-colors"
             >
               Inicia sesión aquí
             </a>
