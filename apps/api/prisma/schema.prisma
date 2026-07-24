@@ -42,6 +42,11 @@ enum ActivityType {
   EVENT
 }
 
+enum VerificationTokenType {
+  EMAIL_VERIFY
+  PASSWORD_RESET
+}
+
 // ==========================================
 // MODELOS CORE DEL NEGOCIO
 // ==========================================
@@ -215,8 +220,9 @@ model Session {
 
 model VerificationToken {
   identifier String
-  token      String   @unique
+  token      String                 @unique
   expires    DateTime
+  type       VerificationTokenType  @default(EMAIL_VERIFY)
 
   @@unique([identifier, token])
 }

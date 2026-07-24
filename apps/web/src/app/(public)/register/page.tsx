@@ -3,6 +3,7 @@ import { auth } from '@/auth';
 import { SignInButton } from '@/components/auth/sign-in-button';
 import { RegisterForm } from '@/components/auth/register-form';
 import { Plane } from 'lucide-react';
+import { LegalLinks } from '@/components/layout/legal-links';
 
 export default async function RegisterPage({
   searchParams,
@@ -97,6 +98,8 @@ export default async function RegisterPage({
             </a>
           </p>
         </div>
+
+        <LegalLinks className="text-zinc-400 mt-4" />
       </div>
     </div>
   );

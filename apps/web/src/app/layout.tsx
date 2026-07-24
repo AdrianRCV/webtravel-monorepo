@@ -14,9 +14,28 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = process.env.AUTH_URL || "https://www.youragencytoday.com";
+
 export const metadata: Metadata = {
-  title: "YourAgencyToday",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "YourAgencyToday",
+    template: "%s | YourAgencyToday",
+  },
   description: "Planifica tu próximo viaje con YourAgencyToday",
+  openGraph: {
+    title: "YourAgencyToday",
+    description: "Planifica tu próximo viaje con YourAgencyToday",
+    url: "/",
+    siteName: "YourAgencyToday",
+    locale: "es_ES",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "YourAgencyToday",
+    description: "Planifica tu próximo viaje con YourAgencyToday",
+  },
 };
 
 export default function RootLayout({
