@@ -200,3 +200,18 @@ export async function sendChatMessage(
     accessToken,
   });
 }
+
+export interface ChatSessionSummary {
+  id: string;
+  updatedAt: string;
+  tripRequest: {
+    id: string;
+    destination: string | null;
+    status: TripStatus;
+  } | null;
+  messages: ChatMessage[];
+}
+
+export async function getMyChatSessions(accessToken: string): Promise<ChatSessionSummary[]> {
+  return fetchAPI<ChatSessionSummary[]>('/chat/sessions', { accessToken });
+}

@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { auth } from '@/auth';
 import { SignInButton } from '@/components/auth/sign-in-button';
+import { ClientLoginForm } from '@/components/auth/client-login-form';
 import { Plane } from 'lucide-react';
 
 const VALID_REDIRECT_PATHS = [
@@ -9,6 +10,7 @@ const VALID_REDIRECT_PATHS = [
   '/itinerarios',
   '/chat',
   '/admin/login',
+  '/client/dashboard',
 ];
 
 function isValidRedirectPath(path: string): boolean {
@@ -24,7 +26,10 @@ export default async function LoginPage({
 }) {
   const session = await auth();
   const params = await searchParams;
-  
+  const callbackUrl = params.callbackUrl && isValidRedirectPath(params.callbackUrl)
+    ? params.callbackUrl
+    : '/client/dashboard';
+
   if (session?.user) {
     const redirectTo = params.callbackUrl && isValidRedirectPath(params.callbackUrl)
       ? params.callbackUrl
@@ -33,7 +38,7 @@ export default async function LoginPage({
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 via-white to-cyan-50 px-4">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 via-white to-cyan-50 px-4 py-12">
       <div className="w-full max-w-md space-y-8 rounded-2xl border border-zinc-200 bg-white/80 backdrop-blur-sm p-10 shadow-2xl">
         <div className="text-center">
           <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg">
@@ -48,24 +53,20 @@ export default async function LoginPage({
         </div>
 
         <div className="space-y-6 pt-4">
-          <SignInButton />
-          
+          <SignInButton callbackUrl={callbackUrl} />
+
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-zinc-200"></div>
             </div>
             <div className="relative flex justify-center text-xs">
               <span className="bg-white px-3 text-zinc-400">
-                Sin registro, sin complicaciones
+                O inicia sesión con tu email
               </span>
             </div>
           </div>
 
-          <div className="rounded-lg bg-gradient-to-br from-blue-50 to-cyan-50 p-6 text-center">
-            <p className="text-sm text-zinc-700 leading-relaxed">
-              Chatea con nuestro asistente de viajes y obtén itinerarios personalizados en minutos
-            </p>
-          </div>
+          <ClientLoginForm callbackUrl={callbackUrl} />
 
           <p className="text-center text-sm text-zinc-600">
             ¿No tienes cuenta?{' '}

@@ -1,26 +1,43 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useState, useEffect, useCallback } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { ChatMessage } from '@webtravel/shared-types';
+import { RotateCcw, MessageSquarePlus } from 'lucide-react';
+import { ChatMessage, TripRequest } from '@webtravel/shared-types';
 import { createChatSession, sendChatMessage, getChatSession } from '@/lib/api';
 import { MessageList } from './MessageList';
 import { ChatInput } from './ChatInput';
+import { SuggestionChips } from './SuggestionChips';
+import { TripSummaryPanel } from './TripSummaryPanel';
+import { ChatHistorySidebar } from './ChatHistorySidebar';
+
+function draftKey(sessionId: string) {
+  return `chatDraft:${sessionId}`;
+}
 
 export function ChatInterface() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const { data: authSession, status } = useSession();
+
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [tripRequest, setTripRequest] = useState<TripRequest | null>(null);
+  const [inputValue, setInputValue] = useState('');
+  const [isSessionLoading, setIsSessionLoading] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [lastFailedMessage, setLastFailedMessage] = useState<string | null>(null);
+  const [historyRefreshKey, setHistoryRefreshKey] = useState(0);
+  const [resetToken, setResetToken] = useState(0);
+
+  const requestedSessionId = searchParams.get('sessionId');
 
   useEffect(() => {
     if (status === 'loading') return;
 
     const accessToken = authSession?.accessToken;
-    const requestedSessionId = searchParams.get('sessionId');
 
     if (requestedSessionId) {
       setSessionId(requestedSessionId);
@@ -38,36 +55,71 @@ export function ChatInterface() {
       initializeSession(accessToken);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status]);
+  }, [status, requestedSessionId, resetToken]);
+
+  useEffect(() => {
+    if (!sessionId) return;
+    const draft = localStorage.getItem(draftKey(sessionId));
+    setInputValue(draft || '');
+  }, [sessionId]);
+
+  const persistDraft = useCallback(
+    (value: string) => {
+      setInputValue(value);
+      if (sessionId) {
+        if (value) {
+          localStorage.setItem(draftKey(sessionId), value);
+        } else {
+          localStorage.removeItem(draftKey(sessionId));
+        }
+      }
+    },
+    [sessionId],
+  );
 
   const initializeSession = async (accessToken?: string) => {
     try {
-      setIsLoading(true);
+      setIsSessionLoading(true);
       setError(null);
       const session = await createChatSession(accessToken);
       setSessionId(session.id);
       setMessages(session.messages || []);
+      setTripRequest(session.tripRequest || null);
       localStorage.setItem('chatSessionId', session.id);
+      setHistoryRefreshKey((k) => k + 1);
     } catch (err) {
       setError('No se pudo iniciar la sesión de chat. Por favor, recarga la página.');
       console.error('Error initializing session:', err);
     } finally {
-      setIsLoading(false);
+      setIsSessionLoading(false);
     }
   };
 
   const loadSession = async (id: string, accessToken?: string) => {
     try {
-      setIsLoading(true);
+      setIsSessionLoading(true);
       const session = await getChatSession(id, accessToken);
       setMessages(session.messages || []);
+      setTripRequest(session.tripRequest || null);
     } catch (err) {
       console.error('Error loading session:', err);
       localStorage.removeItem('chatSessionId');
       initializeSession(accessToken);
     } finally {
-      setIsLoading(false);
+      setIsSessionLoading(false);
     }
+  };
+
+  const handleNewConversation = () => {
+    localStorage.removeItem('chatSessionId');
+    setSessionId(null);
+    setMessages([]);
+    setTripRequest(null);
+    setInputValue('');
+    setError(null);
+    setLastFailedMessage(null);
+    setResetToken((k) => k + 1);
+    router.replace('/chat');
   };
 
   const handleSendMessage = async (content: string) => {
@@ -82,8 +134,10 @@ export function ChatInterface() {
     };
 
     setMessages((prev) => [...prev, optimisticUserMessage]);
-    setIsLoading(true);
+    setIsSending(true);
     setError(null);
+    setLastFailedMessage(null);
+    if (sessionId) localStorage.removeItem(draftKey(sessionId));
 
     try {
       const response = await sendChatMessage(sessionId, content, authSession?.accessToken);
@@ -93,64 +147,120 @@ export function ChatInterface() {
         response.userMessage,
         response.assistantMessage,
       ]);
+      if (response.tripRequest !== undefined) {
+        setTripRequest(response.tripRequest);
+      }
+      setHistoryRefreshKey((k) => k + 1);
     } catch (err) {
-      setError('No se pudo enviar el mensaje. Por favor, intenta de nuevo.');
+      setError('No se pudo enviar el mensaje.');
+      setLastFailedMessage(content);
       setMessages((prev) => prev.filter((m) => m.id !== optimisticUserMessage.id));
       console.error('Error sending message:', err);
     } finally {
-      setIsLoading(false);
+      setIsSending(false);
+    }
+  };
+
+  const handleRetry = () => {
+    if (lastFailedMessage) {
+      handleSendMessage(lastFailedMessage);
     }
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
-      <header className="bg-white border-b px-4 py-4 shadow-sm">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-2xl font-bold text-gray-900">Chat de Viajes</h1>
-          <p className="text-sm text-gray-600 mt-1">
-            Cuéntanos sobre tu próximo viaje y te ayudaremos a planificarlo
-          </p>
-        </div>
-      </header>
+    <div className="flex h-screen bg-gray-50">
+      {authSession?.accessToken && (
+        <ChatHistorySidebar
+          accessToken={authSession.accessToken}
+          activeSessionId={sessionId}
+          refreshKey={historyRefreshKey}
+          onNewConversation={handleNewConversation}
+        />
+      )}
 
-      <div className="flex-1 overflow-hidden flex flex-col">
-        {error && (
-          <div className="bg-red-50 border-b border-red-200 px-4 py-3">
-            <p className="text-sm text-red-700 max-w-4xl mx-auto">{error}</p>
-          </div>
-        )}
-
-        {messages.length === 0 && !isLoading ? (
-          <div className="flex items-center justify-center h-full">
-            <div className="text-center text-gray-500">
-              <svg
-                className="mx-auto h-12 w-12 text-gray-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                />
-              </svg>
-              <p className="mt-4 text-lg">Iniciando conversación...</p>
+      <div className="flex-1 flex flex-col min-w-0">
+        <header className="bg-white border-b px-4 py-4 shadow-sm">
+          <div className="max-w-4xl mx-auto flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">Chat de Viajes</h1>
+              <p className="text-sm text-gray-600 mt-1">
+                Cuéntanos sobre tu próximo viaje y te ayudaremos a planificarlo
+              </p>
             </div>
+            <button
+              onClick={handleNewConversation}
+              className="lg:hidden flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors shrink-0"
+              title="Nueva conversación"
+            >
+              <MessageSquarePlus className="h-4 w-4" />
+            </button>
           </div>
-        ) : (
-          <MessageList messages={messages} />
-        )}
+        </header>
+
+        <div className="flex-1 overflow-hidden flex flex-col">
+          {error && (
+            <div className="bg-red-50 border-b border-red-200 px-4 py-3">
+              <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
+                <p className="text-sm text-red-700">{error}</p>
+                {lastFailedMessage && (
+                  <button
+                    onClick={handleRetry}
+                    className="shrink-0 flex items-center gap-1.5 rounded-lg bg-red-100 px-3 py-1.5 text-sm font-medium text-red-700 hover:bg-red-200 transition-colors"
+                  >
+                    <RotateCcw className="h-3.5 w-3.5" />
+                    Reintentar
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+
+          {messages.length === 0 && !isSessionLoading ? (
+            <div className="flex-1 flex items-center justify-center px-4">
+              <div className="text-center text-gray-500">
+                <svg
+                  className="mx-auto h-12 w-12 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                  />
+                </svg>
+                <p className="mt-4 text-lg">Iniciando conversación...</p>
+              </div>
+            </div>
+          ) : messages.length <= 1 ? (
+            <div className="flex-1 overflow-y-auto flex flex-col items-center justify-center gap-6 px-4 py-6">
+              <div className="max-w-lg text-center">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 text-2xl mb-4">
+                  ✈️
+                </div>
+                <p className="text-gray-700 whitespace-pre-wrap">
+                  {messages[0]?.content ||
+                    '¡Hola! Soy tu asistente de viajes. ¿A dónde te gustaría viajar?'}
+                </p>
+              </div>
+              <SuggestionChips onSelect={persistDraft} disabled={isSending} />
+            </div>
+          ) : (
+            <MessageList messages={messages} isAssistantTyping={isSending} />
+          )}
+        </div>
+
+        <ChatInput
+          value={inputValue}
+          onChange={persistDraft}
+          onSendMessage={handleSendMessage}
+          disabled={isSending || isSessionLoading || !sessionId}
+        />
       </div>
 
-      <ChatInput onSendMessage={handleSendMessage} disabled={isLoading || !sessionId} />
-
-      {isLoading && (
-        <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-full text-sm">
-          El asistente está escribiendo...
-        </div>
-      )}
+      <TripSummaryPanel tripRequest={tripRequest} />
     </div>
   );
 }
