@@ -35,7 +35,7 @@ const STATUS_COLORS: Record<string, string> = {
   REJECTED: 'bg-red-100 text-red-800',
 };
 
-export function TripRequestsTable({ requests, onUpdate }: Props) {
+export function TripRequestsTable({ requests, token, onUpdate }: Props) {
   const [selectedRequest, setSelectedRequest] = useState<TripRequestWithChat | null>(null);
   const [editingRequest, setEditingRequest] = useState<TripRequestWithChat | null>(null);
 
