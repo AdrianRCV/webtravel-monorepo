@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Body, Param, Headers } from '@nestjs/common';
+import { Controller, Post, Get, Delete, Body, Param, Headers } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { SendMessageDto } from './dto/send-message.dto';
 import { Public } from '../auth/public.decorator';
@@ -11,6 +11,14 @@ export class ChatController {
   @Get('sessions')
   async listMySessions(@CurrentUser() user: CurrentUserData) {
     return this.chatService.getMySessions(user.id);
+  }
+
+  @Delete('sessions/:id')
+  async deleteSession(
+    @Param('id') id: string,
+    @CurrentUser() user: CurrentUserData,
+  ) {
+    return this.chatService.deleteSession(id, user);
   }
 
   @Public()

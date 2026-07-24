@@ -1,12 +1,16 @@
 "use client"
 
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import { StatusBadge } from '@/components/trip-requests/status-badge';
 import { StatusActions } from '@/components/trip-requests/status-actions';
 import { ChatHistory } from '@/components/trip-requests/chat-history';
-import type { TripRequestDetail } from '@/lib/api';
+import { DeleteConversationDialog } from '@/components/shared/delete-conversation-dialog';
+import { deleteChatSession, type TripRequestDetail } from '@/lib/api';
 import type { Session } from 'next-auth';
 import Link from 'next/link';
-import { ArrowLeft, Calendar, DollarSign, MapPin, Plane, Users, Mail, MessageSquare, Map } from 'lucide-react';
+import { ArrowLeft, Calendar, DollarSign, MapPin, Plane, Users, Mail, MessageSquare, Map, Trash2 } from 'lucide-react';
 
 interface TripRequestDetailContentProps {
   tripRequest: TripRequestDetail | null;
@@ -33,6 +37,22 @@ function formatBudget(min: number | null | undefined, max: number | null | undef
 }
 
 export function TripRequestDetailContent({ tripRequest, error, session, accessToken }: TripRequestDetailContentProps) {
+  const router = useRouter();
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
+  const handleDeleteConfirm = async () => {
+    if (!tripRequest) return;
+
+    try {
+      await deleteChatSession(tripRequest.chatSession.id, accessToken);
+      toast.success('Conversación borrada');
+      router.push('/solicitudes');
+    } catch (err) {
+      toast.error('Error al borrar la conversación');
+      throw err;
+    }
+  };
+
   if (error) {
     return (
       <div className="p-6">
@@ -61,6 +81,7 @@ export function TripRequestDetailContent({ tripRequest, error, session, accessTo
   const itinerariesCount = tripRequest.itineraries?.length || 0;
 
   return (
+    <>
     <div className="p-6">
         <div className="mx-auto max-w-[1200px] space-y-6">
           <div className="mb-6">
@@ -268,9 +289,40 @@ export function TripRequestDetailContent({ tripRequest, error, session, accessTo
                   </div>
                 </div>
               </div>
+
+              <div className="border-t border-zinc-200 pt-4 dark:border-zinc-800">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
+                      Borrar conversación
+                    </p>
+                    <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+                      Elimina la conversación, la solicitud y sus itinerarios de forma permanente.
+                    </p>
+                  </div>
+                  <button
+                    onClick={(e) => {
+                      e.currentTarget.blur();
+                      setShowDeleteDialog(true);
+                    }}
+                    className="inline-flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-100 dark:border-red-900 dark:bg-red-950 dark:text-red-400 dark:hover:bg-red-900 transition-colors"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    Borrar
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      {showDeleteDialog && (
+        <DeleteConversationDialog
+          onClose={() => setShowDeleteDialog(false)}
+          onConfirm={handleDeleteConfirm}
+        />
+      )}
+    </>
   );
 }
