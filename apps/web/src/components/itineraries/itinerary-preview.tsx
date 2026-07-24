@@ -1,6 +1,6 @@
 "use client"
 
-import { Plane, Hotel, Bus, Calendar, MapPin, ExternalLink, Clock, DollarSign } from 'lucide-react';
+import { Plane, Hotel, Bus, Calendar, MapPin, Users, ExternalLink, Clock, DollarSign } from 'lucide-react';
 import type { ItineraryWithDays } from '@/lib/api';
 
 interface ItineraryPreviewProps {
@@ -35,10 +35,18 @@ export function ItineraryPreview({ itinerary }: ItineraryPreviewProps) {
         
         {itinerary.tripRequest && (
           <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-zinc-600 dark:text-zinc-400">
-            {itinerary.tripRequest.destination && (
+            {(itinerary.tripRequest.origin || itinerary.tripRequest.destination) && (
               <div className="flex items-center gap-2">
                 <MapPin className="h-4 w-4" />
-                <span>{itinerary.tripRequest.destination}</span>
+                <span>
+                  {itinerary.tripRequest.origin || '?'} → {itinerary.tripRequest.destination || '?'}
+                </span>
+              </div>
+            )}
+            {itinerary.tripRequest.numberOfPeople && (
+              <div className="flex items-center gap-2">
+                <Users className="h-4 w-4" />
+                <span>{itinerary.tripRequest.numberOfPeople} {itinerary.tripRequest.numberOfPeople === 1 ? 'persona' : 'personas'}</span>
               </div>
             )}
             <div className="flex items-center gap-2">

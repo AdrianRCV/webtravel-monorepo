@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { TripRequest, ChatSession } from '@prisma/client';
-import { Calendar, MapPin, DollarSign, MessageCircle, Edit2 } from 'lucide-react';
+import { Calendar, MapPin, Plane, Users, DollarSign, MessageCircle, Edit2 } from 'lucide-react';
 import { TripRequestDetailModal } from './trip-request-detail-modal';
 import { TripRequestEditForm } from './trip-request-edit-form';
 
@@ -60,10 +60,16 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
           <thead className="bg-gray-50 border-b border-gray-200">
             <tr>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+                Origen
+              </th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
                 Destino
               </th>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
                 Fechas
+              </th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+                Personas
               </th>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
                 Presupuesto
@@ -79,6 +85,14 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
           <tbody className="divide-y divide-gray-200">
             {requests.map(request => (
               <tr key={request.id} className="hover:bg-gray-50 transition-colors">
+                <td className="px-6 py-4">
+                  <div className="flex items-center gap-2">
+                    <Plane className="h-5 w-5 text-gray-400" />
+                    <span className="font-medium text-gray-900">
+                      {request.origin || 'No especificado'}
+                    </span>
+                  </div>
+                </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-2">
                     <MapPin className="h-5 w-5 text-gray-400" />
@@ -100,6 +114,14 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
                           {new Date(request.endDate).toLocaleDateString('es-ES')}
                         </>
                       )}
+                    </span>
+                  </div>
+                </td>
+                <td className="px-6 py-4">
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <Users className="h-4 w-4" />
+                    <span className="text-sm">
+                      {request.numberOfPeople ?? '-'}
                     </span>
                   </div>
                 </td>

@@ -1,6 +1,6 @@
 'use client';
 
-import { X, MapPin, Calendar, DollarSign, MessageCircle } from 'lucide-react';
+import { X, MapPin, Plane, Calendar, Users, DollarSign, MessageCircle } from 'lucide-react';
 import { TripRequest, ChatSession } from '@prisma/client';
 import Link from 'next/link';
 
@@ -46,6 +46,17 @@ export function TripRequestDetailModal({ request, onClose }: Props) {
         </div>
 
         <div className="p-6 space-y-6">
+          {/* Origen */}
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <Plane className="h-5 w-5 text-gray-400" />
+              <h3 className="text-sm font-semibold text-gray-900">Origen</h3>
+            </div>
+            <p className="text-lg text-gray-700 ml-7">
+              {request.origin || 'No especificado'}
+            </p>
+          </div>
+
           {/* Destino */}
           <div>
             <div className="flex items-center gap-2 mb-2">
@@ -86,6 +97,17 @@ export function TripRequestDetailModal({ request, onClose }: Props) {
               ) : (
                 'No especificadas'
               )}
+            </p>
+          </div>
+
+          {/* Personas */}
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <Users className="h-5 w-5 text-gray-400" />
+              <h3 className="text-sm font-semibold text-gray-900">Número de personas</h3>
+            </div>
+            <p className="text-lg text-gray-700 ml-7">
+              {request.numberOfPeople ?? 'No especificado'}
             </p>
           </div>
 

@@ -1,4 +1,4 @@
-import { MapPin, Calendar, DollarSign, Mail, CheckCircle2, Circle } from 'lucide-react';
+import { MapPin, Plane, Calendar, Users, DollarSign, Mail, CheckCircle2, Circle } from 'lucide-react';
 import { TripRequest } from '@webtravel/shared-types';
 
 interface Props {
@@ -58,8 +58,14 @@ export function TripSummaryPanel({ tripRequest }: Props) {
       </p>
 
       <div className="space-y-5">
+        <Field icon={Plane} label="Origen" value={tripRequest?.origin ?? null} />
         <Field icon={MapPin} label="Destino" value={tripRequest?.destination ?? null} />
         <Field icon={Calendar} label="Fechas" value={dateRange} />
+        <Field
+          icon={Users}
+          label="Personas"
+          value={tripRequest?.numberOfPeople ? String(tripRequest.numberOfPeople) : null}
+        />
         <Field icon={DollarSign} label="Presupuesto" value={budget} />
         <Field icon={Mail} label="Email de contacto" value={tripRequest?.clientEmail ?? null} />
       </div>

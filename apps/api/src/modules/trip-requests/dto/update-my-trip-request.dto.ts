@@ -1,9 +1,18 @@
-import { IsOptional, IsString, IsDateString, IsNumber, Min } from 'class-validator';
+import { IsOptional, IsString, IsDateString, IsNumber, IsInt, Min } from 'class-validator';
 
 export class UpdateMyTripRequestDto {
   @IsOptional()
   @IsString()
   destination?: string;
+
+  @IsOptional()
+  @IsString()
+  origin?: string;
+
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  numberOfPeople?: number;
 
   @IsOptional()
   @IsDateString()

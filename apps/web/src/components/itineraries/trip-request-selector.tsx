@@ -46,8 +46,8 @@ export function TripRequestSelector({
         <option value="">-- Seleccione una solicitud --</option>
         {sortedRequests.map((request) => (
           <option key={request.id} value={request.id}>
-            {request.id.substring(0, 8)} - {request.destination || 'Sin destino'} (
-            {request.status})
+            {request.id.substring(0, 8)} - {request.origin || '?'} → {request.destination || 'Sin destino'}
+            {request.numberOfPeople ? ` (${request.numberOfPeople}p)` : ''} ({request.status})
           </option>
         ))}
       </select>

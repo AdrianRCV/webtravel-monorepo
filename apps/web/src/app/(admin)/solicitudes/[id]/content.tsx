@@ -6,7 +6,7 @@ import { ChatHistory } from '@/components/trip-requests/chat-history';
 import type { TripRequestDetail } from '@/lib/api';
 import type { Session } from 'next-auth';
 import Link from 'next/link';
-import { ArrowLeft, Calendar, DollarSign, MapPin, Mail, MessageSquare, Map } from 'lucide-react';
+import { ArrowLeft, Calendar, DollarSign, MapPin, Plane, Users, Mail, MessageSquare, Map } from 'lucide-react';
 
 interface TripRequestDetailContentProps {
   tripRequest: TripRequestDetail | null;
@@ -125,6 +125,20 @@ export function TripRequestDetailContent({ tripRequest, error, session, accessTo
 
               <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-800/50">
                 <div className="flex items-start gap-3">
+                  <Plane className="h-5 w-5 text-zinc-500 dark:text-zinc-400 mt-0.5" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                      Origen
+                    </p>
+                    <p className="mt-1 text-sm text-zinc-900 dark:text-zinc-100">
+                      {tripRequest.origin || '-'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-800/50">
+                <div className="flex items-start gap-3">
                   <MapPin className="h-5 w-5 text-zinc-500 dark:text-zinc-400 mt-0.5" />
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
@@ -139,13 +153,41 @@ export function TripRequestDetailContent({ tripRequest, error, session, accessTo
 
               <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-800/50">
                 <div className="flex items-start gap-3">
+                  <Users className="h-5 w-5 text-zinc-500 dark:text-zinc-400 mt-0.5" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                      Número de Personas
+                    </p>
+                    <p className="mt-1 text-sm text-zinc-900 dark:text-zinc-100">
+                      {tripRequest.numberOfPeople ?? '-'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-800/50">
+                <div className="flex items-start gap-3">
                   <Calendar className="h-5 w-5 text-zinc-500 dark:text-zinc-400 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
-                      Fechas de Viaje
+                      Fecha de Salida
                     </p>
                     <p className="mt-1 text-sm text-zinc-900 dark:text-zinc-100">
-                      {formatDate(tripRequest.startDate)} - {formatDate(tripRequest.endDate)}
+                      {formatDate(tripRequest.startDate)}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-800/50">
+                <div className="flex items-start gap-3">
+                  <Calendar className="h-5 w-5 text-zinc-500 dark:text-zinc-400 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                      Fecha de Regreso
+                    </p>
+                    <p className="mt-1 text-sm text-zinc-900 dark:text-zinc-100">
+                      {formatDate(tripRequest.endDate)}
                     </p>
                   </div>
                 </div>

@@ -100,6 +100,8 @@ model TripRequest {
   status        TripStatus  @default(PENDING)
   
   destination   String?
+  origin        String?
+  numberOfPeople Int?
   budgetMin     Float?
   budgetMax     Float?
   startDate     DateTime?
