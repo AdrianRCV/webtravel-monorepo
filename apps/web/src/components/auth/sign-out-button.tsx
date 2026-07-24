@@ -3,6 +3,7 @@
 import { signOut } from 'next-auth/react';
 import { LogOut, Loader2 } from 'lucide-react';
 import { useState } from 'react';
+import { clearChatStorage } from '@/lib/chat-storage';
 
 interface SignOutButtonProps {
   variant?: 'dropdown' | 'full';
@@ -14,6 +15,7 @@ export function SignOutButton({ variant = 'dropdown' }: SignOutButtonProps) {
   const handleSignOut = async () => {
     setIsLoading(true);
     try {
+      clearChatStorage();
       await signOut({ callbackUrl: '/login' });
     } catch (error) {
       console.error('Error signing out:', error);

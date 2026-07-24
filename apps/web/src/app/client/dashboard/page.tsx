@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Loader2, LogOut, Menu, X } from 'lucide-react';
 import { useSession, signOut } from 'next-auth/react';
 import { TripRequestsTable } from '@/components/client/trip-requests-table';
+import { clearChatStorage } from '@/lib/chat-storage';
 
 interface TripRequest {
   id: string;
@@ -64,6 +65,7 @@ export default function DashboardPage() {
   }, [status, session, router]);
 
   const handleLogout = async () => {
+    clearChatStorage();
     await signOut({ redirect: true, callbackUrl: '/login' });
   };
 
