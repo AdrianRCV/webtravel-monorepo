@@ -2,9 +2,11 @@
 
 import { useState } from 'react';
 import { TripRequest, ChatSession } from '@prisma/client';
-import { Calendar, MapPin, Plane, Users, DollarSign, MessageCircle, Edit2 } from 'lucide-react';
+import { Calendar, MapPin, Plane, Users, DollarSign, MessageCircle, Edit2, Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
 import { TripRequestDetailModal } from './trip-request-detail-modal';
 import { TripRequestEditForm } from './trip-request-edit-form';
+import { DeleteConversationDialog } from '@/components/shared/delete-conversation-dialog';
 
 interface TripRequestWithChat extends TripRequest {
   chatSession: ChatSession & {
@@ -38,6 +40,28 @@ const STATUS_COLORS: Record<string, string> = {
 export function TripRequestsTable({ requests, token, onUpdate }: Props) {
   const [selectedRequest, setSelectedRequest] = useState<TripRequestWithChat | null>(null);
   const [editingRequest, setEditingRequest] = useState<TripRequestWithChat | null>(null);
+  const [deletingRequest, setDeletingRequest] = useState<TripRequestWithChat | null>(null);
+
+  const handleDeleteConfirm = async () => {
+    if (!deletingRequest) return;
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/chat/sessions/${deletingRequest.chatSession.id}`,
+      {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    if (!response.ok) {
+      const data = await response.json().catch(() => null);
+      toast.error(data?.message || 'Error al borrar la conversación');
+      throw new Error('delete failed');
+    }
+
+    toast.success('Conversación borrada');
+    onUpdate?.();
+  };
 
   if (requests.length === 0) {
     return (
@@ -151,18 +175,34 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
                 <td className="px-6 py-4 text-right">
                   <div className="flex justify-end gap-2">
                     <button
-                      onClick={() => setSelectedRequest(request)}
+                      onClick={(e) => {
+                        e.currentTarget.blur();
+                        setSelectedRequest(request);
+                      }}
                       className="p-2 hover:bg-blue-100 rounded-lg transition-colors text-blue-600"
                       title="Ver detalles"
                     >
                       <MessageCircle className="h-5 w-5" />
                     </button>
                     <button
-                      onClick={() => setEditingRequest(request)}
+                      onClick={(e) => {
+                        e.currentTarget.blur();
+                        setEditingRequest(request);
+                      }}
                       className="p-2 hover:bg-gray-200 rounded-lg transition-colors text-gray-600"
                       title="Editar solicitud"
                     >
                       <Edit2 className="h-5 w-5" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.currentTarget.blur();
+                        setDeletingRequest(request);
+                      }}
+                      className="p-2 hover:bg-red-100 rounded-lg transition-colors text-red-600"
+                      title="Borrar conversación"
+                    >
+                      <Trash2 className="h-5 w-5" />
                     </button>
                   </div>
                 </td>
@@ -185,6 +225,13 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
           token={token}
           onClose={() => setEditingRequest(null)}
           onUpdate={onUpdate}
+        />
+      )}
+
+      {deletingRequest && (
+        <DeleteConversationDialog
+          onClose={() => setDeletingRequest(null)}
+          onConfirm={handleDeleteConfirm}
         />
       )}
     </>

@@ -90,6 +90,16 @@ export async function updateTripRequestStatus(
   });
 }
 
+export async function deleteChatSession(
+  sessionId: string,
+  accessToken?: string,
+): Promise<void> {
+  await fetchAPI<{ success: boolean }>(`/chat/sessions/${sessionId}`, {
+    method: 'DELETE',
+    accessToken,
+  });
+}
+
 export async function getItinerariesByTripRequest(
   tripRequestId: string,
   accessToken?: string,

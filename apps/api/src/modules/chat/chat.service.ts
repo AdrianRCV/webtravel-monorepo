@@ -1,7 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../../prisma/prisma.service';
 import { SenderRole, TripRequest } from '@prisma/client';
+import { CurrentUserData } from '../auth/current-user.decorator';
 
 interface ExtractedIntent {
   destination?: string;
@@ -190,6 +195,29 @@ export class ChatService {
         tripRequest,
       };
     });
+  }
+
+  async deleteSession(sessionId: string, user: CurrentUserData) {
+    const session = await this.prisma.chatSession.findUnique({
+      where: { id: sessionId },
+      select: { id: true, userId: true },
+    });
+
+    if (!session) {
+      throw new NotFoundException(
+        `Chat session with ID ${sessionId} not found`,
+      );
+    }
+
+    if (user.role !== 'ADMIN' && session.userId !== user.id) {
+      throw new ForbiddenException(
+        'No tienes permiso para borrar esta conversación',
+      );
+    }
+
+    await this.prisma.chatSession.delete({ where: { id: sessionId } });
+
+    return { success: true };
   }
 
   private extractIntent(message: string): ExtractedIntent {
