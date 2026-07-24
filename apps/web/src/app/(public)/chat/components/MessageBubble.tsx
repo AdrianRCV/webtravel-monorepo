@@ -11,7 +11,9 @@ export function MessageBubble({ sender, content, timestamp }: MessageBubbleProps
   const isUser = sender === 'USER';
 
   return (
-    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-4`}>
+    <div
+      className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-4 animate-in fade-in-0 slide-in-from-bottom-1 duration-300 motion-reduce:animate-none`}
+    >
       <div className={`max-w-[75%] ${isUser ? 'order-2' : 'order-1'}`}>
         <div
           className={`rounded-2xl px-4 py-3 ${

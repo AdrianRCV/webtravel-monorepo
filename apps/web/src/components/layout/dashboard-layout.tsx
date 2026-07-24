@@ -24,7 +24,7 @@ export function DashboardLayout({ children, title = "Dashboard", session }: Dash
       <div className="flex flex-1 flex-col overflow-hidden">
         <Header title={title} session={session} />
         
-        <main className="flex-1 overflow-y-auto bg-zinc-50 dark:bg-zinc-900">
+        <main className="flex-1 overflow-y-auto bg-muted/40">
           {children}
         </main>
       </div>

@@ -2,17 +2,16 @@
 
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
+import { toast } from 'sonner';
 import { Loader2, Lock } from 'lucide-react';
 
 export function CredentialsForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
     setIsLoading(true);
 
     try {
@@ -23,14 +22,14 @@ export function CredentialsForm() {
       });
 
       if (result?.error) {
-        setError('Credenciales incorrectas');
+        toast.error('Credenciales incorrectas');
         setIsLoading(false);
         return;
       }
 
       window.location.href = '/';
     } catch (err) {
-      setError('Error al iniciar sesión');
+      toast.error('Error al iniciar sesión');
       setIsLoading(false);
     }
   };
@@ -51,7 +50,7 @@ export function CredentialsForm() {
           onChange={(e) => setEmail(e.target.value)}
           required
           className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
-          placeholder="admin@webtravel.com"
+          placeholder="admin@youragencytoday.com"
         />
       </div>
 
@@ -73,12 +72,6 @@ export function CredentialsForm() {
           placeholder="••••••••"
         />
       </div>
-
-      {error && (
-        <div className="rounded-lg bg-red-50 p-3 text-sm text-red-600 dark:bg-red-900/20 dark:text-red-400">
-          {error}
-        </div>
-      )}
 
       <button
         type="submit"

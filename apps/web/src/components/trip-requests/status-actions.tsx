@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import type { TripStatus } from '@webtravel/shared-types';
 import { Button } from '@/components/ui/button';
+import { Spinner } from '@/components/ui/spinner';
 import { updateTripRequestStatus } from '@/lib/api';
 import { Check, X, Clock, FileText } from 'lucide-react';
 
@@ -52,13 +54,12 @@ const statusConfig: Record<TripStatus, { label: string; icon: any; variant: 'def
 export function StatusActions({ requestId, currentStatus, accessToken }: StatusActionsProps) {
   const router = useRouter();
   const [loading, setLoading] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
 
   const availableTransitions = statusTransitions[currentStatus];
 
   if (availableTransitions.length === 0) {
     return (
-      <span className="text-xs text-zinc-500 dark:text-zinc-400">
+      <span className="text-xs text-muted-foreground">
         Estado final
       </span>
     );
@@ -66,14 +67,15 @@ export function StatusActions({ requestId, currentStatus, accessToken }: StatusA
 
   const handleStatusChange = async (newStatus: TripStatus) => {
     setLoading(newStatus);
-    setError(null);
 
     try {
       await updateTripRequestStatus(requestId, newStatus, accessToken);
+      toast.success(`Estado actualizado a "${statusConfig[newStatus].label}"`);
       router.refresh();
     } catch (err) {
       console.error('Error al actualizar estado:', err);
-      setError('Error al actualizar');
+      toast.error('Error al actualizar el estado');
+    } finally {
       setLoading(null);
     }
   };
@@ -95,7 +97,7 @@ export function StatusActions({ requestId, currentStatus, accessToken }: StatusA
             className="gap-1"
           >
             {isLoading ? (
-              <span className="h-3 w-3 animate-spin rounded-full border-2 border-current border-t-transparent" />
+              <Spinner size="sm" />
             ) : (
               <Icon className="h-3 w-3" />
             )}
@@ -103,11 +105,6 @@ export function StatusActions({ requestId, currentStatus, accessToken }: StatusA
           </Button>
         );
       })}
-      {error && (
-        <span className="text-xs text-red-600 dark:text-red-400">
-          {error}
-        </span>
-      )}
     </div>
   );
 }

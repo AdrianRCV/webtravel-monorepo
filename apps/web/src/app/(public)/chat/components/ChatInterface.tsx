@@ -3,14 +3,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { RotateCcw, MessageSquarePlus } from 'lucide-react';
+import { toast } from 'sonner';
+import { MessageSquarePlus } from 'lucide-react';
 import { ChatMessage, TripRequest } from '@webtravel/shared-types';
 import { createChatSession, sendChatMessage, getChatSession } from '@/lib/api';
 import { MessageList } from './MessageList';
 import { ChatInput } from './ChatInput';
 import { SuggestionChips } from './SuggestionChips';
 import { TripSummaryPanel } from './TripSummaryPanel';
-import { ChatHistorySidebar } from './ChatHistorySidebar';
+import { ChatHistorySidebar, MobileChatHistoryDrawer } from './ChatHistorySidebar';
 
 function draftKey(sessionId: string) {
   return `chatDraft:${sessionId}`;
@@ -27,8 +28,7 @@ export function ChatInterface() {
   const [inputValue, setInputValue] = useState('');
   const [isSessionLoading, setIsSessionLoading] = useState(false);
   const [isSending, setIsSending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [lastFailedMessage, setLastFailedMessage] = useState<string | null>(null);
+  const [initError, setInitError] = useState<string | null>(null);
   const [historyRefreshKey, setHistoryRefreshKey] = useState(0);
   const [resetToken, setResetToken] = useState(0);
 
@@ -80,7 +80,7 @@ export function ChatInterface() {
   const initializeSession = async (accessToken?: string) => {
     try {
       setIsSessionLoading(true);
-      setError(null);
+      setInitError(null);
       const session = await createChatSession(accessToken);
       setSessionId(session.id);
       setMessages(session.messages || []);
@@ -88,7 +88,7 @@ export function ChatInterface() {
       localStorage.setItem('chatSessionId', session.id);
       setHistoryRefreshKey((k) => k + 1);
     } catch (err) {
-      setError('No se pudo iniciar la sesión de chat. Por favor, recarga la página.');
+      setInitError('No se pudo iniciar la sesión de chat. Por favor, recarga la página.');
       console.error('Error initializing session:', err);
     } finally {
       setIsSessionLoading(false);
@@ -116,8 +116,7 @@ export function ChatInterface() {
     setMessages([]);
     setTripRequest(null);
     setInputValue('');
-    setError(null);
-    setLastFailedMessage(null);
+    setInitError(null);
     setResetToken((k) => k + 1);
     router.replace('/chat');
   };
@@ -135,8 +134,6 @@ export function ChatInterface() {
 
     setMessages((prev) => [...prev, optimisticUserMessage]);
     setIsSending(true);
-    setError(null);
-    setLastFailedMessage(null);
     if (sessionId) localStorage.removeItem(draftKey(sessionId));
 
     try {
@@ -152,18 +149,16 @@ export function ChatInterface() {
       }
       setHistoryRefreshKey((k) => k + 1);
     } catch (err) {
-      setError('No se pudo enviar el mensaje.');
-      setLastFailedMessage(content);
       setMessages((prev) => prev.filter((m) => m.id !== optimisticUserMessage.id));
       console.error('Error sending message:', err);
+      toast.error('No se pudo enviar el mensaje.', {
+        action: {
+          label: 'Reintentar',
+          onClick: () => handleSendMessage(content),
+        },
+      });
     } finally {
       setIsSending(false);
-    }
-  };
-
-  const handleRetry = () => {
-    if (lastFailedMessage) {
-      handleSendMessage(lastFailedMessage);
     }
   };
 
@@ -187,31 +182,30 @@ export function ChatInterface() {
                 Cuéntanos sobre tu próximo viaje y te ayudaremos a planificarlo
               </p>
             </div>
-            <button
-              onClick={handleNewConversation}
-              className="lg:hidden flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors shrink-0"
-              title="Nueva conversación"
-            >
-              <MessageSquarePlus className="h-4 w-4" />
-            </button>
+            <div className="lg:hidden flex items-center gap-2">
+              {authSession?.accessToken && (
+                <MobileChatHistoryDrawer
+                  accessToken={authSession.accessToken}
+                  activeSessionId={sessionId}
+                  refreshKey={historyRefreshKey}
+                  onNewConversation={handleNewConversation}
+                />
+              )}
+              <button
+                onClick={handleNewConversation}
+                className="flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors shrink-0"
+                title="Nueva conversación"
+              >
+                <MessageSquarePlus className="h-4 w-4" />
+              </button>
+            </div>
           </div>
         </header>
 
         <div className="flex-1 overflow-hidden flex flex-col">
-          {error && (
-            <div className="bg-red-50 border-b border-red-200 px-4 py-3">
-              <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
-                <p className="text-sm text-red-700">{error}</p>
-                {lastFailedMessage && (
-                  <button
-                    onClick={handleRetry}
-                    className="shrink-0 flex items-center gap-1.5 rounded-lg bg-red-100 px-3 py-1.5 text-sm font-medium text-red-700 hover:bg-red-200 transition-colors"
-                  >
-                    <RotateCcw className="h-3.5 w-3.5" />
-                    Reintentar
-                  </button>
-                )}
-              </div>
+          {initError && (
+            <div className="bg-destructive/10 border-b border-destructive/20 px-4 py-3">
+              <p className="max-w-4xl mx-auto text-sm text-destructive">{initError}</p>
             </div>
           )}
 

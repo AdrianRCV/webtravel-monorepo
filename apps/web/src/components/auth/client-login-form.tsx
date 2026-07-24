@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import { toast } from 'sonner';
 import { Loader2, Eye, EyeOff } from 'lucide-react';
 
 interface Props {
@@ -15,11 +16,9 @@ export function ClientLoginForm({ callbackUrl = '/client/dashboard' }: Props) {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
     setIsLoading(true);
 
     try {
@@ -30,7 +29,7 @@ export function ClientLoginForm({ callbackUrl = '/client/dashboard' }: Props) {
       });
 
       if (result?.error) {
-        setError('Email o contraseña incorrectos');
+        toast.error('Email o contraseña incorrectos');
         setIsLoading(false);
         return;
       }
@@ -38,7 +37,7 @@ export function ClientLoginForm({ callbackUrl = '/client/dashboard' }: Props) {
       router.push(callbackUrl);
       router.refresh();
     } catch {
-      setError('Error al iniciar sesión');
+      toast.error('Error al iniciar sesión');
       setIsLoading(false);
     }
   };
@@ -84,12 +83,6 @@ export function ClientLoginForm({ callbackUrl = '/client/dashboard' }: Props) {
           </button>
         </div>
       </div>
-
-      {error && (
-        <div className="rounded-lg bg-red-50 p-3 text-sm text-red-600 border border-red-200">
-          {error}
-        </div>
-      )}
 
       <button
         type="submit"
