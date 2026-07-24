@@ -1,33 +1,50 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { ChatMessage } from '@webtravel/shared-types';
-import { createChatSession, sendChatMessage } from '@/lib/api';
+import { createChatSession, sendChatMessage, getChatSession } from '@/lib/api';
 import { MessageList } from './MessageList';
 import { ChatInput } from './ChatInput';
 
 export function ChatInterface() {
+  const searchParams = useSearchParams();
+  const { data: authSession, status } = useSession();
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (status === 'loading') return;
+
+    const accessToken = authSession?.accessToken;
+    const requestedSessionId = searchParams.get('sessionId');
+
+    if (requestedSessionId) {
+      setSessionId(requestedSessionId);
+      localStorage.setItem('chatSessionId', requestedSessionId);
+      loadSession(requestedSessionId, accessToken);
+      return;
+    }
+
     const storedSessionId = localStorage.getItem('chatSessionId');
-    
+
     if (storedSessionId) {
       setSessionId(storedSessionId);
-      loadSession(storedSessionId);
+      loadSession(storedSessionId, accessToken);
     } else {
-      initializeSession();
+      initializeSession(accessToken);
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status]);
 
-  const initializeSession = async () => {
+  const initializeSession = async (accessToken?: string) => {
     try {
       setIsLoading(true);
       setError(null);
-      const session = await createChatSession();
+      const session = await createChatSession(accessToken);
       setSessionId(session.id);
       setMessages(session.messages || []);
       localStorage.setItem('chatSessionId', session.id);
@@ -39,16 +56,15 @@ export function ChatInterface() {
     }
   };
 
-  const loadSession = async (id: string) => {
+  const loadSession = async (id: string, accessToken?: string) => {
     try {
       setIsLoading(true);
-      const { getChatSession } = await import('@/lib/api');
-      const session = await getChatSession(id);
+      const session = await getChatSession(id, accessToken);
       setMessages(session.messages || []);
     } catch (err) {
       console.error('Error loading session:', err);
       localStorage.removeItem('chatSessionId');
-      initializeSession();
+      initializeSession(accessToken);
     } finally {
       setIsLoading(false);
     }
@@ -70,8 +86,8 @@ export function ChatInterface() {
     setError(null);
 
     try {
-      const response = await sendChatMessage(sessionId, content);
-      
+      const response = await sendChatMessage(sessionId, content, authSession?.accessToken);
+
       setMessages((prev) => [
         ...prev.filter((m) => m.id !== optimisticUserMessage.id),
         response.userMessage,

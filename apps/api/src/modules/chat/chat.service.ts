@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../../prisma/prisma.service';
 import { SenderRole, TripRequest } from '@prisma/client';
 
@@ -14,7 +15,25 @@ interface ExtractedIntent {
 
 @Injectable()
 export class ChatService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly jwtService: JwtService,
+  ) {}
+
+  extractUserId(authHeader?: string): string | undefined {
+    if (!authHeader?.startsWith('Bearer ')) {
+      return undefined;
+    }
+
+    try {
+      const payload = this.jwtService.verify<{ sub: string }>(
+        authHeader.slice('Bearer '.length),
+      );
+      return payload.sub;
+    } catch {
+      return undefined;
+    }
+  }
 
   async createChatSession(userId?: string) {
     return this.prisma.chatSession.create({
@@ -57,7 +76,7 @@ export class ChatService {
     return session;
   }
 
-  async sendMessage(sessionId: string, userMessage: string) {
+  async sendMessage(sessionId: string, userMessage: string, userId?: string) {
     const session = await this.prisma.chatSession.findUnique({
       where: { id: sessionId },
       include: {
@@ -77,6 +96,13 @@ export class ChatService {
     const extractedIntent = this.extractIntent(userMessage);
 
     return this.prisma.$transaction(async (tx) => {
+      if (userId && !session.userId) {
+        await tx.chatSession.update({
+          where: { id: sessionId },
+          data: { userId },
+        });
+      }
+
       const savedUserMessage = await tx.chatMessage.create({
         data: {
           chatSessionId: sessionId,
