@@ -36,6 +36,13 @@ coverage/
 # Docker
 docker-compose.override.yml
 
+# Claude Code local settings (personal, no compartido)
+.claude/settings.local.json
+
+# Documentación: solo el README.md de la raíz se sube
+*.md
+!/README.md
+
 # Configuración local de opencode
 opencode.json
 agent.md
