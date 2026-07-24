@@ -47,7 +47,7 @@ export function Sidebar({ session }: SidebarProps) {
     <aside className="flex h-full w-64 flex-col bg-zinc-950 text-zinc-100">
       <div className="flex h-16 items-center gap-2 border-b border-zinc-800 px-6">
         <Plane className="h-6 w-6 text-zinc-400" />
-        <span className="text-lg font-semibold">WebTravel Admin</span>
+        <span className="text-lg font-semibold">YourAgencyToday Admin</span>
       </div>
       
       <nav className="flex-1 space-y-1 p-4">

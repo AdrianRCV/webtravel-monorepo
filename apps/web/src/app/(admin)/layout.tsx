@@ -3,8 +3,8 @@ import { redirect } from 'next/navigation';
 import { DashboardLayout } from '@/components/layout/dashboard-layout';
 
 export const metadata = {
-  title: "Panel de Administración | WebTravel",
-  description: "Panel de administración para WebTravel",
+  title: "Panel de Administración | YourAgencyToday",
+  description: "Panel de administración para YourAgencyToday",
 };
 
 export default async function AdminLayout({
