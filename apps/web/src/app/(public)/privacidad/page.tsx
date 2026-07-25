@@ -1,7 +1,7 @@
 import { LegalPageLayout } from '@/components/legal/legal-page-layout';
 
 export const metadata = {
-  title: 'Política de Privacidad | YourAgencyToday',
+  title: 'Política de Privacidad',
   description: 'Cómo YourAgencyToday recopila, usa y protege tus datos.',
 };
 

@@ -113,7 +113,7 @@ export class AuthService {
         });
 
     await this.prisma.verificationToken.deleteMany({
-      where: { identifier: email },
+      where: { identifier: email, type: VerificationTokenType.EMAIL_VERIFY },
     });
 
     const token = this.jwtService.sign({
@@ -139,6 +139,7 @@ export class AuthService {
       data: {
         identifier: email,
         token: verificationToken,
+        type: VerificationTokenType.EMAIL_VERIFY,
         expires: new Date(Date.now() + VERIFICATION_TOKEN_TTL_MS),
       },
     });
@@ -155,8 +156,12 @@ export class AuthService {
       where: { token },
     });
 
-    if (!verificationToken || verificationToken.expires < new Date()) {
-      if (verificationToken) {
+    if (
+      !verificationToken ||
+      verificationToken.type !== VerificationTokenType.EMAIL_VERIFY ||
+      verificationToken.expires < new Date()
+    ) {
+      if (verificationToken && verificationToken.type === VerificationTokenType.EMAIL_VERIFY) {
         await this.prisma.verificationToken.delete({
           where: { token },
         });
@@ -173,7 +178,7 @@ export class AuthService {
     });
 
     await this.prisma.verificationToken.deleteMany({
-      where: { identifier: verificationToken.identifier },
+      where: { identifier: verificationToken.identifier, type: VerificationTokenType.EMAIL_VERIFY },
     });
 
     return { success: true, user };

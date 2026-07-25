@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { DashboardLayout } from '@/components/layout/dashboard-layout';
 
 export const metadata = {
-  title: "Panel de Administración | YourAgencyToday",
+  title: "Panel de Administración",
   description: "Panel de administración para YourAgencyToday",
   robots: { index: false, follow: false },
 };

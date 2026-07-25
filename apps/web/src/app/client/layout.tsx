@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 import { auth } from '@/auth';
 
 export const metadata = {
-  title: "Mi Panel | YourAgencyToday",
+  title: "Mi Panel",
   robots: { index: false, follow: false },
 };
 

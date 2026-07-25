@@ -2,7 +2,7 @@ import { Plane } from 'lucide-react';
 import { ContactForm } from '@/components/contact/contact-form';
 
 export const metadata = {
-  title: 'Contacto | YourAgencyToday',
+  title: 'Contacto',
   description: 'Escribinos y un especialista de YourAgencyToday te responderá a la brevedad.',
 };
 
