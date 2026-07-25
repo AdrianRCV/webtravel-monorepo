@@ -5,6 +5,7 @@ import { DashboardLayout } from '@/components/layout/dashboard-layout';
 export const metadata = {
   title: "Panel de Administración | YourAgencyToday",
   description: "Panel de administración para YourAgencyToday",
+  robots: { index: false, follow: false },
 };
 
 export default async function AdminLayout({
