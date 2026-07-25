@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { TripRequestsTable } from '@/components/client/trip-requests-table';
+import { DashboardWelcome } from '@/components/client/dashboard-welcome';
 import { ClientHeader } from '@/components/client/client-header';
 
 interface TripRequest {
@@ -86,11 +87,15 @@ export default function DashboardPage() {
             <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
           </div>
         ) : session?.accessToken ? (
-          <TripRequestsTable
-            requests={requests}
-            token={session.accessToken}
-            onUpdate={() => session?.accessToken && fetchRequests(session.accessToken)}
-          />
+          requests.length === 0 ? (
+            <DashboardWelcome />
+          ) : (
+            <TripRequestsTable
+              requests={requests}
+              token={session.accessToken}
+              onUpdate={() => session?.accessToken && fetchRequests(session.accessToken)}
+            />
+          )
         ) : null}
       </main>
     </div>

@@ -63,20 +63,6 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
     onUpdate?.();
   };
 
-  if (requests.length === 0) {
-    return (
-      <div className="rounded-lg border border-gray-200 bg-white p-12 text-center">
-        <MapPin className="mx-auto h-12 w-12 text-gray-400" />
-        <h3 className="mt-4 text-lg font-medium text-gray-900">
-          No hay solicitudes de viaje aún
-        </h3>
-        <p className="mt-2 text-sm text-gray-600">
-          Comienza una nueva solicitud en el chat para verla aquí
-        </p>
-      </div>
-    );
-  }
-
   return (
     <>
       <div className="overflow-x-auto rounded-lg border border-gray-200">
