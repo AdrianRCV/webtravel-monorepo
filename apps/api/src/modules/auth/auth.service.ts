@@ -8,8 +8,10 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { NotificationsService } from '../notifications/notifications.service';
 import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
+import { VerificationTokenType } from '@prisma/client';
 
 const VERIFICATION_TOKEN_TTL_MS = 24 * 60 * 60 * 1000;
+const PASSWORD_RESET_TOKEN_TTL_MS = 60 * 60 * 1000;
 
 @Injectable()
 export class AuthService {
@@ -175,5 +177,81 @@ export class AuthService {
     });
 
     return { success: true, user };
+  }
+
+  async forgotPassword(email: string): Promise<{ success: true }> {
+    const user = await this.prisma.user.findUnique({
+      where: { email },
+      select: { id: true, password: true },
+    });
+
+    if (user) {
+      if (!user.password) {
+        await this.notificationsService.sendGoogleAccountNotice(email);
+      } else {
+        await this.prisma.verificationToken.deleteMany({
+          where: { identifier: email, type: VerificationTokenType.PASSWORD_RESET },
+        });
+
+        const resetToken = crypto.randomBytes(32).toString('hex');
+
+        await this.prisma.verificationToken.create({
+          data: {
+            identifier: email,
+            token: resetToken,
+            type: VerificationTokenType.PASSWORD_RESET,
+            expires: new Date(Date.now() + PASSWORD_RESET_TOKEN_TTL_MS),
+          },
+        });
+
+        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+
+        await this.notificationsService.sendPasswordResetEmail(email, {
+          resetUrl: `${frontendUrl}/reset-password?token=${resetToken}`,
+        });
+      }
+    }
+
+    return { success: true };
+  }
+
+  async resetPassword(
+    token: string,
+    password: string,
+    passwordConfirm: string,
+  ): Promise<{ success: true }> {
+    if (password !== passwordConfirm) {
+      throw new BadRequestException('Las contraseñas no coinciden');
+    }
+
+    const verificationToken = await this.prisma.verificationToken.findUnique({
+      where: { token },
+    });
+
+    if (
+      !verificationToken ||
+      verificationToken.type !== VerificationTokenType.PASSWORD_RESET ||
+      verificationToken.expires < new Date()
+    ) {
+      throw new BadRequestException(
+        'El enlace de recuperación no es válido o ha caducado',
+      );
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await this.prisma.user.update({
+      where: { email: verificationToken.identifier },
+      data: { password: hashedPassword },
+    });
+
+    await this.prisma.verificationToken.deleteMany({
+      where: {
+        identifier: verificationToken.identifier,
+        type: VerificationTokenType.PASSWORD_RESET,
+      },
+    });
+
+    return { success: true };
   }
 }

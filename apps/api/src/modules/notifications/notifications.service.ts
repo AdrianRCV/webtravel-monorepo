@@ -10,6 +10,8 @@ import {
   ItineraryCreatedEmailData,
 } from './templates/itinerary-created.template';
 import { verifyEmailTemplate, VerifyEmailData } from './templates/verify-email.template';
+import { passwordResetTemplate, PasswordResetEmailData } from './templates/password-reset.template';
+import { googleAccountNoticeTemplate } from './templates/google-account-notice.template';
 
 @Injectable()
 export class NotificationsService {
@@ -152,6 +154,77 @@ export class NotificationsService {
       const err = error as Error;
       this.logger.error(
         `Failed to send verification email to ${to}: ${err.message}`,
+        err.stack,
+      );
+    }
+  }
+
+  async sendPasswordResetEmail(
+    to: string,
+    data: Omit<PasswordResetEmailData, 'previewText'>,
+  ): Promise<void> {
+    if (!this.enabled || !this.resend) {
+      this.logger.warn('Email sending skipped: service not enabled');
+      return;
+    }
+
+    if (!to || !this.isValidEmail(to)) {
+      this.logger.warn(`Invalid email address: ${to}`);
+      return;
+    }
+
+    try {
+      const emailData: PasswordResetEmailData = {
+        ...data,
+        previewText: 'Restablecé tu contraseña de YourAgencyToday',
+      };
+      const html = passwordResetTemplate(emailData);
+
+      await this.resend.emails.send({
+        from: this.from,
+        to,
+        subject: 'Restablecé tu contraseña - YourAgencyToday',
+        html,
+      });
+
+      this.logger.log(`Password reset email sent to ${to}`);
+    } catch (error) {
+      const err = error as Error;
+      this.logger.error(
+        `Failed to send password reset email to ${to}: ${err.message}`,
+        err.stack,
+      );
+    }
+  }
+
+  async sendGoogleAccountNotice(to: string): Promise<void> {
+    if (!this.enabled || !this.resend) {
+      this.logger.warn('Email sending skipped: service not enabled');
+      return;
+    }
+
+    if (!to || !this.isValidEmail(to)) {
+      this.logger.warn(`Invalid email address: ${to}`);
+      return;
+    }
+
+    try {
+      const html = googleAccountNoticeTemplate({
+        previewText: 'Esta cuenta usa Inicio de sesión con Google',
+      });
+
+      await this.resend.emails.send({
+        from: this.from,
+        to,
+        subject: 'Esta cuenta usa Google - YourAgencyToday',
+        html,
+      });
+
+      this.logger.log(`Google account notice email sent to ${to}`);
+    } catch (error) {
+      const err = error as Error;
+      this.logger.error(
+        `Failed to send google account notice email: ${err.message}`,
         err.stack,
       );
     }

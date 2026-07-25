@@ -3,6 +3,8 @@ import { AuthService } from './auth.service';
 import { ValidateCredentialsDto } from './dto/validate-credentials.dto';
 import { RegisterDto } from './dto/register.dto';
 import { VerifyEmailDto } from './dto/verify-email.dto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 import { Public } from './public.decorator';
 
 @Controller('auth')
@@ -29,5 +31,21 @@ export class AuthController {
   @Post('verify-email')
   async verifyEmail(@Body(ValidationPipe) dto: VerifyEmailDto) {
     return this.authService.verifyEmail(dto.token);
+  }
+
+  @Public()
+  @Post('forgot-password')
+  async forgotPassword(@Body(ValidationPipe) dto: ForgotPasswordDto) {
+    return this.authService.forgotPassword(dto.email);
+  }
+
+  @Public()
+  @Post('reset-password')
+  async resetPassword(@Body(ValidationPipe) dto: ResetPasswordDto) {
+    return this.authService.resetPassword(
+      dto.token,
+      dto.password,
+      dto.passwordConfirm,
+    );
   }
 }
