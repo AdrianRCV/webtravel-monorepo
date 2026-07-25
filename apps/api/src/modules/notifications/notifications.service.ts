@@ -12,6 +12,7 @@ import {
 import { verifyEmailTemplate, VerifyEmailData } from './templates/verify-email.template';
 import { passwordResetTemplate, PasswordResetEmailData } from './templates/password-reset.template';
 import { googleAccountNoticeTemplate } from './templates/google-account-notice.template';
+import { contactMessageTemplate } from './templates/contact-message.template';
 
 @Injectable()
 export class NotificationsService {
@@ -225,6 +226,48 @@ export class NotificationsService {
       const err = error as Error;
       this.logger.error(
         `Failed to send google account notice email: ${err.message}`,
+        err.stack,
+      );
+    }
+  }
+
+  async sendContactMessage(data: {
+    name: string;
+    email: string;
+    message: string;
+  }): Promise<void> {
+    if (!this.enabled || !this.resend) {
+      this.logger.warn('Email sending skipped: service not enabled');
+      return;
+    }
+
+    const to = process.env.CONTACT_EMAIL_TO;
+
+    if (!to || !this.isValidEmail(to)) {
+      this.logger.warn('Contact email skipped: CONTACT_EMAIL_TO not configured');
+      return;
+    }
+
+    try {
+      const html = contactMessageTemplate({
+        senderName: data.name,
+        senderEmail: data.email,
+        message: data.message,
+        previewText: `Nuevo mensaje de contacto de ${data.name}`,
+      });
+
+      await this.resend.emails.send({
+        from: this.from,
+        to,
+        subject: `Nuevo mensaje de contacto: ${data.name}`,
+        html,
+      });
+
+      this.logger.log(`Contact message email sent to ${to} from ${data.email}`);
+    } catch (error) {
+      const err = error as Error;
+      this.logger.error(
+        `Failed to send contact message email: ${err.message}`,
         err.stack,
       );
     }

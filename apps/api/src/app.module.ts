@@ -6,6 +6,7 @@ import { ItinerariesModule } from './modules/itineraries/itineraries.module';
 import { ChatModule } from './modules/chat/chat.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
+import { ContactModule } from './modules/contact/contact.module';
 import { JwtAuthGuard } from './modules/auth/jwt-auth.guard';
 
 @Module({
@@ -16,6 +17,7 @@ import { JwtAuthGuard } from './modules/auth/jwt-auth.guard';
     ItinerariesModule,
     ChatModule,
     UsersModule,
+    ContactModule,
   ],
   providers: [
     {
