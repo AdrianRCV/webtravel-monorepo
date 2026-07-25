@@ -31,7 +31,7 @@ export class TripRequestsService {
     });
   }
 
-  async findOne(id: string) {
+  async findOne(id: string, user: { id: string; role: string }) {
     const tripRequest = await this.prisma.tripRequest.findUnique({
       where: { id },
       include: {
@@ -52,6 +52,10 @@ export class TripRequestsService {
               },
               orderBy: { dayNumber: 'asc' },
             },
+            createdByAdmin: {
+              select: { id: true, name: true, email: true },
+            },
+            tripRequest: true,
           },
         },
       },
@@ -59,6 +63,15 @@ export class TripRequestsService {
 
     if (!tripRequest) {
       throw new NotFoundException(`Trip request with ID ${id} not found`);
+    }
+
+    if (
+      user.role === 'CLIENT' &&
+      tripRequest.chatSession?.userId !== user.id
+    ) {
+      throw new ForbiddenException(
+        'No tienes permiso para ver esta solicitud',
+      );
     }
 
     return tripRequest;
@@ -97,7 +110,8 @@ export class TripRequestsService {
 
       const shouldNotify =
         (previousStatus === 'PENDING' && status === 'IN_PROGRESS') ||
-        (previousStatus === 'IN_PROGRESS' && status === 'PROPOSED');
+        (previousStatus === 'IN_PROGRESS' && status === 'PROPOSED') ||
+        (previousStatus === 'PROPOSED' && status === 'APPROVED');
 
       if (shouldNotify && updatedTripRequest.clientEmail) {
         const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
