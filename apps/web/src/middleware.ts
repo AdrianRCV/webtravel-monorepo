@@ -6,7 +6,16 @@ import { routing } from './i18n/routing';
 
 const handleI18nRouting = createMiddleware(routing);
 
-const LOCALIZED_PATHS = ['/', '/login'];
+const LOCALIZED_PATHS = [
+  '/',
+  '/login',
+  '/register',
+  '/forgot-password',
+  '/reset-password',
+  '/verify-email',
+  '/confirm-email-change',
+  '/unauthorized',
+];
 
 function stripLocale(pathname: string): string {
   for (const locale of routing.locales) {
