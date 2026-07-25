@@ -187,7 +187,10 @@ export class AuthService {
 
     if (user) {
       if (!user.password) {
-        await this.notificationsService.sendGoogleAccountNotice(email);
+        // Fire-and-forget: awaiting the network call here would make this branch
+        // measurably slower than the "no such account" branch, leaking account
+        // existence via response timing.
+        void this.notificationsService.sendGoogleAccountNotice(email);
       } else {
         await this.prisma.verificationToken.deleteMany({
           where: { identifier: email, type: VerificationTokenType.PASSWORD_RESET },
@@ -206,7 +209,8 @@ export class AuthService {
 
         const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
 
-        await this.notificationsService.sendPasswordResetEmail(email, {
+        // Fire-and-forget: see comment above, same timing-leak concern.
+        void this.notificationsService.sendPasswordResetEmail(email, {
           resetUrl: `${frontendUrl}/reset-password?token=${resetToken}`,
         });
       }
