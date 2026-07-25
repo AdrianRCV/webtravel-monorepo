@@ -2,9 +2,11 @@
 
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { useTranslations } from 'next-intl';
 import { Loader2 } from 'lucide-react';
 
 export function ForgotPasswordForm() {
+  const t = useTranslations('Auth.ForgotPassword');
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -21,7 +23,7 @@ export function ForgotPasswordForm() {
       });
       setSubmitted(true);
     } catch (err) {
-      toast.error('No se pudo enviar la solicitud. Intenta de nuevo.');
+      toast.error(t('genericError'));
     } finally {
       setIsLoading(false);
     }
@@ -30,8 +32,9 @@ export function ForgotPasswordForm() {
   if (submitted) {
     return (
       <p className="text-center text-sm text-zinc-600">
-        Si el correo <span className="font-medium">{email}</span> está registrado, te
-        enviamos un enlace para restablecer tu contraseña.
+        {t('confirmedPrefix')}
+        <span className="font-medium">{email}</span>
+        {t('confirmedSuffix')}
       </p>
     );
   }
@@ -40,7 +43,7 @@ export function ForgotPasswordForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-          Correo electrónico
+          {t('emailLabel')}
         </label>
         <input
           id="email"
@@ -50,7 +53,7 @@ export function ForgotPasswordForm() {
           onChange={(e) => setEmail(e.target.value)}
           required
           className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
-          placeholder="tu@email.com"
+          placeholder={t('emailPlaceholder')}
         />
       </div>
 
@@ -62,10 +65,10 @@ export function ForgotPasswordForm() {
         {isLoading ? (
           <>
             <Loader2 className="inline h-4 w-4 animate-spin mr-2" />
-            Enviando...
+            {t('submitting')}
           </>
         ) : (
-          'Enviar enlace de recuperación'
+          t('submit')
         )}
       </button>
     </form>

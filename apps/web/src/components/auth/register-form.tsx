@@ -4,32 +4,33 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { toast } from 'sonner';
+import { useTranslations } from 'next-intl';
 import { Loader2, Eye, EyeOff } from 'lucide-react';
 
 interface PasswordStrength {
   score: number;
-  feedback: string;
+  feedbackKey: 'weak' | 'fair' | 'good' | 'strong' | '';
   color: string;
 }
 
 function getPasswordStrength(password: string): PasswordStrength {
   let score = 0;
-  const feedback = [];
 
   if (password.length >= 8) score++;
   if (/[A-Z]/.test(password)) score++;
   if (/[0-9]/.test(password)) score++;
   if (/[^A-Za-z0-9]/.test(password)) score++;
 
-  if (score === 0) return { score: 0, feedback: '', color: 'bg-gray-300' };
-  if (score === 1) return { score: 1, feedback: 'Débil', color: 'bg-red-500' };
-  if (score === 2) return { score: 2, feedback: 'Regular', color: 'bg-yellow-500' };
-  if (score === 3) return { score: 3, feedback: 'Buena', color: 'bg-blue-500' };
-  return { score: 4, feedback: 'Muy fuerte', color: 'bg-green-500' };
+  if (score === 0) return { score: 0, feedbackKey: '', color: 'bg-gray-300' };
+  if (score === 1) return { score: 1, feedbackKey: 'weak', color: 'bg-red-500' };
+  if (score === 2) return { score: 2, feedbackKey: 'fair', color: 'bg-yellow-500' };
+  if (score === 3) return { score: 3, feedbackKey: 'good', color: 'bg-blue-500' };
+  return { score: 4, feedbackKey: 'strong', color: 'bg-green-500' };
 }
 
 export function RegisterForm() {
   const router = useRouter();
+  const t = useTranslations('Auth.Register');
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -73,7 +74,7 @@ export function RegisterForm() {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || 'Error en el registro');
+        throw new Error(data.message || t('genericError'));
       }
 
       // El registro fue exitoso, ahora hacer login con NextAuth
@@ -84,16 +85,14 @@ export function RegisterForm() {
       });
 
       if (signInResult?.ok) {
-        toast.success(
-          'Cuenta creada. Revisa tu correo para verificarla y recuperar tu historial de conversaciones previas.'
-        );
+        toast.success(t('successToast'));
         // Redirigir al dashboard
         router.push('/client/dashboard');
       } else {
-        throw new Error('Error al establecer la sesión');
+        throw new Error(t('sessionError'));
       }
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Error en el registro');
+      toast.error(err instanceof Error ? err.message : t('genericError'));
     } finally {
       setIsLoading(false);
     }
@@ -103,7 +102,7 @@ export function RegisterForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-          Correo electrónico
+          {t('emailLabel')}
         </label>
         <input
           id="email"
@@ -113,13 +112,13 @@ export function RegisterForm() {
           onChange={handleChange}
           required
           className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
-          placeholder="tu@email.com"
+          placeholder={t('emailPlaceholder')}
         />
       </div>
 
       <div>
         <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-          Contraseña
+          {t('passwordLabel')}
         </label>
         <div className="relative">
           <input
@@ -129,7 +128,7 @@ export function RegisterForm() {
             value={formData.password}
             onChange={handleChange}
             className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 pr-12 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
-            placeholder="Mínimo 8 caracteres"
+            placeholder={t('passwordPlaceholder')}
           />
           <button
             type="button"
@@ -151,17 +150,24 @@ export function RegisterForm() {
                   }}
                 />
               </div>
-              <span className="text-gray-600">{passwordStrength.feedback}</span>
+              <span className="text-gray-600">
+                {passwordStrength.feedbackKey && {
+                  weak: t('strengthWeak'),
+                  fair: t('strengthFair'),
+                  good: t('strengthGood'),
+                  strong: t('strengthStrong'),
+                }[passwordStrength.feedbackKey]}
+              </span>
             </div>
             <ul className="text-xs text-gray-600 space-y-1">
               <li className={formData.password.length >= 8 ? 'text-green-600' : ''}>
-                ✓ Mínimo 8 caracteres
+                {t('reqMinLength')}
               </li>
               <li className={/[A-Z]/.test(formData.password) ? 'text-green-600' : ''}>
-                ✓ Contiene mayúscula
+                {t('reqUppercase')}
               </li>
               <li className={/[0-9]/.test(formData.password) ? 'text-green-600' : ''}>
-                ✓ Contiene número
+                {t('reqNumber')}
               </li>
             </ul>
           </div>
@@ -170,7 +176,7 @@ export function RegisterForm() {
 
       <div>
         <label htmlFor="passwordConfirm" className="block text-sm font-medium text-gray-700">
-          Confirmar contraseña
+          {t('passwordConfirmLabel')}
         </label>
         <div className="relative">
           <input
@@ -180,7 +186,7 @@ export function RegisterForm() {
             value={formData.passwordConfirm}
             onChange={handleChange}
             className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 pr-12 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
-            placeholder="Repite tu contraseña"
+            placeholder={t('passwordConfirmPlaceholder')}
           />
           <button
             type="button"
@@ -197,21 +203,21 @@ export function RegisterForm() {
               passwordsMatch ? 'text-green-600' : 'text-red-600'
             }`}
           >
-            {passwordsMatch ? '✓ Las contraseñas coinciden' : '✗ Las contraseñas no coinciden'}
+            {passwordsMatch ? t('passwordsMatch') : t('passwordsNoMatch')}
           </p>
         )}
       </div>
 
       <p className="text-xs text-zinc-500 text-center">
-        Al crear tu cuenta, aceptás nuestros{' '}
+        {t('termsPrefix')}
         <a href="/terminos" className="underline hover:text-brand">
-          Términos
-        </a>{' '}
-        y nuestra{' '}
-        <a href="/privacidad" className="underline hover:text-brand">
-          Política de Privacidad
+          {t('termsLink')}
         </a>
-        .
+        {t('termsAnd')}
+        <a href="/privacidad" className="underline hover:text-brand">
+          {t('privacyLink')}
+        </a>
+        {t('termsSuffix')}
       </p>
 
       <button
@@ -222,10 +228,10 @@ export function RegisterForm() {
         {isLoading ? (
           <>
             <Loader2 className="inline h-4 w-4 animate-spin mr-2" />
-            Registrando...
+            {t('submitting')}
           </>
         ) : (
-          'Crear cuenta'
+          t('submit')
         )}
       </button>
     </form>

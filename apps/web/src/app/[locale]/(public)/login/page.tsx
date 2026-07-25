@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
+import { Link as LocaleLink } from '@/i18n/navigation';
 import { auth } from '@/auth';
 import { SignInButton } from '@/components/auth/sign-in-button';
 import { ClientLoginForm } from '@/components/auth/client-login-form';
@@ -72,22 +73,22 @@ export default async function LoginPage({
           <ClientLoginForm callbackUrl={callbackUrl} />
 
           <p className="text-center text-sm">
-            <a
+            <LocaleLink
               href="/forgot-password"
               className="font-medium text-brand hover:text-brand-accent transition-colors"
             >
               {t('forgotPassword')}
-            </a>
+            </LocaleLink>
           </p>
 
           <p className="text-center text-sm text-zinc-600">
             {t('noAccount')}{' '}
-            <a
+            <LocaleLink
               href="/register"
               className="font-medium text-brand hover:text-brand-accent transition-colors"
             >
               {t('registerLink')}
-            </a>
+            </LocaleLink>
           </p>
         </div>
 
