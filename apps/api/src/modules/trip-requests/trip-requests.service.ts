@@ -48,7 +48,9 @@ export class TripRequestsService {
           include: {
             days: {
               include: {
-                activities: true,
+                activities: {
+                  orderBy: { createdAt: 'asc' },
+                },
               },
               orderBy: { dayNumber: 'asc' },
             },
