@@ -3,6 +3,7 @@ import { auth } from '@/auth';
 import { SignInButton } from '@/components/auth/sign-in-button';
 import { ClientLoginForm } from '@/components/auth/client-login-form';
 import { Plane } from 'lucide-react';
+import { LegalLinks } from '@/components/layout/legal-links';
 
 const VALID_REDIRECT_PATHS = [
   '/dashboard',
@@ -99,6 +100,8 @@ export default async function LoginPage({
             </a>
           </p>
         </div>
+
+        <LegalLinks className="text-zinc-400 mt-4" />
       </div>
     </div>
   );

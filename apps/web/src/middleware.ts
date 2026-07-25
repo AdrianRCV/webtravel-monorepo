@@ -19,7 +19,7 @@ function isValidRedirectPath(path: string): boolean {
 export default auth((req) => {
   const { pathname } = req.nextUrl;
 
-  const publicRoutes = ['/', '/login', '/register', '/unauthorized', '/chat', '/forgot-password', '/reset-password', '/contacto'];
+  const publicRoutes = ['/', '/login', '/register', '/unauthorized', '/chat', '/forgot-password', '/reset-password', '/contacto', '/terminos', '/privacidad'];
   const isPublicRoute = publicRoutes.some(route => pathname === route || pathname.startsWith(route + '/'));
   const isAuthRoute = pathname.startsWith('/api/auth');
   const isAdminLoginRoute = pathname.startsWith('/admin/login');

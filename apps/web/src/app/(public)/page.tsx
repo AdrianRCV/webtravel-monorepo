@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sparkles, MessageCircle, Users, Plane } from 'lucide-react';
+import { LegalLinks } from '@/components/layout/legal-links';
 
 export default function LandingPage() {
   return (
@@ -126,8 +127,9 @@ export default function LandingPage() {
       </main>
 
       <footer className="border-t border-slate-800 py-8">
-        <div className="max-w-6xl mx-auto px-6 text-center text-slate-500 text-sm">
-          © 2026 YourAgencyToday. Todos los derechos reservados.
+        <div className="max-w-6xl mx-auto px-6 text-center text-slate-500 text-sm space-y-3">
+          <p>© 2026 YourAgencyToday. Todos los derechos reservados.</p>
+          <LegalLinks className="text-slate-500" />
         </div>
       </footer>
     </div>

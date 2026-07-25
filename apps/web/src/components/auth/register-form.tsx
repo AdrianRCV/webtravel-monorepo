@@ -202,6 +202,18 @@ export function RegisterForm() {
         )}
       </div>
 
+      <p className="text-xs text-zinc-500 text-center">
+        Al crear tu cuenta, aceptás nuestros{' '}
+        <a href="/terminos" className="underline hover:text-brand">
+          Términos
+        </a>{' '}
+        y nuestra{' '}
+        <a href="/privacidad" className="underline hover:text-brand">
+          Política de Privacidad
+        </a>
+        .
+      </p>
+
       <button
         type="submit"
         disabled={isLoading || !isValidated}
