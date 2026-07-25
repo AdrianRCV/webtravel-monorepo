@@ -35,6 +35,43 @@ export class TripRequestsService {
     });
   }
 
+  async getStats(user: { id: string; role: string }) {
+    if (user.role !== 'ADMIN') {
+      throw new ForbiddenException('Esta acción requiere permisos de administrador');
+    }
+
+    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+
+    const [activeItinerariesCount, statusGroups, newRequestsLast7Days, newUsersLast7Days] =
+      await Promise.all([
+        this.prisma.itinerary.count({ where: { isActive: true } }),
+        this.prisma.tripRequest.groupBy({
+          by: ['status'],
+          _count: { status: true },
+        }),
+        this.prisma.tripRequest.count({ where: { createdAt: { gte: sevenDaysAgo } } }),
+        this.prisma.user.count({ where: { createdAt: { gte: sevenDaysAgo } } }),
+      ]);
+
+    const requestsByStatus: Record<TripStatus, number> = {
+      PENDING: 0,
+      IN_PROGRESS: 0,
+      PROPOSED: 0,
+      APPROVED: 0,
+      REJECTED: 0,
+    };
+    for (const group of statusGroups) {
+      requestsByStatus[group.status] = group._count.status;
+    }
+
+    return {
+      activeItinerariesCount,
+      requestsByStatus,
+      newRequestsLast7Days,
+      newUsersLast7Days,
+    };
+  }
+
   async findOne(id: string, user: { id: string; role: string }) {
     const tripRequest = await this.prisma.tripRequest.findUnique({
       where: { id },

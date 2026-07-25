@@ -2,6 +2,8 @@
 
 import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { Link as LocaleLink } from '@/i18n/navigation';
 import { CheckCircle2, XCircle, Plane } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
 
@@ -16,6 +18,7 @@ export default function ConfirmEmailChangePage() {
 }
 
 function ConfirmEmailChangeContent() {
+  const t = useTranslations('Auth.ConfirmEmailChange');
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
   const [state, setState] = useState<ConfirmationState>('loading');
@@ -24,7 +27,7 @@ function ConfirmEmailChangeContent() {
   useEffect(() => {
     if (!token) {
       setState('error');
-      setErrorMessage('Falta el token de confirmación en el enlace.');
+      setErrorMessage(t('missingToken'));
       return;
     }
 
@@ -42,7 +45,7 @@ function ConfirmEmailChangeContent() {
         if (!response.ok) {
           const data = await response.json().catch(() => null);
           throw new Error(
-            data?.message || 'El enlace de confirmación no es válido o ha caducado'
+            data?.message || t('invalidLink')
           );
         }
 
@@ -50,7 +53,7 @@ function ConfirmEmailChangeContent() {
       } catch (err) {
         setState('error');
         setErrorMessage(
-          err instanceof Error ? err.message : 'Error al confirmar el nuevo email'
+          err instanceof Error ? err.message : t('genericError')
         );
       }
     };
@@ -68,36 +71,36 @@ function ConfirmEmailChangeContent() {
         {state === 'loading' && (
           <>
             <Spinner size="lg" className="mx-auto text-blue-600" />
-            <p className="text-zinc-600">Confirmando tu nuevo email...</p>
+            <p className="text-zinc-600">{t('loading')}</p>
           </>
         )}
 
         {state === 'success' && (
           <>
             <CheckCircle2 className="mx-auto h-12 w-12 text-green-500" />
-            <h1 className="text-2xl font-bold text-zinc-900">¡Email actualizado!</h1>
+            <h1 className="text-2xl font-bold text-zinc-900">{t('successTitle')}</h1>
             <p className="text-zinc-600">
-              Tu email quedó actualizado. Iniciá sesión de nuevo con tu nuevo email.
+              {t('successMessage')}
             </p>
-            <a
+            <LocaleLink
               href="/login"
               className="inline-block w-full rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 px-4 py-3 text-white font-medium transition-all hover:shadow-lg"
             >
-              Ir a iniciar sesión
-            </a>
+              {t('goToLogin')}
+            </LocaleLink>
           </>
         )}
 
         {state === 'error' && (
           <>
             <XCircle className="mx-auto h-12 w-12 text-red-500" />
-            <h1 className="text-2xl font-bold text-zinc-900">No se pudo confirmar</h1>
+            <h1 className="text-2xl font-bold text-zinc-900">{t('errorTitle')}</h1>
             <p className="text-zinc-600">{errorMessage}</p>
             <a
               href="/client/settings"
               className="inline-block w-full rounded-lg border border-zinc-300 px-4 py-3 text-zinc-700 font-medium transition-colors hover:bg-zinc-50"
             >
-              Volver a ajustes de cuenta
+              {t('backToSettings')}
             </a>
           </>
         )}

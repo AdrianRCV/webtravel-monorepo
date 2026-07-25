@@ -2,6 +2,8 @@
 
 import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { Link as LocaleLink } from '@/i18n/navigation';
 import { CheckCircle2, XCircle, Plane } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
 
@@ -16,6 +18,7 @@ export default function VerifyEmailPage() {
 }
 
 function VerifyEmailContent() {
+  const t = useTranslations('Auth.VerifyEmail');
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
   const [state, setState] = useState<VerificationState>('loading');
@@ -24,7 +27,7 @@ function VerifyEmailContent() {
   useEffect(() => {
     if (!token) {
       setState('error');
-      setErrorMessage('Falta el token de verificación en el enlace.');
+      setErrorMessage(t('missingToken'));
       return;
     }
 
@@ -42,7 +45,7 @@ function VerifyEmailContent() {
         if (!response.ok) {
           const data = await response.json().catch(() => null);
           throw new Error(
-            data?.message || 'El enlace de verificación no es válido o ha caducado'
+            data?.message || t('invalidLink')
           );
         }
 
@@ -50,7 +53,7 @@ function VerifyEmailContent() {
       } catch (err) {
         setState('error');
         setErrorMessage(
-          err instanceof Error ? err.message : 'Error al verificar el correo'
+          err instanceof Error ? err.message : t('genericError')
         );
       }
     };
@@ -68,23 +71,22 @@ function VerifyEmailContent() {
         {state === 'loading' && (
           <>
             <Spinner size="lg" className="mx-auto text-blue-600" />
-            <p className="text-zinc-600">Verificando tu correo electrónico...</p>
+            <p className="text-zinc-600">{t('loading')}</p>
           </>
         )}
 
         {state === 'success' && (
           <>
             <CheckCircle2 className="mx-auto h-12 w-12 text-green-500" />
-            <h1 className="text-2xl font-bold text-zinc-900">¡Correo verificado!</h1>
+            <h1 className="text-2xl font-bold text-zinc-900">{t('successTitle')}</h1>
             <p className="text-zinc-600">
-              Tu cuenta ha quedado confirmada. Ya puedes acceder a tu panel con todo tu
-              historial de solicitudes de viaje asociado a este correo.
+              {t('successMessage')}
             </p>
             <a
               href="/client/dashboard"
               className="inline-block w-full rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 px-4 py-3 text-white font-medium transition-all hover:shadow-lg"
             >
-              Ir a mi panel
+              {t('goToDashboard')}
             </a>
           </>
         )}
@@ -92,14 +94,14 @@ function VerifyEmailContent() {
         {state === 'error' && (
           <>
             <XCircle className="mx-auto h-12 w-12 text-red-500" />
-            <h1 className="text-2xl font-bold text-zinc-900">No se pudo verificar</h1>
+            <h1 className="text-2xl font-bold text-zinc-900">{t('errorTitle')}</h1>
             <p className="text-zinc-600">{errorMessage}</p>
-            <a
+            <LocaleLink
               href="/login"
               className="inline-block w-full rounded-lg border border-zinc-300 px-4 py-3 text-zinc-700 font-medium transition-colors hover:bg-zinc-50"
             >
-              Volver a iniciar sesión
-            </a>
+              {t('backToLogin')}
+            </LocaleLink>
           </>
         )}
       </div>

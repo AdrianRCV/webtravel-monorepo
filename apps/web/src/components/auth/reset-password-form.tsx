@@ -1,11 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
 import { toast } from 'sonner';
+import { useTranslations } from 'next-intl';
 import { Loader2, Eye, EyeOff } from 'lucide-react';
 
 export function ResetPasswordForm() {
+  const t = useTranslations('Auth.ResetPassword');
   const searchParams = useSearchParams();
   const router = useRouter();
   const token = searchParams.get('token');
@@ -40,13 +43,13 @@ export function ResetPasswordForm() {
 
       if (!response.ok) {
         const data = await response.json().catch(() => null);
-        throw new Error(data?.message || 'El enlace no es válido o ha caducado');
+        throw new Error(data?.message || t('invalidLink'));
       }
 
-      toast.success('Contraseña actualizada. Ya puedes iniciar sesión.');
+      toast.success(t('successToast'));
       router.push('/login');
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Error al restablecer la contraseña');
+      toast.error(err instanceof Error ? err.message : t('genericError'));
     } finally {
       setIsLoading(false);
     }
@@ -55,8 +58,7 @@ export function ResetPasswordForm() {
   if (!token) {
     return (
       <p className="text-center text-sm text-red-600">
-        Falta el token de recuperación en el enlace. Solicitá uno nuevo desde la página de
-        recuperación.
+        {t('missingToken')}
       </p>
     );
   }
@@ -65,7 +67,7 @@ export function ResetPasswordForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
         <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-          Nueva contraseña
+          {t('newPasswordLabel')}
         </label>
         <div className="relative">
           <input
@@ -74,7 +76,7 @@ export function ResetPasswordForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 pr-12 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
-            placeholder="Mínimo 8 caracteres"
+            placeholder={t('passwordPlaceholder')}
           />
           <button
             type="button"
@@ -88,7 +90,7 @@ export function ResetPasswordForm() {
 
       <div>
         <label htmlFor="passwordConfirm" className="block text-sm font-medium text-gray-700">
-          Confirmar contraseña
+          {t('passwordConfirmLabel')}
         </label>
         <input
           id="passwordConfirm"
@@ -96,11 +98,11 @@ export function ResetPasswordForm() {
           value={passwordConfirm}
           onChange={(e) => setPasswordConfirm(e.target.value)}
           className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
-          placeholder="Repite tu contraseña"
+          placeholder={t('passwordConfirmPlaceholder')}
         />
         {passwordConfirm && (
           <p className={`mt-2 text-sm ${passwordsMatch ? 'text-green-600' : 'text-red-600'}`}>
-            {passwordsMatch ? '✓ Las contraseñas coinciden' : '✗ Las contraseñas no coinciden'}
+            {passwordsMatch ? t('passwordsMatch') : t('passwordsNoMatch')}
           </p>
         )}
       </div>
@@ -113,10 +115,10 @@ export function ResetPasswordForm() {
         {isLoading ? (
           <>
             <Loader2 className="inline h-4 w-4 animate-spin mr-2" />
-            Guardando...
+            {t('submitting')}
           </>
         ) : (
-          'Guardar nueva contraseña'
+          t('submit')
         )}
       </button>
     </form>

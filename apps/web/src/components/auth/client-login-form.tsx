@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { toast } from 'sonner';
+import { useTranslations } from 'next-intl';
 import { Loader2, Eye, EyeOff } from 'lucide-react';
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export function ClientLoginForm({ callbackUrl = '/client/dashboard' }: Props) {
+  const t = useTranslations('Auth.Login');
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,7 +31,7 @@ export function ClientLoginForm({ callbackUrl = '/client/dashboard' }: Props) {
       });
 
       if (result?.error) {
-        toast.error('Email o contraseña incorrectos');
+        toast.error(t('invalidCredentials'));
         setIsLoading(false);
         return;
       }
@@ -37,7 +39,7 @@ export function ClientLoginForm({ callbackUrl = '/client/dashboard' }: Props) {
       router.push(callbackUrl);
       router.refresh();
     } catch {
-      toast.error('Error al iniciar sesión');
+      toast.error(t('genericError'));
       setIsLoading(false);
     }
   };
@@ -46,7 +48,7 @@ export function ClientLoginForm({ callbackUrl = '/client/dashboard' }: Props) {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-zinc-700">
-          Correo electrónico
+          {t('emailLabel')}
         </label>
         <input
           id="email"
@@ -55,13 +57,13 @@ export function ClientLoginForm({ callbackUrl = '/client/dashboard' }: Props) {
           onChange={(e) => setEmail(e.target.value)}
           required
           className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2.5 text-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
-          placeholder="tu@email.com"
+          placeholder={t('emailPlaceholder')}
         />
       </div>
 
       <div>
         <label htmlFor="password" className="block text-sm font-medium text-zinc-700">
-          Contraseña
+          {t('passwordLabel')}
         </label>
         <div className="relative">
           <input
@@ -92,10 +94,10 @@ export function ClientLoginForm({ callbackUrl = '/client/dashboard' }: Props) {
         {isLoading ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin" />
-            <span>Iniciando sesión...</span>
+            <span>{t('submitting')}</span>
           </>
         ) : (
-          'Iniciar sesión'
+          t('submit')
         )}
       </button>
     </form>

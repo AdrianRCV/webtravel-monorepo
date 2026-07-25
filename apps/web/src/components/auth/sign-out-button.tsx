@@ -3,6 +3,7 @@
 import { signOut } from 'next-auth/react';
 import { LogOut, Loader2 } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { clearChatStorage } from '@/lib/chat-storage';
 
 interface SignOutButtonProps {
@@ -10,6 +11,7 @@ interface SignOutButtonProps {
 }
 
 export function SignOutButton({ variant = 'dropdown' }: SignOutButtonProps) {
+  const t = useTranslations('Auth.SignOut');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSignOut = async () => {
@@ -33,12 +35,12 @@ export function SignOutButton({ variant = 'dropdown' }: SignOutButtonProps) {
         {isLoading ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin" />
-            <span>Cerrando sesión...</span>
+            <span>{t('signingOut')}</span>
           </>
         ) : (
           <>
             <LogOut className="h-4 w-4" />
-            <span>Cerrar Sesión</span>
+            <span>{t('signOut')}</span>
           </>
         )}
       </button>
@@ -54,12 +56,12 @@ export function SignOutButton({ variant = 'dropdown' }: SignOutButtonProps) {
       {isLoading ? (
         <>
           <Loader2 className="h-4 w-4 animate-spin" />
-          <span>Cerrando sesión...</span>
+          <span>{t('signingOut')}</span>
         </>
       ) : (
         <>
           <LogOut className="h-4 w-4" />
-          <span>Cerrar Sesión</span>
+          <span>{t('signOut')}</span>
         </>
       )}
     </button>

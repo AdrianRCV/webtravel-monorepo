@@ -1,11 +1,14 @@
 import { AlertCircle, MessageSquare, LogIn } from 'lucide-react';
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
+import { Link as LocaleLink } from '@/i18n/navigation';
 import { auth } from '@/auth';
 import { SignOutButton } from '@/components/auth/sign-out-button';
 
 export default async function UnauthorizedPage() {
   const session = await auth();
   const isAuthenticated = !!session?.user;
+  const t = await getTranslations('Auth.Unauthorized');
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-red-50 via-zinc-50 to-zinc-100 px-4">
@@ -16,27 +19,27 @@ export default async function UnauthorizedPage() {
           </div>
           
           <h1 className="mt-6 text-2xl font-bold tracking-tight text-zinc-900">
-            Acceso Denegado
+            {t('title')}
           </h1>
-          
+
           {isAuthenticated ? (
             <>
               <p className="mt-3 text-sm text-zinc-600">
-                Tu cuenta no tiene permisos para acceder al panel de administración.
+                {t('authedMessage')}
               </p>
-              
+
               <p className="mt-2 text-xs text-zinc-500">
-                Si necesitas acceso administrativo, contacta al administrador del sistema.
+                {t('authedHint')}
               </p>
             </>
           ) : (
             <>
               <p className="mt-3 text-sm text-zinc-600">
-                Necesitas iniciar sesión con una cuenta autorizada para acceder a esta área.
+                {t('unauthedMessage')}
               </p>
-              
+
               <p className="mt-2 text-xs text-zinc-500">
-                Solo los administradores pueden acceder al panel.
+                {t('unauthedHint')}
               </p>
             </>
           )}
@@ -50,27 +53,27 @@ export default async function UnauthorizedPage() {
                 className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-700"
               >
                 <MessageSquare className="h-4 w-4" />
-                Ir al Chat de Viajes
+                {t('goToChatButton')}
               </Link>
-              
+
               <SignOutButton variant="full" />
             </>
           ) : (
             <>
-              <Link
+              <LocaleLink
                 href="/login"
                 className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-700"
               >
                 <LogIn className="h-4 w-4" />
-                Iniciar Sesión
-              </Link>
-              
+                {t('loginButton')}
+              </LocaleLink>
+
               <Link
                 href="/chat"
                 className="flex w-full items-center justify-center gap-2 rounded-lg border border-zinc-200 bg-white px-4 py-2.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50"
               >
                 <MessageSquare className="h-4 w-4" />
-                Continuar sin Iniciar Sesión
+                {t('continueWithoutLogin')}
               </Link>
             </>
           )}

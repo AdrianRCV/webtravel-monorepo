@@ -1,11 +1,11 @@
-'use client';
-
-import { Suspense } from 'react';
-import Link from 'next/link';
+import { Link as LocaleLink } from '@/i18n/navigation';
+import { getTranslations } from 'next-intl/server';
 import { Plane } from 'lucide-react';
-import { ResetPasswordForm } from '@/components/auth/reset-password-form';
+import { ForgotPasswordForm } from '@/components/auth/forgot-password-form';
 
-export default function ResetPasswordPage() {
+export default async function ForgotPasswordPage() {
+  const t = await getTranslations('Auth.ForgotPassword');
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-teal-50 via-white to-indigo-50 px-4 py-12">
       <div className="w-full max-w-md space-y-8 rounded-2xl border border-zinc-200 bg-white/80 backdrop-blur-sm p-10 shadow-2xl">
@@ -14,21 +14,22 @@ export default function ResetPasswordPage() {
             <Plane className="h-10 w-10 text-white" />
           </div>
           <h1 className="mt-6 text-3xl font-bold tracking-tight bg-gradient-to-r from-brand to-brand-accent bg-clip-text text-transparent">
-            Elegí tu nueva contraseña
+            {t('title')}
           </h1>
+          <p className="mt-4 text-base text-zinc-600">
+            {t('subtitle')}
+          </p>
         </div>
 
-        <Suspense fallback={null}>
-          <ResetPasswordForm />
-        </Suspense>
+        <ForgotPasswordForm />
 
         <p className="text-center text-sm text-zinc-600">
-          <Link
+          <LocaleLink
             href="/login"
             className="font-medium text-brand hover:text-brand-accent transition-colors"
           >
-            Volver a iniciar sesión
-          </Link>
+            {t('backToLogin')}
+          </LocaleLink>
         </p>
       </div>
     </div>
