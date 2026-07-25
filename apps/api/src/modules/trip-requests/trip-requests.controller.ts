@@ -19,9 +19,10 @@ import { CurrentUser } from '../auth/current-user.decorator';
 export class TripRequestsController {
   constructor(private readonly tripRequestsService: TripRequestsService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get()
-  findAll(@Query('status') status?: TripStatus) {
-    return this.tripRequestsService.findAll(status);
+  findAll(@Query('status') status: TripStatus | undefined, @CurrentUser() user: any) {
+    return this.tripRequestsService.findAll(status, user);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -39,12 +40,14 @@ export class TripRequestsController {
     return this.tripRequestsService.findOne(id, user);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id/status')
   updateStatus(
     @Param('id') id: string,
     @Body(ValidationPipe) updateStatusDto: UpdateTripRequestStatusDto,
+    @CurrentUser() user: any,
   ) {
-    return this.tripRequestsService.updateStatus(id, updateStatusDto.status);
+    return this.tripRequestsService.updateStatus(id, updateStatusDto.status, user);
   }
 
   @UseGuards(JwtAuthGuard)
