@@ -59,7 +59,7 @@ export default async function middleware(req: NextRequest) {
 
   const session = await auth();
 
-  const publicRoutes = ['/', '/login', '/register', '/unauthorized', '/chat', '/forgot-password', '/reset-password', '/contacto', '/terminos', '/privacidad', '/confirm-email-change'];
+  const publicRoutes = ['/', '/login', '/register', '/unauthorized', '/chat', '/forgot-password', '/reset-password', '/verify-email', '/contacto', '/terminos', '/privacidad', '/confirm-email-change'];
   const isPublicRoute = publicRoutes.some(route => normalizedPath === route || normalizedPath.startsWith(route + '/'));
   const isAuthRoute = normalizedPath.startsWith('/api/auth');
   const isAdminLoginRoute = normalizedPath.startsWith('/admin/login');
