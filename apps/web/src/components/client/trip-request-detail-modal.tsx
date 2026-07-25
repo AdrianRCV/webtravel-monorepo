@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { MapPin, Plane, Calendar, Users, DollarSign, MessageCircle } from 'lucide-react';
+import { MapPin, Plane, Calendar, Users, DollarSign, MessageCircle, FileText } from 'lucide-react';
 import { TripRequest, ChatSession } from '@prisma/client';
 import Link from 'next/link';
 import {
@@ -16,6 +16,7 @@ interface TripRequestWithChat extends TripRequest {
   chatSession: ChatSession & {
     messages: any[];
   };
+  itineraries: any[];
 }
 
 interface Props {
@@ -153,6 +154,14 @@ export function TripRequestDetailModal({ request, onClose }: Props) {
                 Continuar conversación
               </Link>
             </Button>
+            {request.itineraries && request.itineraries.length > 0 && (
+              <Button asChild variant="outline" className="gap-2">
+                <Link href={`/client/trips/${request.id}`}>
+                  <FileText className="h-5 w-5" />
+                  Ver itinerario
+                </Link>
+              </Button>
+            )}
             <Button variant="outline" onClick={() => handleOpenChange(false)}>
               Cerrar
             </Button>

@@ -69,6 +69,17 @@ const getStatusMessage = (
     `;
   }
 
+  if (previousStatus === 'PROPOSED' && newStatus === 'APPROVED') {
+    return `
+      <p style="font-size: 16px; color: #333; line-height: 1.8;">
+        ¡Tu itinerario para <strong>${escapedDestination}</strong> fue aprobado! 🎉
+      </p>
+      <p style="font-size: 16px; color: #555; line-height: 1.8;">
+        Ya podés ver todos los detalles, descargarlo o imprimirlo desde tu panel cuando quieras.
+      </p>
+    `;
+  }
+
   return `
     <p style="font-size: 16px; color: #333; line-height: 1.8;">
       El estado de tu solicitud de viaje a <strong>${escapedDestination}</strong> ha sido actualizado.
@@ -108,7 +119,7 @@ export const statusUpdateTemplate = (data: StatusUpdateEmailData): string => {
     }
 
     <div style="text-align: center; margin-top: 35px;">
-      <a href="${escapeHtml(data.frontendUrl)}/dashboard/trips/${escapeHtml(data.tripRequestId)}" class="button">
+      <a href="${escapeHtml(data.frontendUrl)}/client/trips/${escapeHtml(data.tripRequestId)}" class="button">
         Ver mi Solicitud
       </a>
     </div>

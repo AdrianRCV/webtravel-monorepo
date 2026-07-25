@@ -103,7 +103,7 @@ export const itineraryCreatedTemplate = (
     </p>
 
     <div style="text-align: center; margin-top: 35px;">
-      <a href="${escapeHtml(data.frontendUrl)}/dashboard/trips/${escapeHtml(data.tripRequestId)}" class="button">
+      <a href="${escapeHtml(data.frontendUrl)}/client/trips/${escapeHtml(data.tripRequestId)}" class="button">
         Ver Itinerario Completo
       </a>
     </div>
