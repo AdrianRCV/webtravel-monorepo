@@ -45,6 +45,7 @@ enum ActivityType {
 enum VerificationTokenType {
   EMAIL_VERIFY
   PASSWORD_RESET
+  EMAIL_CHANGE
 }
 
 // ==========================================
@@ -223,6 +224,7 @@ model VerificationToken {
   token      String                 @unique
   expires    DateTime
   type       VerificationTokenType  @default(EMAIL_VERIFY)
+  newEmail   String?
 
   @@unique([identifier, token])
 }

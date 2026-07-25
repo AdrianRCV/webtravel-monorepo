@@ -13,6 +13,10 @@ import { verifyEmailTemplate, VerifyEmailData } from './templates/verify-email.t
 import { passwordResetTemplate, PasswordResetEmailData } from './templates/password-reset.template';
 import { googleAccountNoticeTemplate } from './templates/google-account-notice.template';
 import { contactMessageTemplate } from './templates/contact-message.template';
+import {
+  emailChangeConfirmationTemplate,
+  EmailChangeConfirmationData,
+} from './templates/email-change-confirmation.template';
 
 @Injectable()
 export class NotificationsService {
@@ -268,6 +272,44 @@ export class NotificationsService {
       const err = error as Error;
       this.logger.error(
         `Failed to send contact message email: ${err.message}`,
+        err.stack,
+      );
+    }
+  }
+
+  async sendEmailChangeConfirmation(
+    to: string,
+    data: Omit<EmailChangeConfirmationData, 'previewText'>,
+  ): Promise<void> {
+    if (!this.enabled || !this.resend) {
+      this.logger.warn('Email sending skipped: service not enabled');
+      return;
+    }
+
+    if (!to || !this.isValidEmail(to)) {
+      this.logger.warn(`Invalid email address: ${to}`);
+      return;
+    }
+
+    try {
+      const emailData: EmailChangeConfirmationData = {
+        ...data,
+        previewText: 'Confirmá tu nuevo email de YourAgencyToday',
+      };
+      const html = emailChangeConfirmationTemplate(emailData);
+
+      await this.resend.emails.send({
+        from: this.from,
+        to,
+        subject: 'Confirmá tu nuevo email - YourAgencyToday',
+        html,
+      });
+
+      this.logger.log(`Email change confirmation sent to ${to}`);
+    } catch (error) {
+      const err = error as Error;
+      this.logger.error(
+        `Failed to send email change confirmation to ${to}: ${err.message}`,
         err.stack,
       );
     }

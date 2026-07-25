@@ -7,6 +7,7 @@ import { ChatModule } from './modules/chat/chat.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { ContactModule } from './modules/contact/contact.module';
+import { AccountModule } from './modules/account/account.module';
 import { JwtAuthGuard } from './modules/auth/jwt-auth.guard';
 
 @Module({
@@ -18,6 +19,7 @@ import { JwtAuthGuard } from './modules/auth/jwt-auth.guard';
     ChatModule,
     UsersModule,
     ContactModule,
+    AccountModule,
   ],
   providers: [
     {
