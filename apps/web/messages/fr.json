@@ -1,1 +1,43 @@
-{}
+{
+  "Landing": {
+    "loginButton": "Se connecter",
+    "badge": "Assistant intelligent, conception 100 % humaine",
+    "heroTitleStart": "Votre prochain voyage, ",
+    "heroTitleHighlight": "conçu sur mesure par des experts",
+    "heroSubtitle": "Racontez vos projets à notre chat intelligent pour commencer. Ensuite, un spécialiste du voyage conçoit et vérifie chaque détail de votre itinéraire à la main pour vous offrir une expérience unique.",
+    "heroCta": "Démarrer le chat de voyage",
+    "howItWorksTitle": "Comment ça marche ?",
+    "step1Title": "1. Dites-nous ce que vous recherchez",
+    "step1Text": "Discutez avec notre assistant intelligent pour nous indiquer votre destination idéale, vos dates et votre budget.",
+    "step2Title": "2. Conception artisanale et humaine",
+    "step2Text": "Un expert humain examine vos préférences et conçoit votre itinéraire à la main, en soignant chaque détail.",
+    "step3Title": "3. Profitez de votre voyage",
+    "step3Text": "Recevez votre proposition détaillée et préparez-vous à vivre une expérience inoubliable.",
+    "ctaTitle": "Commencez à planifier votre prochaine aventure",
+    "ctaSubtitle": "Pas d'inscription compliquée. Pas d'attente. Juste votre voyage parfait.",
+    "ctaButton": "Commencer maintenant",
+    "footer": "© {year} YourAgencyToday. Tous droits réservés."
+  },
+  "Auth": {
+    "Login": {
+      "subtitle": "Planifiez votre prochain voyage intelligemment",
+      "orDivider": "Ou connectez-vous avec votre email",
+      "forgotPassword": "Mot de passe oublié ?",
+      "noAccount": "Vous n'avez pas de compte ?",
+      "registerLink": "Inscrivez-vous ici",
+      "adminPrompt": "Êtes-vous administrateur ? ",
+      "adminLink": "Connectez-vous ici",
+      "emailLabel": "Adresse email",
+      "emailPlaceholder": "vous@email.com",
+      "passwordLabel": "Mot de passe",
+      "submitting": "Connexion en cours...",
+      "submit": "Se connecter",
+      "invalidCredentials": "Email ou mot de passe incorrect",
+      "genericError": "Erreur lors de la connexion"
+    },
+    "GoogleSignIn": {
+      "loading": "Connexion en cours...",
+      "button": "Continuer avec Google"
+    }
+  }
+}

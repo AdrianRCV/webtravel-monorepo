@@ -1,1 +1,43 @@
-{}
+{
+  "Landing": {
+    "loginButton": "Anmelden",
+    "badge": "Intelligenter Assistent, 100 % menschliches Design",
+    "heroTitleStart": "Deine nächste Reise, ",
+    "heroTitleHighlight": "maßgeschneidert von Experten",
+    "heroSubtitle": "Erzähl unserem intelligenten Chat von deinen Plänen, um loszulegen. Danach gestaltet und prüft ein Reisespezialist jedes Detail deiner Reiseroute von Hand, um dir ein einzigartiges Erlebnis zu bieten.",
+    "heroCta": "Reise-Chat starten",
+    "howItWorksTitle": "Wie funktioniert es?",
+    "step1Title": "1. Erzähl uns, wonach du suchst",
+    "step1Text": "Chatte mit unserem intelligenten Assistenten und teile uns dein Wunschziel, deine Daten und dein Budget mit.",
+    "step2Title": "2. Handgemachtes, menschliches Design",
+    "step2Text": "Ein menschlicher Experte prüft deine Vorlieben und gestaltet deine Reiseroute von Hand, mit Liebe zum Detail.",
+    "step3Title": "3. Genieße deine Reise",
+    "step3Text": "Erhalte deinen detaillierten Vorschlag und mach dich bereit für ein unvergessliches Erlebnis.",
+    "ctaTitle": "Beginne mit der Planung deines nächsten Abenteuers",
+    "ctaSubtitle": "Keine komplizierte Anmeldung. Kein Warten. Nur deine perfekte Reise.",
+    "ctaButton": "Jetzt loslegen",
+    "footer": "© {year} YourAgencyToday. Alle Rechte vorbehalten."
+  },
+  "Auth": {
+    "Login": {
+      "subtitle": "Plane deine nächste Reise intelligent",
+      "orDivider": "Oder melde dich mit deiner E-Mail an",
+      "forgotPassword": "Passwort vergessen?",
+      "noAccount": "Noch kein Konto?",
+      "registerLink": "Hier registrieren",
+      "adminPrompt": "Bist du Administrator? ",
+      "adminLink": "Hier anmelden",
+      "emailLabel": "E-Mail-Adresse",
+      "emailPlaceholder": "du@email.com",
+      "passwordLabel": "Passwort",
+      "submitting": "Anmeldung läuft...",
+      "submit": "Anmelden",
+      "invalidCredentials": "E-Mail oder Passwort falsch",
+      "genericError": "Fehler bei der Anmeldung"
+    },
+    "GoogleSignIn": {
+      "loading": "Anmeldung läuft...",
+      "button": "Mit Google fortfahren"
+    }
+  }
+}

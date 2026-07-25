@@ -1,1 +1,43 @@
-{}
+{
+  "Landing": {
+    "loginButton": "Iniciar Sesión",
+    "badge": "Asistente inteligente, diseño 100% humano",
+    "heroTitleStart": "Tu próximo viaje, ",
+    "heroTitleHighlight": "diseñado a medida por expertos",
+    "heroSubtitle": "Cuéntale tus planes a nuestro chat inteligente para empezar. A partir de ahí, un especialista en viajes diseña y verifica cada detalle de tu itinerario a mano para ofrecerte una experiencia única.",
+    "heroCta": "Iniciar Chat de Viajes",
+    "howItWorksTitle": "¿Cómo funciona?",
+    "step1Title": "1. Cuéntanos qué buscas",
+    "step1Text": "Chatea con nuestro asistente inteligente para contarnos tu destino ideal, fechas y presupuesto.",
+    "step2Title": "2. Diseño artesanal y humano",
+    "step2Text": "Un experto humano revisa tus gustos y diseña tu itinerario a mano, cuidando cada detalle.",
+    "step3Title": "3. Disfruta tu viaje",
+    "step3Text": "Recibe tu propuesta detallada y prepárate para vivir una experiencia inolvidable.",
+    "ctaTitle": "Comienza a planificar tu próxima aventura",
+    "ctaSubtitle": "Sin registros complicados. Sin esperas. Solo tu viaje perfecto.",
+    "ctaButton": "Empezar ahora",
+    "footer": "© {year} YourAgencyToday. Todos los derechos reservados."
+  },
+  "Auth": {
+    "Login": {
+      "subtitle": "Planifica tu próximo viaje de manera inteligente",
+      "orDivider": "O inicia sesión con tu email",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "noAccount": "¿No tienes cuenta?",
+      "registerLink": "Regístrate aquí",
+      "adminPrompt": "¿Eres administrador? ",
+      "adminLink": "Accede aquí",
+      "emailLabel": "Correo electrónico",
+      "emailPlaceholder": "tu@email.com",
+      "passwordLabel": "Contraseña",
+      "submitting": "Iniciando sesión...",
+      "submit": "Iniciar sesión",
+      "invalidCredentials": "Email o contraseña incorrectos",
+      "genericError": "Error al iniciar sesión"
+    },
+    "GoogleSignIn": {
+      "loading": "Iniciando sesión...",
+      "button": "Continuar con Google"
+    }
+  }
+}

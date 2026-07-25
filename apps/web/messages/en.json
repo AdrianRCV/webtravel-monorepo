@@ -1,1 +1,43 @@
-{}
+{
+  "Landing": {
+    "loginButton": "Sign In",
+    "badge": "Smart assistant, 100% human design",
+    "heroTitleStart": "Your next trip, ",
+    "heroTitleHighlight": "custom-designed by experts",
+    "heroSubtitle": "Tell our smart chat about your plans to get started. From there, a travel specialist designs and checks every detail of your itinerary by hand to give you a truly unique experience.",
+    "heroCta": "Start Travel Chat",
+    "howItWorksTitle": "How does it work?",
+    "step1Title": "1. Tell us what you're looking for",
+    "step1Text": "Chat with our smart assistant to tell us your ideal destination, dates, and budget.",
+    "step2Title": "2. Human, handcrafted design",
+    "step2Text": "A human expert reviews your preferences and designs your itinerary by hand, taking care of every detail.",
+    "step3Title": "3. Enjoy your trip",
+    "step3Text": "Receive your detailed proposal and get ready for an unforgettable experience.",
+    "ctaTitle": "Start planning your next adventure",
+    "ctaSubtitle": "No complicated sign-ups. No waiting. Just your perfect trip.",
+    "ctaButton": "Get started",
+    "footer": "© {year} YourAgencyToday. All rights reserved."
+  },
+  "Auth": {
+    "Login": {
+      "subtitle": "Plan your next trip intelligently",
+      "orDivider": "Or sign in with your email",
+      "forgotPassword": "Forgot your password?",
+      "noAccount": "Don't have an account?",
+      "registerLink": "Sign up here",
+      "adminPrompt": "Are you an administrator? ",
+      "adminLink": "Sign in here",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "you@email.com",
+      "passwordLabel": "Password",
+      "submitting": "Signing in...",
+      "submit": "Sign in",
+      "invalidCredentials": "Incorrect email or password",
+      "genericError": "Error signing in"
+    },
+    "GoogleSignIn": {
+      "loading": "Signing in...",
+      "button": "Continue with Google"
+    }
+  }
+}

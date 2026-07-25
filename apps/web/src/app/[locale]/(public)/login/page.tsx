@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import { auth } from '@/auth';
 import { SignInButton } from '@/components/auth/sign-in-button';
 import { ClientLoginForm } from '@/components/auth/client-login-form';
@@ -26,6 +27,7 @@ export default async function LoginPage({
   searchParams: Promise<{ callbackUrl?: string }>;
 }) {
   const session = await auth();
+  const t = await getTranslations('Auth.Login');
   const params = await searchParams;
   const callbackUrl = params.callbackUrl && isValidRedirectPath(params.callbackUrl)
     ? params.callbackUrl
@@ -49,7 +51,7 @@ export default async function LoginPage({
             YourAgencyToday
           </h1>
           <p className="mt-4 text-base text-zinc-600">
-            Planifica tu próximo viaje de manera inteligente
+            {t('subtitle')}
           </p>
         </div>
 
@@ -62,7 +64,7 @@ export default async function LoginPage({
             </div>
             <div className="relative flex justify-center text-xs">
               <span className="bg-white px-3 text-zinc-400">
-                O inicia sesión con tu email
+                {t('orDivider')}
               </span>
             </div>
           </div>
@@ -74,29 +76,29 @@ export default async function LoginPage({
               href="/forgot-password"
               className="font-medium text-brand hover:text-brand-accent transition-colors"
             >
-              ¿Olvidaste tu contraseña?
+              {t('forgotPassword')}
             </a>
           </p>
 
           <p className="text-center text-sm text-zinc-600">
-            ¿No tienes cuenta?{' '}
+            {t('noAccount')}{' '}
             <a
               href="/register"
               className="font-medium text-brand hover:text-brand-accent transition-colors"
             >
-              Regístrate aquí
+              {t('registerLink')}
             </a>
           </p>
         </div>
 
         <div className="text-center pt-4">
           <p className="text-xs text-zinc-400">
-            ¿Eres administrador? {' '}
+            {t('adminPrompt')}
             <a
               href="/admin/login"
               className="font-medium text-brand hover:text-brand-accent transition-colors"
             >
-              Accede aquí
+              {t('adminLink')}
             </a>
           </p>
         </div>
