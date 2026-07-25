@@ -17,18 +17,47 @@ async function bootstrap() {
   app.use(helmet());
 
   const { default: rateLimit } = await import('express-rate-limit');
-  app.use(
-    '/auth/validate-credentials',
+
+  const limiter = (max: number, message: string) =>
     rateLimit({
       windowMs: 15 * 60 * 1000,
-      max: 10,
-      message: {
-        message:
-          'Demasiados intentos de inicio de sesión. Intenta de nuevo en 15 minutos.',
-      },
+      max,
+      message: { message },
       standardHeaders: true,
       legacyHeaders: false,
-    }),
+    });
+
+  app.use(
+    '/auth/validate-credentials',
+    limiter(
+      10,
+      'Demasiados intentos de inicio de sesión. Intenta de nuevo en 15 minutos.',
+    ),
+  );
+  app.use(
+    '/auth/forgot-password',
+    limiter(5, 'Demasiadas solicitudes. Intenta de nuevo en 15 minutos.'),
+  );
+  app.use(
+    '/auth/reset-password',
+    limiter(10, 'Demasiados intentos. Intenta de nuevo en 15 minutos.'),
+  );
+  app.use(
+    '/contact',
+    limiter(5, 'Demasiados mensajes enviados. Intenta de nuevo en 15 minutos.'),
+  );
+  // Un solo límite compartido para todas las acciones bajo /account/*
+  // (cambiar contraseña, cambiar email, confirmar email, borrar cuenta):
+  // express-rate-limit se monta por prefijo de ruta con app.use, así que un
+  // límite por sub-ruta individual también protegería (redundantemente) a
+  // sus rutas hermanas anidadas bajo /account — un único límite compartido
+  // evita esa duplicación sin perder protección.
+  app.use(
+    '/account',
+    limiter(
+      10,
+      'Demasiados intentos sobre tu cuenta. Intenta de nuevo en 15 minutos.',
+    ),
   );
 
   app.useGlobalPipes(
