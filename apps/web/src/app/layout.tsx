@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { getLocale } from 'next-intl/server';
+import { NextIntlClientProvider } from 'next-intl';
 import { SessionProvider } from "@/components/providers/session-provider";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
@@ -52,8 +53,10 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="h-full">
-        <SessionProvider>{children}</SessionProvider>
-        <Toaster position="bottom-right" />
+        <NextIntlClientProvider>
+          <SessionProvider>{children}</SessionProvider>
+          <Toaster position="bottom-right" />
+        </NextIntlClientProvider>
       </body>
     </html>
   );
