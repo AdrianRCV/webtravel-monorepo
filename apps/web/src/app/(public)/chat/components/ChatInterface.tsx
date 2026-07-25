@@ -179,7 +179,10 @@ export function ChatInterface() {
             <div>
               <h1 className="text-2xl font-bold text-gray-900">Chat de Viajes</h1>
               <p className="text-sm text-gray-600 mt-1">
-                Cuéntanos sobre tu próximo viaje y te ayudaremos a planificarlo
+                Cuéntanos sobre tu próximo viaje y te ayudaremos a planificarlo ·{' '}
+                <a href="/contacto" className="underline hover:text-gray-900">
+                  ¿No encontraste lo que buscabas? Escribinos
+                </a>
               </p>
             </div>
             <div className="lg:hidden flex items-center gap-2">
