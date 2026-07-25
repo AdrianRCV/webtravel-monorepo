@@ -2,11 +2,23 @@
 
 import type { TripRequest, TripStatus } from '@webtravel/shared-types';
 import type { Session } from 'next-auth';
+import type { DashboardStats } from '@/lib/api';
+
+const STATUS_ORDER: TripStatus[] = ['PENDING', 'IN_PROGRESS', 'PROPOSED', 'APPROVED', 'REJECTED'];
+
+const STATUS_LABELS: Record<TripStatus, string> = {
+  PENDING: 'Pendiente',
+  IN_PROGRESS: 'En Progreso',
+  PROPOSED: 'Propuesto',
+  APPROVED: 'Aprobado',
+  REJECTED: 'Rechazado',
+};
 
 interface HomeContentProps {
   tripRequests: TripRequest[];
   pendingCount: number;
   usersCount: number;
+  stats: DashboardStats;
   error: string | null;
   session: Session | null;
 }
@@ -20,17 +32,9 @@ function getStatusBadge(status: TripStatus) {
     REJECTED: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
   };
 
-  const labels = {
-    PENDING: 'Pendiente',
-    IN_PROGRESS: 'En Progreso',
-    PROPOSED: 'Propuesto',
-    APPROVED: 'Aprobado',
-    REJECTED: 'Rechazado',
-  };
-
   return (
     <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${styles[status]}`}>
-      {labels[status]}
+      {STATUS_LABELS[status]}
     </span>
   );
 }
@@ -52,7 +56,7 @@ function formatBudget(min: number | null | undefined, max: number | null | undef
   return '-';
 }
 
-export function HomeContent({ tripRequests, pendingCount, usersCount, error, session }: HomeContentProps) {
+export function HomeContent({ tripRequests, pendingCount, usersCount, stats, error, session }: HomeContentProps) {
   return (
     <div className="p-8">
       <div className="mx-auto max-w-7xl">
@@ -83,7 +87,7 @@ export function HomeContent({ tripRequests, pendingCount, usersCount, error, ses
               Itinerarios Activos
             </h3>
             <p className="mt-2 text-3xl font-bold text-zinc-900 dark:text-zinc-100">
-              0
+              {stats.activeItinerariesCount}
             </p>
             <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
               En progreso
@@ -100,6 +104,39 @@ export function HomeContent({ tripRequests, pendingCount, usersCount, error, ses
             <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
               Registrados en el sistema
             </p>
+          </div>
+        </div>
+
+        <div className="mb-8">
+          <h3 className="mb-4 text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+            Desglose y actividad reciente
+          </h3>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5 mb-4">
+            {STATUS_ORDER.map((status) => (
+              <div
+                key={status}
+                className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+              >
+                <p className="text-sm text-zinc-600 dark:text-zinc-400">{STATUS_LABELS[status]}</p>
+                <p className="mt-1 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+                  {stats.requestsByStatus[status]}
+                </p>
+              </div>
+            ))}
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+              <p className="text-sm text-zinc-600 dark:text-zinc-400">Nuevas solicitudes (7 días)</p>
+              <p className="mt-1 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+                {stats.newRequestsLast7Days}
+              </p>
+            </div>
+            <div className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+              <p className="text-sm text-zinc-600 dark:text-zinc-400">Nuevos usuarios (7 días)</p>
+              <p className="mt-1 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+                {stats.newUsersLast7Days}
+              </p>
+            </div>
           </div>
         </div>
 

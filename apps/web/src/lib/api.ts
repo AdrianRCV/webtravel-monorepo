@@ -74,6 +74,17 @@ export async function getUsersCount(accessToken?: string): Promise<number> {
   return count;
 }
 
+export interface DashboardStats {
+  activeItinerariesCount: number;
+  requestsByStatus: Record<TripStatus, number>;
+  newRequestsLast7Days: number;
+  newUsersLast7Days: number;
+}
+
+export async function getDashboardStats(accessToken?: string): Promise<DashboardStats> {
+  return fetchAPI<DashboardStats>('/trip-requests/stats', { accessToken });
+}
+
 export async function getTripRequestById(id: string, accessToken?: string): Promise<TripRequestDetail> {
   return fetchAPI<TripRequestDetail>(`/trip-requests/${id}`, { accessToken });
 }

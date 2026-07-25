@@ -1,6 +1,19 @@
 import { auth } from '@/auth';
-import { getTripRequests, getUsersCount } from '@/lib/api';
+import { getTripRequests, getUsersCount, getDashboardStats, type DashboardStats } from '@/lib/api';
 import { HomeContent } from './content';
+
+const EMPTY_STATS: DashboardStats = {
+  activeItinerariesCount: 0,
+  requestsByStatus: {
+    PENDING: 0,
+    IN_PROGRESS: 0,
+    PROPOSED: 0,
+    APPROVED: 0,
+    REJECTED: 0,
+  },
+  newRequestsLast7Days: 0,
+  newUsersLast7Days: 0,
+};
 
 export default async function Home() {
   const session = await auth();
@@ -8,6 +21,7 @@ export default async function Home() {
   let tripRequests = [];
   let error: string | null = null;
   let usersCount = 0;
+  let stats = EMPTY_STATS;
 
   try {
     tripRequests = await getTripRequests(accessToken);
@@ -22,6 +36,12 @@ export default async function Home() {
     console.error('Error al obtener el número de usuarios:', err);
   }
 
+  try {
+    stats = await getDashboardStats(accessToken);
+  } catch (err) {
+    console.error('Error al obtener estadísticas:', err);
+  }
+
   const pendingCount = tripRequests.filter((req) => req.status === 'PENDING').length;
   const latestRequests = tripRequests
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
@@ -32,6 +52,7 @@ export default async function Home() {
       tripRequests={latestRequests}
       pendingCount={pendingCount}
       usersCount={usersCount}
+      stats={stats}
       error={error}
       session={session}
     />
