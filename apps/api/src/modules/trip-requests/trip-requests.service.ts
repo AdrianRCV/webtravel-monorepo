@@ -14,7 +14,11 @@ export class TripRequestsService {
     private readonly notificationsService: NotificationsService,
   ) {}
 
-  async findAll(status?: TripStatus) {
+  async findAll(status: TripStatus | undefined, user: { id: string; role: string }) {
+    if (user.role !== 'ADMIN') {
+      throw new ForbiddenException('Esta acción requiere permisos de administrador');
+    }
+
     return this.prisma.tripRequest.findMany({
       where: status ? { status } : undefined,
       include: {
@@ -79,7 +83,11 @@ export class TripRequestsService {
     return tripRequest;
   }
 
-  async updateStatus(id: string, status: TripStatus) {
+  async updateStatus(id: string, status: TripStatus, user: { id: string; role: string }) {
+    if (user.role !== 'ADMIN') {
+      throw new ForbiddenException('Esta acción requiere permisos de administrador');
+    }
+
     const existingTripRequest = await this.prisma.tripRequest.findUnique({
       where: { id },
       select: {

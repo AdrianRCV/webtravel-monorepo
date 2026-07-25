@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { Itinerary } from '@prisma/client';
 import { CreateItineraryDto } from './dto/create-itinerary.dto';
@@ -12,7 +12,11 @@ export class ItinerariesService {
     private readonly notificationsService: NotificationsService,
   ) {}
 
-  async findOne(id: string): Promise<Itinerary> {
+  async findOne(id: string, user: { id: string; role: string }): Promise<Itinerary> {
+    if (user.role !== 'ADMIN') {
+      throw new ForbiddenException('Esta acción requiere permisos de administrador');
+    }
+
     const itinerary = await this.prisma.itinerary.findUnique({
       where: { id },
       include: {
@@ -45,7 +49,11 @@ export class ItinerariesService {
     return itinerary;
   }
 
-  async findActiveByTripRequest(tripRequestId: string): Promise<Itinerary> {
+  async findActiveByTripRequest(tripRequestId: string, user: { id: string; role: string }): Promise<Itinerary> {
+    if (user.role !== 'ADMIN') {
+      throw new ForbiddenException('Esta acción requiere permisos de administrador');
+    }
+
     const itinerary = await this.prisma.itinerary.findFirst({
       where: {
         tripRequestId,
@@ -83,7 +91,11 @@ export class ItinerariesService {
     return itinerary;
   }
 
-  async findAllByTripRequest(tripRequestId: string): Promise<Itinerary[]> {
+  async findAllByTripRequest(tripRequestId: string, user: { id: string; role: string }): Promise<Itinerary[]> {
+    if (user.role !== 'ADMIN') {
+      throw new ForbiddenException('Esta acción requiere permisos de administrador');
+    }
+
     return this.prisma.itinerary.findMany({
       where: { tripRequestId },
       include: {
@@ -103,7 +115,11 @@ export class ItinerariesService {
     });
   }
 
-  async create(createItineraryDto: CreateItineraryDto): Promise<Itinerary> {
+  async create(createItineraryDto: CreateItineraryDto, user: { id: string; role: string }): Promise<Itinerary> {
+    if (user.role !== 'ADMIN') {
+      throw new ForbiddenException('Esta acción requiere permisos de administrador');
+    }
+
     const { tripRequestId, days, ...itineraryData } = createItineraryDto;
 
     const tripRequest = await this.prisma.tripRequest.findUnique({
@@ -213,7 +229,11 @@ export class ItinerariesService {
     return itinerary;
   }
 
-  async update(id: string, updateDto: UpdateItineraryDto): Promise<Itinerary> {
+  async update(id: string, updateDto: UpdateItineraryDto, user: { id: string; role: string }): Promise<Itinerary> {
+    if (user.role !== 'ADMIN') {
+      throw new ForbiddenException('Esta acción requiere permisos de administrador');
+    }
+
     const existingItinerary = await this.prisma.itinerary.findUnique({
       where: { id },
       include: {
@@ -295,7 +315,11 @@ export class ItinerariesService {
     });
   }
 
-  async updateStatus(id: string, isActive: boolean): Promise<Itinerary> {
+  async updateStatus(id: string, isActive: boolean, user: { id: string; role: string }): Promise<Itinerary> {
+    if (user.role !== 'ADMIN') {
+      throw new ForbiddenException('Esta acción requiere permisos de administrador');
+    }
+
     const itinerary = await this.prisma.itinerary.findUnique({
       where: { id },
       select: { id: true, tripRequestId: true },
