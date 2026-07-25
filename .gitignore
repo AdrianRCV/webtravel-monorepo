@@ -36,8 +36,9 @@ coverage/
 # Docker
 docker-compose.override.yml
 
-# Claude Code local settings (personal, no compartido)
-.claude/settings.local.json
+# Claude Code y CodeGraph: locales a cada máquina, no se comparten
+.claude/
+.codegraph/
 
 # Documentación: solo el README.md de la raíz se sube
 *.md
