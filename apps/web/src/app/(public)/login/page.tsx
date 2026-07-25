@@ -68,6 +68,15 @@ export default async function LoginPage({
 
           <ClientLoginForm callbackUrl={callbackUrl} />
 
+          <p className="text-center text-sm">
+            <a
+              href="/forgot-password"
+              className="font-medium text-brand hover:text-brand-accent transition-colors"
+            >
+              ¿Olvidaste tu contraseña?
+            </a>
+          </p>
+
           <p className="text-center text-sm text-zinc-600">
             ¿No tienes cuenta?{' '}
             <a
