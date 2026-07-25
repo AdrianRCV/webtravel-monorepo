@@ -35,6 +35,12 @@ export class TripRequestsController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get('stats')
+  getStats(@CurrentUser() user: any) {
+    return this.tripRequestsService.getStats(user);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string, @CurrentUser() user: any) {
     return this.tripRequestsService.findOne(id, user);
