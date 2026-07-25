@@ -5,6 +5,7 @@ import {
   Delete,
   Body,
   ValidationPipe,
+  ForbiddenException,
 } from '@nestjs/common';
 import { AccountService } from './account.service';
 import { ChangePasswordDto } from './dto/change-password.dto';
@@ -23,6 +24,12 @@ export class AccountController {
     @CurrentUser() user: any,
     @Body(ValidationPipe) dto: ChangePasswordDto,
   ) {
+    if (user.role !== 'CLIENT') {
+      throw new ForbiddenException(
+        'Esta función solo está disponible para cuentas de cliente',
+      );
+    }
+
     return this.accountService.changePassword(
       user.id,
       dto.currentPassword,
@@ -36,6 +43,12 @@ export class AccountController {
     @CurrentUser() user: any,
     @Body(ValidationPipe) dto: ChangeEmailDto,
   ) {
+    if (user.role !== 'CLIENT') {
+      throw new ForbiddenException(
+        'Esta función solo está disponible para cuentas de cliente',
+      );
+    }
+
     return this.accountService.requestEmailChange(
       user.id,
       dto.currentPassword,
@@ -54,6 +67,12 @@ export class AccountController {
     @CurrentUser() user: any,
     @Body(ValidationPipe) dto: DeleteAccountDto,
   ) {
+    if (user.role !== 'CLIENT') {
+      throw new ForbiddenException(
+        'Esta función solo está disponible para cuentas de cliente',
+      );
+    }
+
     return this.accountService.deleteAccount(user.id, dto.confirmation);
   }
 }

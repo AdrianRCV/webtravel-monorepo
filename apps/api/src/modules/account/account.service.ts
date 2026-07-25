@@ -7,7 +7,7 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { NotificationsService } from '../notifications/notifications.service';
 import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
-import { VerificationTokenType } from '@prisma/client';
+import { Prisma, VerificationTokenType } from '@prisma/client';
 
 const EMAIL_CHANGE_TOKEN_TTL_MS = 60 * 60 * 1000;
 
@@ -85,12 +85,9 @@ export class AccountService {
       throw new BadRequestException('Ese email ya está en uso por otra cuenta');
     }
 
-    // user.email is guaranteed non-null here: requirePassword already
-    // confirmed user.password is set, and only email/password registration
-    // (which always sets email) produces a user with a password.
     await this.prisma.verificationToken.deleteMany({
       where: {
-        identifier: user.email as string,
+        identifier: userId,
         type: VerificationTokenType.EMAIL_CHANGE,
       },
     });
@@ -99,7 +96,7 @@ export class AccountService {
 
     await this.prisma.verificationToken.create({
       data: {
-        identifier: user.email as string,
+        identifier: userId,
         token: changeToken,
         type: VerificationTokenType.EMAIL_CHANGE,
         newEmail,
@@ -141,10 +138,22 @@ export class AccountService {
       throw new BadRequestException('Ese email ya está en uso por otra cuenta');
     }
 
-    await this.prisma.user.update({
-      where: { email: verificationToken.identifier },
-      data: { email: verificationToken.newEmail, emailVerified: new Date() },
-    });
+    try {
+      await this.prisma.user.update({
+        where: { id: verificationToken.identifier },
+        data: { email: verificationToken.newEmail, emailVerified: new Date() },
+      });
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        (error.code === 'P2002' || error.code === 'P2025')
+      ) {
+        throw new BadRequestException(
+          'El enlace de confirmación no es válido o ha caducado',
+        );
+      }
+      throw error;
+    }
 
     await this.prisma.verificationToken.deleteMany({
       where: {

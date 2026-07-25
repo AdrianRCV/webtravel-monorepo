@@ -5,6 +5,11 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Confía únicamente en el primer hop (el proxy de Render delante de esta
+  // app) — necesario para que express-rate-limit lea la IP real del cliente
+  // en vez de la del proxy, que si no agrupa a todos los clientes como uno.
+  app.getHttpAdapter().getInstance().set('trust proxy', 1);
+
   const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
 
   app.enableCors({
