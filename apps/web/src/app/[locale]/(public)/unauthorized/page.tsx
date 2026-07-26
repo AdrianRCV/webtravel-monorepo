@@ -1,5 +1,4 @@
 import { AlertCircle, MessageSquare, LogIn } from 'lucide-react';
-import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { Link as LocaleLink } from '@/i18n/navigation';
 import { auth } from '@/auth';
@@ -48,13 +47,13 @@ export default async function UnauthorizedPage() {
         <div className="space-y-3 pt-4">
           {isAuthenticated ? (
             <>
-              <Link
+              <LocaleLink
                 href="/chat"
                 className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-700"
               >
                 <MessageSquare className="h-4 w-4" />
                 {t('goToChatButton')}
-              </Link>
+              </LocaleLink>
 
               <SignOutButton variant="full" />
             </>
@@ -68,13 +67,13 @@ export default async function UnauthorizedPage() {
                 {t('loginButton')}
               </LocaleLink>
 
-              <Link
+              <LocaleLink
                 href="/chat"
                 className="flex w-full items-center justify-center gap-2 rounded-lg border border-zinc-200 bg-white px-4 py-2.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50"
               >
                 <MessageSquare className="h-4 w-4" />
                 {t('continueWithoutLogin')}
-              </Link>
+              </LocaleLink>
             </>
           )}
         </div>

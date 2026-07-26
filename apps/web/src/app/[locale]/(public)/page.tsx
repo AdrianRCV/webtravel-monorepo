@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { Link as LocaleLink } from '@/i18n/navigation';
 import { getTranslations } from 'next-intl/server';
 import { Button } from '@/components/ui/button';
@@ -48,12 +47,12 @@ export default async function LandingPage() {
             <p className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto">{t('heroSubtitle')}</p>
 
             <div className="pt-4">
-              <Link href="/chat">
+              <LocaleLink href="/chat">
                 <Button size="lg" className="text-lg px-8 py-6 h-auto bg-gradient-to-r from-brand to-brand-accent hover:opacity-90 shadow-lg shadow-brand/30 transition-all duration-300 hover:scale-105">
                   {t('heroCta')}
                   <MessageCircle className="w-5 h-5 ml-2" />
                 </Button>
-              </Link>
+              </LocaleLink>
             </div>
           </div>
         </section>
@@ -121,11 +120,11 @@ export default async function LandingPage() {
             <p className="text-xl text-slate-300">
               {t('ctaSubtitle')}
             </p>
-            <Link href="/chat">
+            <LocaleLink href="/chat">
               <Button size="lg" className="text-lg px-8 py-6 h-auto bg-gradient-to-r from-brand to-brand-accent hover:opacity-90 shadow-lg shadow-brand/30 transition-all duration-300 hover:scale-105">
                 {t('ctaButton')}
               </Button>
-            </Link>
+            </LocaleLink>
           </div>
         </section>
       </main>
