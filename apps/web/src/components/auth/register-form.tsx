@@ -6,6 +6,7 @@ import { signIn } from 'next-auth/react';
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
 import { Loader2, Eye, EyeOff } from 'lucide-react';
+import { Link as LocaleLink } from '@/i18n/navigation';
 
 interface PasswordStrength {
   score: number;
@@ -210,13 +211,13 @@ export function RegisterForm() {
 
       <p className="text-xs text-zinc-500 text-center">
         {t('termsPrefix')}
-        <a href="/terminos" className="underline hover:text-brand">
+        <LocaleLink href="/terminos" className="underline hover:text-brand">
           {t('termsLink')}
-        </a>
+        </LocaleLink>
         {t('termsAnd')}
-        <a href="/privacidad" className="underline hover:text-brand">
+        <LocaleLink href="/privacidad" className="underline hover:text-brand">
           {t('privacyLink')}
-        </a>
+        </LocaleLink>
         {t('termsSuffix')}
       </p>
 

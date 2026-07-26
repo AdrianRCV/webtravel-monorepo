@@ -200,5 +200,53 @@
     "submit": "Nachricht senden",
     "genericError": "Deine Nachricht konnte nicht gesendet werden. Versuche es erneut.",
     "successMessage": "Danke! Wir haben deine Nachricht erhalten und melden uns in Kürze."
+  },
+  "Legal": {
+    "Layout": {
+      "lastUpdated": "Letzte Aktualisierung: Juli 2026."
+    },
+    "Links": {
+      "terminos": "AGB",
+      "privacidad": "Datenschutz",
+      "contacto": "Kontakt"
+    },
+    "Terminos": {
+      "metaTitle": "Allgemeine Geschäftsbedingungen",
+      "metaDescription": "Allgemeine Geschäftsbedingungen für die Nutzung von YourAgencyToday.",
+      "title": "Allgemeine Geschäftsbedingungen",
+      "intro": "Diese Allgemeinen Geschäftsbedingungen regeln die Nutzung der Website und des Reiseplanungs-Chats von YourAgencyToday („wir“, „die Agentur“). Durch die Nutzung der Website akzeptierst du diese Bedingungen.",
+      "whatWeOfferTitle": "Was wir anbieten",
+      "whatWeOfferBody": "Über unseren KI-gestützten Chat erfassen wir deine Reisedaten (Reiseziel, Daten, Budget, Abflugort und Anzahl der Personen), damit einer unserer Spezialisten einen maßgeschneiderten Reiseplan-Vorschlag erstellt. Der endgültige Vorschlag und seine Verfügbarkeit unterliegen der Bestätigung durch einen Menschen.",
+      "accountTitle": "Dein Konto",
+      "accountItem1": "Du bist dafür verantwortlich, dein Passwort geheim zu halten.",
+      "accountItem2": "Die Angaben, die du uns machst, müssen wahrheitsgemäß sein.",
+      "accountItem3Prefix": "Du kannst jederzeit über unser ",
+      "accountItem3Link": "Kontaktformular",
+      "accountItem3Suffix": " die Löschung deines Kontos und deiner Daten beantragen.",
+      "liabilityTitle": "Haftungsbeschränkung",
+      "liabilityBody": "Die vorgeschlagenen Reisepläne hängen von der tatsächlichen Verfügbarkeit externer Anbieter (Fluggesellschaften, Hotels, Transportunternehmen) zum Zeitpunkt der Buchung ab. Wir garantieren weder Preise noch Verfügbarkeit, bis eine Buchung ausdrücklich von einem Spezialisten bestätigt wurde.",
+      "changesTitle": "Änderungen dieser Bedingungen",
+      "changesBody": "Wir können diese Bedingungen gelegentlich aktualisieren. Wesentliche Änderungen werden auf dieser Seite dargestellt."
+    },
+    "Privacidad": {
+      "metaTitle": "Datenschutzerklärung",
+      "metaDescription": "Wie YourAgencyToday deine Daten erhebt, nutzt und schützt.",
+      "title": "Datenschutzerklärung",
+      "intro": "Diese Richtlinie erklärt, welche Daten wir bei YourAgencyToday erheben, wofür wir sie verwenden und welche Rechte du in Bezug auf sie hast.",
+      "dataCollectedTitle": "Welche Daten wir erheben",
+      "dataItem1": "Deine E-Mail-Adresse und ein verschlüsselt gespeichertes Passwort (oder dein Google-Konto, falls du diese Anmeldemethode wählst).",
+      "dataItem2": "Die Reisedetails, die du im Chat teilst: Reiseziel, Abflugort, Daten, Budget und Anzahl der Personen.",
+      "dataItem3": "Der Inhalt der Nachrichten, die du an unseren Chat sendest und die von einem externen Anbieter für künstliche Intelligenz zur Erstellung von Antworten verarbeitet werden.",
+      "dataUseTitle": "Wofür wir sie verwenden",
+      "dataUseItem1": "Um einen maßgeschneiderten Reiseplan zu entwerfen und vorzuschlagen.",
+      "dataUseItem2": "Um dir per E-Mail Updates zum Status deiner Anfrage zu senden.",
+      "dataUseItem3": "Um deinen Gesprächsverlauf mit deinem Konto verknüpft zu halten.",
+      "cookiesTitle": "Cookies",
+      "cookiesBody": "Wir verwenden ein unbedingt erforderliches Sitzungs-Cookie, um deine Anmeldung aktiv zu halten. Wir verwenden keine Werbe-Tracking-Cookies.",
+      "rightsTitle": "Deine Rechte",
+      "rightsPrefix": "Du kannst uns bitten, auf deine Daten zuzugreifen oder sie vollständig zu löschen, indem du uns über unser ",
+      "rightsLink": "Kontaktformular",
+      "rightsSuffix": " schreibst."
+    }
   }
 }

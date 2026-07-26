@@ -200,5 +200,53 @@
     "submit": "Send message",
     "genericError": "Couldn't send your message. Try again.",
     "successMessage": "Thank you! We've received your message and will get back to you shortly."
+  },
+  "Legal": {
+    "Layout": {
+      "lastUpdated": "Last updated: July 2026."
+    },
+    "Links": {
+      "terminos": "Terms",
+      "privacidad": "Privacy",
+      "contacto": "Contact"
+    },
+    "Terminos": {
+      "metaTitle": "Terms and Conditions",
+      "metaDescription": "Terms and conditions of use for YourAgencyToday.",
+      "title": "Terms and Conditions",
+      "intro": "These Terms and Conditions govern the use of YourAgencyToday's (\"we\", \"the agency\") website and travel-planning chat. By using the site, you accept these terms.",
+      "whatWeOfferTitle": "What we offer",
+      "whatWeOfferBody": "Through our AI-powered chat we collect your trip details (destination, dates, budget, origin, and number of travelers) so one of our specialists can design a tailored itinerary proposal. The final proposal and its availability are subject to human confirmation.",
+      "accountTitle": "Your account",
+      "accountItem1": "You are responsible for keeping your password private.",
+      "accountItem2": "The information you provide us must be truthful.",
+      "accountItem3Prefix": "You can request the deletion of your account and your data at any time through our ",
+      "accountItem3Link": "contact form",
+      "accountItem3Suffix": ".",
+      "liabilityTitle": "Limitation of liability",
+      "liabilityBody": "Proposed itineraries depend on the actual availability of external providers (airlines, hotels, transportation) at the time of booking. We do not guarantee prices or availability until a booking is explicitly confirmed by a specialist.",
+      "changesTitle": "Changes to these terms",
+      "changesBody": "We may update these terms occasionally. Significant changes will be reflected on this same page."
+    },
+    "Privacidad": {
+      "metaTitle": "Privacy Policy",
+      "metaDescription": "How YourAgencyToday collects, uses, and protects your data.",
+      "title": "Privacy Policy",
+      "intro": "This policy explains what data we collect at YourAgencyToday, what we use it for, and what rights you have over it.",
+      "dataCollectedTitle": "What data we collect",
+      "dataItem1": "Your email and a password stored in encrypted form (or your Google account, if you choose that sign-in method).",
+      "dataItem2": "The trip details you share in the chat: destination, origin, dates, budget, and number of travelers.",
+      "dataItem3": "The content of the messages you send to our chat, which are processed by an external artificial intelligence provider to generate responses.",
+      "dataUseTitle": "What we use it for",
+      "dataUseItem1": "Designing and proposing a tailored travel itinerary.",
+      "dataUseItem2": "Emailing you updates about the status of your request.",
+      "dataUseItem3": "Keeping your conversation history linked to your account.",
+      "cookiesTitle": "Cookies",
+      "cookiesBody": "We use a strictly necessary session cookie to keep you signed in. We do not use advertising tracking cookies.",
+      "rightsTitle": "Your rights",
+      "rightsPrefix": "You can ask us to access your data or delete it entirely by writing to us through our ",
+      "rightsLink": "contact form",
+      "rightsSuffix": "."
+    }
   }
 }
