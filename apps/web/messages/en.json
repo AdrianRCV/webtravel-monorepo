@@ -137,5 +137,68 @@
       "signingOut": "Signing out...",
       "signOut": "Sign Out"
     }
+  },
+  "Chat": {
+    "Interface": {
+      "title": "Travel Chat",
+      "subtitlePrefix": "Tell us about your next trip and we'll help you plan it · ",
+      "helpLink": "Couldn't find what you were looking for? Write to us",
+      "newConversationTooltip": "New conversation",
+      "initError": "Couldn't start the chat session. Please reload the page.",
+      "sendError": "Couldn't send the message.",
+      "retry": "Retry",
+      "loading": "Starting conversation...",
+      "defaultGreeting": "Hi! I'm your travel assistant. Where would you like to go?"
+    },
+    "History": {
+      "newConversation": "New conversation",
+      "newConversationFallbackLabel": "New conversation",
+      "empty": "You don't have any previous conversations yet",
+      "historyTooltip": "Conversation history",
+      "drawerTitle": "Conversations"
+    },
+    "Input": {
+      "placeholder": "Type your message...",
+      "send": "Send"
+    },
+    "Suggestions": {
+      "s1": "I want to travel to Japan for 15 days in March",
+      "s2": "Looking for a trip to Italy with a €1500 budget",
+      "s3": "I need a 10-day plan for Greece",
+      "s4": "Traveling to Portugal as a couple, June 10th to 20th"
+    },
+    "TripSummary": {
+      "title": "Your request",
+      "subtitle": "Here's what we've understood so far",
+      "origin": "Origin",
+      "destination": "Destination",
+      "dates": "Dates",
+      "people": "People",
+      "budget": "Budget",
+      "contactEmail": "Contact email",
+      "notDefined": "Not yet defined",
+      "statusLabel": "Request status",
+      "statusPending": "Pending review",
+      "statusInProgress": "In progress",
+      "statusProposed": "Proposal sent",
+      "statusApproved": "Approved",
+      "statusRejected": "Rejected"
+    }
+  },
+  "Contact": {
+    "metaTitle": "Contact",
+    "metaDescription": "Write to us and a YourAgencyToday specialist will get back to you shortly.",
+    "title": "Need help?",
+    "subtitle": "Write to us and a specialist will get back to you shortly.",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your name",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "you@email.com",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Tell us how we can help you",
+    "submitting": "Sending...",
+    "submit": "Send message",
+    "genericError": "Couldn't send your message. Try again.",
+    "successMessage": "Thank you! We've received your message and will get back to you shortly."
   }
 }

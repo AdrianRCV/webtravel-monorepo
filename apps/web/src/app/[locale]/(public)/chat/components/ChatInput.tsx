@@ -1,4 +1,5 @@
 import { KeyboardEvent } from 'react';
+import { useTranslations } from 'next-intl';
 
 interface ChatInputProps {
   value: string;
@@ -8,6 +9,7 @@ interface ChatInputProps {
 }
 
 export function ChatInput({ value, onChange, onSendMessage, disabled = false }: ChatInputProps) {
+  const t = useTranslations('Chat.Input');
   const handleSend = () => {
     if (value.trim() && !disabled) {
       onSendMessage(value.trim());
@@ -29,7 +31,7 @@ export function ChatInput({ value, onChange, onSendMessage, disabled = false }: 
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Escribe tu mensaje..."
+          placeholder={t('placeholder')}
           disabled={disabled}
           rows={1}
           className="flex-1 resize-none rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed min-h-[48px] max-h-[120px]"
@@ -48,7 +50,7 @@ export function ChatInput({ value, onChange, onSendMessage, disabled = false }: 
           disabled={disabled || !value.trim()}
           className="rounded-lg bg-blue-600 px-6 py-3 text-white font-medium hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
         >
-          Enviar
+          {t('send')}
         </button>
       </div>
     </div>

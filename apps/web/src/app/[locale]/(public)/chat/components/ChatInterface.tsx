@@ -1,7 +1,9 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { Link as LocaleLink, useRouter } from '@/i18n/navigation';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import { MessageSquarePlus } from 'lucide-react';
@@ -18,6 +20,7 @@ function draftKey(sessionId: string) {
 }
 
 export function ChatInterface() {
+  const t = useTranslations('Chat.Interface');
   const searchParams = useSearchParams();
   const router = useRouter();
   const { data: authSession, status } = useSession();
@@ -88,7 +91,7 @@ export function ChatInterface() {
       localStorage.setItem('chatSessionId', session.id);
       setHistoryRefreshKey((k) => k + 1);
     } catch (err) {
-      setInitError('No se pudo iniciar la sesión de chat. Por favor, recarga la página.');
+      setInitError(t('initError'));
       console.error('Error initializing session:', err);
     } finally {
       setIsSessionLoading(false);
@@ -151,9 +154,9 @@ export function ChatInterface() {
     } catch (err) {
       setMessages((prev) => prev.filter((m) => m.id !== optimisticUserMessage.id));
       console.error('Error sending message:', err);
-      toast.error('No se pudo enviar el mensaje.', {
+      toast.error(t('sendError'), {
         action: {
-          label: 'Reintentar',
+          label: t('retry'),
           onClick: () => handleSendMessage(content),
         },
       });
@@ -177,12 +180,12 @@ export function ChatInterface() {
         <header className="bg-white border-b px-4 py-4 shadow-sm">
           <div className="max-w-4xl mx-auto flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Chat de Viajes</h1>
+              <h1 className="text-2xl font-bold text-gray-900">{t('title')}</h1>
               <p className="text-sm text-gray-600 mt-1">
-                Cuéntanos sobre tu próximo viaje y te ayudaremos a planificarlo ·{' '}
-                <a href="/contacto" className="underline hover:text-gray-900">
-                  ¿No encontraste lo que buscabas? Escribinos
-                </a>
+                {t('subtitlePrefix')}
+                <LocaleLink href="/contacto" className="underline hover:text-gray-900">
+                  {t('helpLink')}
+                </LocaleLink>
               </p>
             </div>
             <div className="lg:hidden flex items-center gap-2">
@@ -197,7 +200,7 @@ export function ChatInterface() {
               <button
                 onClick={handleNewConversation}
                 className="flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors shrink-0"
-                title="Nueva conversación"
+                title={t('newConversationTooltip')}
               >
                 <MessageSquarePlus className="h-4 w-4" />
               </button>
@@ -228,7 +231,7 @@ export function ChatInterface() {
                     d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                   />
                 </svg>
-                <p className="mt-4 text-lg">Iniciando conversación...</p>
+                <p className="mt-4 text-lg">{t('loading')}</p>
               </div>
             </div>
           ) : messages.length <= 1 ? (
@@ -238,8 +241,7 @@ export function ChatInterface() {
                   ✈️
                 </div>
                 <p className="text-gray-700 whitespace-pre-wrap">
-                  {messages[0]?.content ||
-                    '¡Hola! Soy tu asistente de viajes. ¿A dónde te gustaría viajar?'}
+                  {messages[0]?.content || t('defaultGreeting')}
                 </p>
               </div>
               <SuggestionChips onSelect={persistDraft} disabled={isSending} />

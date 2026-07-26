@@ -137,5 +137,68 @@
       "signingOut": "Cerrando sesión...",
       "signOut": "Cerrar Sesión"
     }
+  },
+  "Chat": {
+    "Interface": {
+      "title": "Chat de Viajes",
+      "subtitlePrefix": "Cuéntanos sobre tu próximo viaje y te ayudaremos a planificarlo · ",
+      "helpLink": "¿No encontraste lo que buscabas? Escribinos",
+      "newConversationTooltip": "Nueva conversación",
+      "initError": "No se pudo iniciar la sesión de chat. Por favor, recarga la página.",
+      "sendError": "No se pudo enviar el mensaje.",
+      "retry": "Reintentar",
+      "loading": "Iniciando conversación...",
+      "defaultGreeting": "¡Hola! Soy tu asistente de viajes. ¿A dónde te gustaría viajar?"
+    },
+    "History": {
+      "newConversation": "Nueva conversación",
+      "newConversationFallbackLabel": "Nueva conversación",
+      "empty": "Aún no tienes conversaciones anteriores",
+      "historyTooltip": "Historial de conversaciones",
+      "drawerTitle": "Conversaciones"
+    },
+    "Input": {
+      "placeholder": "Escribe tu mensaje...",
+      "send": "Enviar"
+    },
+    "Suggestions": {
+      "s1": "Quiero viajar a Japón 15 días en marzo",
+      "s2": "Busco un viaje a Italia con presupuesto de 1500€",
+      "s3": "Necesito un plan para 10 días en Grecia",
+      "s4": "Viajar a Portugal en pareja, del 10 al 20 de junio"
+    },
+    "TripSummary": {
+      "title": "Tu solicitud",
+      "subtitle": "Esto es lo que hemos entendido hasta ahora",
+      "origin": "Origen",
+      "destination": "Destino",
+      "dates": "Fechas",
+      "people": "Personas",
+      "budget": "Presupuesto",
+      "contactEmail": "Email de contacto",
+      "notDefined": "Aún sin definir",
+      "statusLabel": "Estado de la solicitud",
+      "statusPending": "Pendiente de revisión",
+      "statusInProgress": "En proceso",
+      "statusProposed": "Propuesta enviada",
+      "statusApproved": "Aprobada",
+      "statusRejected": "Rechazada"
+    }
+  },
+  "Contact": {
+    "metaTitle": "Contacto",
+    "metaDescription": "Escribinos y un especialista de YourAgencyToday te responderá a la brevedad.",
+    "title": "¿Necesitas ayuda?",
+    "subtitle": "Escribinos y un especialista te responderá a la brevedad.",
+    "nameLabel": "Nombre",
+    "namePlaceholder": "Tu nombre",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "tu@email.com",
+    "messageLabel": "Mensaje",
+    "messagePlaceholder": "Contanos en qué podemos ayudarte",
+    "submitting": "Enviando...",
+    "submit": "Enviar mensaje",
+    "genericError": "No se pudo enviar tu mensaje. Intenta de nuevo.",
+    "successMessage": "¡Gracias! Recibimos tu mensaje y te responderemos a la brevedad."
   }
 }

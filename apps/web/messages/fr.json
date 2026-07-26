@@ -137,5 +137,68 @@
       "signingOut": "Déconnexion en cours...",
       "signOut": "Se déconnecter"
     }
+  },
+  "Chat": {
+    "Interface": {
+      "title": "Chat de voyage",
+      "subtitlePrefix": "Parlez-nous de votre prochain voyage et nous vous aiderons à le planifier · ",
+      "helpLink": "Vous n'avez pas trouvé ce que vous cherchiez ? Écrivez-nous",
+      "newConversationTooltip": "Nouvelle conversation",
+      "initError": "Impossible de démarrer la session de chat. Veuillez recharger la page.",
+      "sendError": "Impossible d'envoyer le message.",
+      "retry": "Réessayer",
+      "loading": "Démarrage de la conversation...",
+      "defaultGreeting": "Bonjour ! Je suis votre assistant de voyage. Où aimeriez-vous partir ?"
+    },
+    "History": {
+      "newConversation": "Nouvelle conversation",
+      "newConversationFallbackLabel": "Nouvelle conversation",
+      "empty": "Vous n'avez pas encore de conversations précédentes",
+      "historyTooltip": "Historique des conversations",
+      "drawerTitle": "Conversations"
+    },
+    "Input": {
+      "placeholder": "Écrivez votre message...",
+      "send": "Envoyer"
+    },
+    "Suggestions": {
+      "s1": "Je veux voyager au Japon 15 jours en mars",
+      "s2": "Je cherche un voyage en Italie avec un budget de 1500 €",
+      "s3": "J'ai besoin d'un plan de 10 jours pour la Grèce",
+      "s4": "Voyager au Portugal en couple, du 10 au 20 juin"
+    },
+    "TripSummary": {
+      "title": "Votre demande",
+      "subtitle": "Voici ce que nous avons compris jusqu'à présent",
+      "origin": "Origine",
+      "destination": "Destination",
+      "dates": "Dates",
+      "people": "Personnes",
+      "budget": "Budget",
+      "contactEmail": "Email de contact",
+      "notDefined": "Pas encore défini",
+      "statusLabel": "Statut de la demande",
+      "statusPending": "En attente de révision",
+      "statusInProgress": "En cours",
+      "statusProposed": "Proposition envoyée",
+      "statusApproved": "Approuvée",
+      "statusRejected": "Rejetée"
+    }
+  },
+  "Contact": {
+    "metaTitle": "Contact",
+    "metaDescription": "Écrivez-nous et un spécialiste de YourAgencyToday vous répondra rapidement.",
+    "title": "Besoin d'aide ?",
+    "subtitle": "Écrivez-nous et un spécialiste vous répondra rapidement.",
+    "nameLabel": "Nom",
+    "namePlaceholder": "Votre nom",
+    "emailLabel": "Adresse email",
+    "emailPlaceholder": "vous@email.com",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Dites-nous comment nous pouvons vous aider",
+    "submitting": "Envoi en cours...",
+    "submit": "Envoyer le message",
+    "genericError": "Impossible d'envoyer votre message. Réessayez.",
+    "successMessage": "Merci ! Nous avons reçu votre message et vous répondrons rapidement."
   }
 }
