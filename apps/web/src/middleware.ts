@@ -17,6 +17,8 @@ const LOCALIZED_PATHS = [
   '/unauthorized',
   '/chat',
   '/contacto',
+  '/terminos',
+  '/privacidad',
 ];
 
 function stripLocale(pathname: string): string {
