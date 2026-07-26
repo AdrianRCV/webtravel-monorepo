@@ -1,4 +1,6 @@
 import { SenderRole } from '@webtravel/shared-types';
+import { useLocale } from 'next-intl';
+import { DATE_LOCALES } from '@/i18n/date-locales';
 import { FormattedMessage } from './FormattedMessage';
 
 interface MessageBubbleProps {
@@ -9,6 +11,8 @@ interface MessageBubbleProps {
 
 export function MessageBubble({ sender, content, timestamp }: MessageBubbleProps) {
   const isUser = sender === 'USER';
+  const locale = useLocale();
+  const dateLocale = DATE_LOCALES[locale] ?? 'es-ES';
 
   return (
     <div
@@ -31,7 +35,7 @@ export function MessageBubble({ sender, content, timestamp }: MessageBubbleProps
           </div>
         </div>
         <div className={`text-xs text-gray-500 mt-1 px-2 ${isUser ? 'text-right' : 'text-left'}`}>
-          {new Date(timestamp).toLocaleTimeString('es-ES', {
+          {new Date(timestamp).toLocaleTimeString(dateLocale, {
             hour: '2-digit',
             minute: '2-digit'
           })}

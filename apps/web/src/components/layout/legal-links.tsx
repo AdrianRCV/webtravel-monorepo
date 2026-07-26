@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Link as LocaleLink } from '@/i18n/navigation';
 
 export function LegalLinks({ className = '' }: { className?: string }) {
   return (
@@ -11,9 +12,9 @@ export function LegalLinks({ className = '' }: { className?: string }) {
         Privacidad
       </Link>
       <span aria-hidden="true">·</span>
-      <Link href="/contacto" className="hover:underline">
+      <LocaleLink href="/contacto" className="hover:underline">
         Contacto
-      </Link>
+      </LocaleLink>
     </div>
   );
 }

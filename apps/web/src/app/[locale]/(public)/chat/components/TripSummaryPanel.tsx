@@ -1,17 +1,11 @@
 import { MapPin, Plane, Calendar, Users, DollarSign, Mail, CheckCircle2, Circle } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { TripRequest } from '@webtravel/shared-types';
+import { DATE_LOCALES } from '@/i18n/date-locales';
 
 interface Props {
   tripRequest: TripRequest | null | undefined;
 }
-
-const DATE_LOCALES: Record<string, string> = {
-  es: 'es-ES',
-  en: 'en-US',
-  fr: 'fr-FR',
-  de: 'de-DE',
-};
 
 function Field({
   icon: Icon,
