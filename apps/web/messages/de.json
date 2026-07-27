@@ -377,6 +377,22 @@
       "confirmDelete": "Ja, mein Konto löschen",
       "errorFallback": "Das Konto konnte nicht gelöscht werden",
       "errorGeneric": "Fehler beim Löschen des Kontos"
+    },
+    "TripItinerary": {
+      "documentTitlePrefix": "Reiseplan - ",
+      "documentTitleFallback": "deine Reise",
+      "backLink": "Zurück zu meinen Anfragen",
+      "downloadPdf": "PDF herunterladen"
+    },
+    "ItineraryPreview": {
+      "noActivities": "Für diesen Tag sind keine Aktivitäten geplant",
+      "personSingular": "Person",
+      "personPlural": "Personen",
+      "daySingular": "Tag",
+      "dayPlural": "Tage",
+      "referenceLabel": "Referenz:",
+      "viewDetailsFallback": "Details ansehen",
+      "createdByAdminPrefix": "Reiseplan erstellt von "
     }
   }
 }

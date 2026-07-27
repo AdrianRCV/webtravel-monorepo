@@ -377,6 +377,22 @@
       "confirmDelete": "Sí, eliminar mi cuenta",
       "errorFallback": "No se pudo eliminar la cuenta",
       "errorGeneric": "Error al eliminar la cuenta"
+    },
+    "TripItinerary": {
+      "documentTitlePrefix": "Itinerario - ",
+      "documentTitleFallback": "tu viaje",
+      "backLink": "Volver a mis solicitudes",
+      "downloadPdf": "Descargar PDF"
+    },
+    "ItineraryPreview": {
+      "noActivities": "No hay actividades programadas para este día",
+      "personSingular": "persona",
+      "personPlural": "personas",
+      "daySingular": "día",
+      "dayPlural": "días",
+      "referenceLabel": "Referencia:",
+      "viewDetailsFallback": "Ver Detalles",
+      "createdByAdminPrefix": "Itinerario creado por "
     }
   }
 }

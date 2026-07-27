@@ -1,5 +1,5 @@
-import { redirect } from 'next/navigation';
-import { getTranslations } from 'next-intl/server';
+import { redirect } from '@/i18n/navigation';
+import { getTranslations, getLocale } from 'next-intl/server';
 import { Link as LocaleLink } from '@/i18n/navigation';
 import { auth } from '@/auth';
 import { SignInButton } from '@/components/auth/sign-in-button';
@@ -18,7 +18,8 @@ export default async function RegisterPage({
   const tab = params.tab || 'register';
 
   if (session?.user) {
-    redirect('/client/dashboard');
+    const locale = await getLocale();
+    redirect({ href: '/client/dashboard', locale });
   }
 
   return (

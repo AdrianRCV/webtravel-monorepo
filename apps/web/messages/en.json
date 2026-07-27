@@ -377,6 +377,22 @@
       "confirmDelete": "Yes, delete my account",
       "errorFallback": "Couldn't delete the account",
       "errorGeneric": "Error deleting the account"
+    },
+    "TripItinerary": {
+      "documentTitlePrefix": "Itinerary - ",
+      "documentTitleFallback": "your trip",
+      "backLink": "Back to my requests",
+      "downloadPdf": "Download PDF"
+    },
+    "ItineraryPreview": {
+      "noActivities": "No activities scheduled for this day",
+      "personSingular": "traveler",
+      "personPlural": "travelers",
+      "daySingular": "day",
+      "dayPlural": "days",
+      "referenceLabel": "Reference:",
+      "viewDetailsFallback": "View Details",
+      "createdByAdminPrefix": "Itinerary created by "
     }
   }
 }

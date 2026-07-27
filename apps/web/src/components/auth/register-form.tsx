@@ -1,12 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
 import { Loader2, Eye, EyeOff } from 'lucide-react';
-import { Link as LocaleLink } from '@/i18n/navigation';
+import { Link as LocaleLink, useRouter } from '@/i18n/navigation';
 
 interface PasswordStrength {
   score: number;

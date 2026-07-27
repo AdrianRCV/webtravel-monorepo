@@ -377,6 +377,22 @@
       "confirmDelete": "Oui, supprimer mon compte",
       "errorFallback": "Impossible de supprimer le compte",
       "errorGeneric": "Erreur lors de la suppression du compte"
+    },
+    "TripItinerary": {
+      "documentTitlePrefix": "Itinéraire - ",
+      "documentTitleFallback": "votre voyage",
+      "backLink": "Retour à mes demandes",
+      "downloadPdf": "Télécharger le PDF"
+    },
+    "ItineraryPreview": {
+      "noActivities": "Aucune activité prévue pour ce jour",
+      "personSingular": "personne",
+      "personPlural": "personnes",
+      "daySingular": "jour",
+      "dayPlural": "jours",
+      "referenceLabel": "Référence :",
+      "viewDetailsFallback": "Voir les détails",
+      "createdByAdminPrefix": "Itinéraire créé par "
     }
   }
 }
