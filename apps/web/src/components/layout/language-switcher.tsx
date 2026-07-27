@@ -3,13 +3,7 @@
 import { useLocale } from 'next-intl';
 import { usePathname, useRouter } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
-
-const LOCALE_LABELS: Record<string, string> = {
-  es: 'Español',
-  en: 'English',
-  fr: 'Français',
-  de: 'Deutsch',
-};
+import { LOCALE_LABELS } from '@/i18n/locale-labels';
 
 export function LanguageSwitcher({ className }: { className?: string }) {
   const locale = useLocale();

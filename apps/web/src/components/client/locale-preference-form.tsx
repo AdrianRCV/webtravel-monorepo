@@ -6,13 +6,7 @@ import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { routing } from '@/i18n/routing';
-
-const LOCALE_LABELS: Record<string, string> = {
-  es: 'Español',
-  en: 'English',
-  fr: 'Français',
-  de: 'Deutsch',
-};
+import { LOCALE_LABELS } from '@/i18n/locale-labels';
 
 export function LocalePreferenceForm() {
   const { data: session } = useSession();

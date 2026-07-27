@@ -367,7 +367,7 @@
       "successSuffix": " gesendet. Deine aktuelle E-Mail-Adresse funktioniert weiter, bis du die Änderung bestätigst."
     },
     "LocalePreferenceForm": {
-      "label": "Sprache für E-Mails und die Oberfläche",
+      "label": "Sprache für E-Mails",
       "saving": "Wird gespeichert...",
       "submit": "Speichern",
       "successToast": "Sprache aktualisiert.",

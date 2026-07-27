@@ -367,7 +367,7 @@
       "successSuffix": ". Votre email actuel continue de fonctionner jusqu'à ce que vous confirmiez le changement."
     },
     "LocalePreferenceForm": {
-      "label": "Langue pour les emails et l'interface",
+      "label": "Langue pour les emails",
       "saving": "Enregistrement...",
       "submit": "Enregistrer",
       "successToast": "Langue mise à jour.",
