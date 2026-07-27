@@ -336,6 +336,47 @@
       "cancel": "Cancelar",
       "deleting": "Borrando...",
       "confirmDelete": "Borrar definitivamente"
+    },
+    "Settings": {
+      "title": "Ajustes de cuenta",
+      "subtitle": "Administrá tu contraseña, tu email y tu cuenta",
+      "passwordSectionTitle": "Cambiar contraseña",
+      "emailSectionTitle": "Cambiar email"
+    },
+    "ChangePasswordForm": {
+      "currentPasswordLabel": "Contraseña actual",
+      "newPasswordLabel": "Nueva contraseña",
+      "newPasswordPlaceholder": "Mínimo 8 caracteres, una mayúscula y un número",
+      "confirmPasswordLabel": "Confirmar nueva contraseña",
+      "saving": "Guardando...",
+      "submit": "Cambiar contraseña",
+      "successToast": "Contraseña actualizada.",
+      "errorFallback": "No se pudo cambiar la contraseña",
+      "errorGeneric": "Error al cambiar la contraseña"
+    },
+    "ChangeEmailForm": {
+      "currentPasswordLabel": "Contraseña actual",
+      "newEmailLabel": "Nuevo email",
+      "newEmailPlaceholder": "tu-nuevo@email.com",
+      "sending": "Enviando...",
+      "submit": "Cambiar email",
+      "errorFallback": "No se pudo solicitar el cambio de email",
+      "errorGeneric": "Error al solicitar el cambio de email",
+      "successPrefix": "Te enviamos un enlace de confirmación a ",
+      "successSuffix": ". Tu email actual sigue funcionando hasta que confirmes el cambio."
+    },
+    "DeleteAccountSection": {
+      "dangerZoneTitle": "Zona de peligro",
+      "warning": "Eliminar tu cuenta borra permanentemente tu historial de conversaciones y solicitudes de viaje. Esta acción no se puede deshacer.",
+      "deleteButton": "Eliminar mi cuenta",
+      "dialogTitle": "¿Eliminar tu cuenta?",
+      "dialogDescription": "Escribí tu contraseña actual (o \"ELIMINAR\" si tu cuenta usa Google) para confirmar. Esta acción es permanente.",
+      "confirmPlaceholder": "Contraseña actual o ELIMINAR",
+      "cancel": "Cancelar",
+      "deleting": "Eliminando...",
+      "confirmDelete": "Sí, eliminar mi cuenta",
+      "errorFallback": "No se pudo eliminar la cuenta",
+      "errorGeneric": "Error al eliminar la cuenta"
     }
   }
 }

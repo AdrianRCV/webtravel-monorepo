@@ -336,6 +336,47 @@
       "cancel": "Annuler",
       "deleting": "Suppression...",
       "confirmDelete": "Supprimer définitivement"
+    },
+    "Settings": {
+      "title": "Paramètres du compte",
+      "subtitle": "Gérez votre mot de passe, votre email et votre compte",
+      "passwordSectionTitle": "Changer le mot de passe",
+      "emailSectionTitle": "Changer l'email"
+    },
+    "ChangePasswordForm": {
+      "currentPasswordLabel": "Mot de passe actuel",
+      "newPasswordLabel": "Nouveau mot de passe",
+      "newPasswordPlaceholder": "Au moins 8 caractères, une majuscule et un chiffre",
+      "confirmPasswordLabel": "Confirmer le nouveau mot de passe",
+      "saving": "Enregistrement...",
+      "submit": "Changer le mot de passe",
+      "successToast": "Mot de passe mis à jour.",
+      "errorFallback": "Impossible de changer le mot de passe",
+      "errorGeneric": "Erreur lors du changement de mot de passe"
+    },
+    "ChangeEmailForm": {
+      "currentPasswordLabel": "Mot de passe actuel",
+      "newEmailLabel": "Nouvel email",
+      "newEmailPlaceholder": "votre-nouveau@email.com",
+      "sending": "Envoi en cours...",
+      "submit": "Changer l'email",
+      "errorFallback": "Impossible de demander le changement d'email",
+      "errorGeneric": "Erreur lors de la demande de changement d'email",
+      "successPrefix": "Nous avons envoyé un lien de confirmation à ",
+      "successSuffix": ". Votre email actuel continue de fonctionner jusqu'à ce que vous confirmiez le changement."
+    },
+    "DeleteAccountSection": {
+      "dangerZoneTitle": "Zone de danger",
+      "warning": "La suppression de votre compte efface définitivement votre historique de conversations et vos demandes de voyage. Cette action est irréversible.",
+      "deleteButton": "Supprimer mon compte",
+      "dialogTitle": "Supprimer votre compte ?",
+      "dialogDescription": "Saisissez votre mot de passe actuel (ou « SUPPRIMER » si votre compte utilise Google) pour confirmer. Cette action est définitive.",
+      "confirmPlaceholder": "Mot de passe actuel ou SUPPRIMER",
+      "cancel": "Annuler",
+      "deleting": "Suppression...",
+      "confirmDelete": "Oui, supprimer mon compte",
+      "errorFallback": "Impossible de supprimer le compte",
+      "errorGeneric": "Erreur lors de la suppression du compte"
     }
   }
 }

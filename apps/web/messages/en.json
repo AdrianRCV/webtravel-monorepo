@@ -336,6 +336,47 @@
       "cancel": "Cancel",
       "deleting": "Deleting...",
       "confirmDelete": "Delete permanently"
+    },
+    "Settings": {
+      "title": "Account settings",
+      "subtitle": "Manage your password, email, and account",
+      "passwordSectionTitle": "Change password",
+      "emailSectionTitle": "Change email"
+    },
+    "ChangePasswordForm": {
+      "currentPasswordLabel": "Current password",
+      "newPasswordLabel": "New password",
+      "newPasswordPlaceholder": "At least 8 characters, one uppercase letter and one number",
+      "confirmPasswordLabel": "Confirm new password",
+      "saving": "Saving...",
+      "submit": "Change password",
+      "successToast": "Password updated.",
+      "errorFallback": "Couldn't change the password",
+      "errorGeneric": "Error changing the password"
+    },
+    "ChangeEmailForm": {
+      "currentPasswordLabel": "Current password",
+      "newEmailLabel": "New email",
+      "newEmailPlaceholder": "your-new@email.com",
+      "sending": "Sending...",
+      "submit": "Change email",
+      "errorFallback": "Couldn't request the email change",
+      "errorGeneric": "Error requesting the email change",
+      "successPrefix": "We sent a confirmation link to ",
+      "successSuffix": ". Your current email keeps working until you confirm the change."
+    },
+    "DeleteAccountSection": {
+      "dangerZoneTitle": "Danger zone",
+      "warning": "Deleting your account permanently erases your conversation history and travel requests. This action cannot be undone.",
+      "deleteButton": "Delete my account",
+      "dialogTitle": "Delete your account?",
+      "dialogDescription": "Type your current password (or \"DELETE\" if your account uses Google) to confirm. This action is permanent.",
+      "confirmPlaceholder": "Current password or DELETE",
+      "cancel": "Cancel",
+      "deleting": "Deleting...",
+      "confirmDelete": "Yes, delete my account",
+      "errorFallback": "Couldn't delete the account",
+      "errorGeneric": "Error deleting the account"
     }
   }
 }

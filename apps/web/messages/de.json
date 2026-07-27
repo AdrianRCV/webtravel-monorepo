@@ -336,6 +336,47 @@
       "cancel": "Abbrechen",
       "deleting": "Wird gelöscht...",
       "confirmDelete": "Endgültig löschen"
+    },
+    "Settings": {
+      "title": "Kontoeinstellungen",
+      "subtitle": "Verwalte dein Passwort, deine E-Mail und dein Konto",
+      "passwordSectionTitle": "Passwort ändern",
+      "emailSectionTitle": "E-Mail ändern"
+    },
+    "ChangePasswordForm": {
+      "currentPasswordLabel": "Aktuelles Passwort",
+      "newPasswordLabel": "Neues Passwort",
+      "newPasswordPlaceholder": "Mindestens 8 Zeichen, ein Großbuchstabe und eine Zahl",
+      "confirmPasswordLabel": "Neues Passwort bestätigen",
+      "saving": "Wird gespeichert...",
+      "submit": "Passwort ändern",
+      "successToast": "Passwort aktualisiert.",
+      "errorFallback": "Das Passwort konnte nicht geändert werden",
+      "errorGeneric": "Fehler beim Ändern des Passworts"
+    },
+    "ChangeEmailForm": {
+      "currentPasswordLabel": "Aktuelles Passwort",
+      "newEmailLabel": "Neue E-Mail-Adresse",
+      "newEmailPlaceholder": "deine-neue@email.com",
+      "sending": "Wird gesendet...",
+      "submit": "E-Mail ändern",
+      "errorFallback": "Die E-Mail-Änderung konnte nicht angefordert werden",
+      "errorGeneric": "Fehler bei der Anforderung der E-Mail-Änderung",
+      "successPrefix": "Wir haben einen Bestätigungslink an ",
+      "successSuffix": " gesendet. Deine aktuelle E-Mail-Adresse funktioniert weiter, bis du die Änderung bestätigst."
+    },
+    "DeleteAccountSection": {
+      "dangerZoneTitle": "Gefahrenzone",
+      "warning": "Das Löschen deines Kontos entfernt deinen Gesprächsverlauf und deine Reiseanfragen dauerhaft. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "deleteButton": "Mein Konto löschen",
+      "dialogTitle": "Konto löschen?",
+      "dialogDescription": "Gib dein aktuelles Passwort ein (oder \"LÖSCHEN\", falls dein Konto Google verwendet), um zu bestätigen. Diese Aktion ist endgültig.",
+      "confirmPlaceholder": "Aktuelles Passwort oder LÖSCHEN",
+      "cancel": "Abbrechen",
+      "deleting": "Wird gelöscht...",
+      "confirmDelete": "Ja, mein Konto löschen",
+      "errorFallback": "Das Konto konnte nicht gelöscht werden",
+      "errorGeneric": "Fehler beim Löschen des Kontos"
     }
   }
 }

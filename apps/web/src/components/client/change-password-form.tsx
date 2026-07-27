@@ -4,9 +4,11 @@ import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export function ChangePasswordForm() {
   const { data: session } = useSession();
+  const t = useTranslations('Client.ChangePasswordForm');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
@@ -36,15 +38,15 @@ export function ChangePasswordForm() {
 
       if (!response.ok) {
         const data = await response.json().catch(() => null);
-        throw new Error(data?.message || 'No se pudo cambiar la contraseña');
+        throw new Error(data?.message || t('errorFallback'));
       }
 
-      toast.success('Contraseña actualizada.');
+      toast.success(t('successToast'));
       setCurrentPassword('');
       setNewPassword('');
       setNewPasswordConfirm('');
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Error al cambiar la contraseña');
+      toast.error(err instanceof Error ? err.message : t('errorGeneric'));
     } finally {
       setIsLoading(false);
     }
@@ -54,7 +56,7 @@ export function ChangePasswordForm() {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700">
-          Contraseña actual
+          {t('currentPasswordLabel')}
         </label>
         <input
           id="currentPassword"
@@ -67,7 +69,7 @@ export function ChangePasswordForm() {
 
       <div>
         <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700">
-          Nueva contraseña
+          {t('newPasswordLabel')}
         </label>
         <input
           id="newPassword"
@@ -75,13 +77,13 @@ export function ChangePasswordForm() {
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
           className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
-          placeholder="Mínimo 8 caracteres, una mayúscula y un número"
+          placeholder={t('newPasswordPlaceholder')}
         />
       </div>
 
       <div>
         <label htmlFor="newPasswordConfirm" className="block text-sm font-medium text-gray-700">
-          Confirmar nueva contraseña
+          {t('confirmPasswordLabel')}
         </label>
         <input
           id="newPasswordConfirm"
@@ -100,10 +102,10 @@ export function ChangePasswordForm() {
         {isLoading ? (
           <>
             <Loader2 className="inline h-4 w-4 animate-spin mr-2" />
-            Guardando...
+            {t('saving')}
           </>
         ) : (
-          'Cambiar contraseña'
+          t('submit')
         )}
       </button>
     </form>
