@@ -212,14 +212,14 @@ export class ItinerariesService {
                 month: 'long',
                 day: 'numeric',
               })
-            : 'Por definir',
+            : undefined,
           endDate: tripRequest.endDate
             ? new Date(tripRequest.endDate).toLocaleDateString(intlLocale, {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
               })
-            : 'Por definir',
+            : undefined,
           totalDays,
           totalEstimatedPrice: itinerary.totalEstimatedPrice,
           itineraryTitle: itinerary.title,

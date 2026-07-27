@@ -4,8 +4,8 @@ import { SupportedLocale, normalizeLocale, INTL_LOCALE } from '../../../common/l
 
 export interface ItineraryCreatedEmailData extends BaseEmailData {
   destination: string;
-  startDate: string;
-  endDate: string;
+  startDate?: string;
+  endDate?: string;
   totalDays: number;
   totalEstimatedPrice: number;
   itineraryTitle: string;
@@ -86,8 +86,8 @@ export const itineraryCreatedTemplate = (
   const c = COPY[locale];
   const escapedTitle = escapeHtml(data.itineraryTitle);
   const escapedDestination = escapeHtml(data.destination);
-  const escapedStartDate = escapeHtml(data.startDate);
-  const escapedEndDate = escapeHtml(data.endDate);
+  const escapedStartDate = data.startDate ? escapeHtml(data.startDate) : c.tbd;
+  const escapedEndDate = data.endDate ? escapeHtml(data.endDate) : c.tbd;
   const escapedFirstDayPreview = data.firstDayPreview
     ? escapeHtml(data.firstDayPreview)
     : undefined;
