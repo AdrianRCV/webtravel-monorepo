@@ -66,6 +66,15 @@ export class AccountService {
     return { success: true };
   }
 
+  async updateLocale(userId: string, locale: string): Promise<{ success: true }> {
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { locale },
+    });
+
+    return { success: true };
+  }
+
   async requestEmailChange(
     userId: string,
     currentPassword: string,

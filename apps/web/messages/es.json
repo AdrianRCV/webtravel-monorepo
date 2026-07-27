@@ -341,7 +341,8 @@
       "title": "Ajustes de cuenta",
       "subtitle": "Administrá tu contraseña, tu email y tu cuenta",
       "passwordSectionTitle": "Cambiar contraseña",
-      "emailSectionTitle": "Cambiar email"
+      "emailSectionTitle": "Cambiar email",
+      "localeSectionTitle": "Idioma"
     },
     "ChangePasswordForm": {
       "currentPasswordLabel": "Contraseña actual",
@@ -364,6 +365,13 @@
       "errorGeneric": "Error al solicitar el cambio de email",
       "successPrefix": "Te enviamos un enlace de confirmación a ",
       "successSuffix": ". Tu email actual sigue funcionando hasta que confirmes el cambio."
+    },
+    "LocalePreferenceForm": {
+      "label": "Idioma para emails y la interfaz",
+      "saving": "Guardando...",
+      "submit": "Guardar",
+      "successToast": "Idioma actualizado.",
+      "errorGeneric": "Error al actualizar el idioma"
     },
     "DeleteAccountSection": {
       "dangerZoneTitle": "Zona de peligro",
