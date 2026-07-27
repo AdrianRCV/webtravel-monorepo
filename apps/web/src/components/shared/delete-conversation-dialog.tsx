@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import {
   Dialog,
   DialogContent,
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export function DeleteConversationDialog({ onClose, onConfirm }: Props) {
+  const t = useTranslations('Client.DeleteConversationDialog');
   const [open, setOpen] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -43,10 +45,9 @@ export function DeleteConversationDialog({ onClose, onConfirm }: Props) {
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>Borrar conversación</DialogTitle>
+          <DialogTitle>{t('title')}</DialogTitle>
           <DialogDescription>
-            Esta acción no se puede deshacer. Se eliminará la conversación completa, la
-            solicitud de viaje y cualquier itinerario asociado.
+            {t('description')}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -55,7 +56,7 @@ export function DeleteConversationDialog({ onClose, onConfirm }: Props) {
             onClick={() => handleOpenChange(false)}
             disabled={isDeleting}
           >
-            Cancelar
+            {t('cancel')}
           </Button>
           <Button
             variant="destructive"
@@ -64,7 +65,7 @@ export function DeleteConversationDialog({ onClose, onConfirm }: Props) {
             className="gap-2"
           >
             {isDeleting && <Loader2 className="h-4 w-4 animate-spin" />}
-            {isDeleting ? 'Borrando...' : 'Borrar definitivamente'}
+            {isDeleting ? t('deleting') : t('confirmDelete')}
           </Button>
         </DialogFooter>
       </DialogContent>

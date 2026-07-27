@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useTranslations } from 'next-intl';
 import { TripRequest, ChatSession } from '@prisma/client';
 import {
   Drawer,
@@ -26,6 +27,7 @@ interface Props {
 }
 
 export function TripRequestEditForm({ request, token, onClose, onUpdate }: Props) {
+  const t = useTranslations('Client.TripRequestEditForm');
   const [open, setOpen] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -96,14 +98,14 @@ export function TripRequestEditForm({ request, token, onClose, onUpdate }: Props
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || 'Error al actualizar la solicitud');
+        throw new Error(data.message || t('errorFallback'));
       }
 
-      toast.success('Solicitud actualizada');
+      toast.success(t('successToast'));
       onUpdate?.();
       handleOpenChange(false);
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Error al actualizar');
+      toast.error(err instanceof Error ? err.message : t('errorGeneric'));
     } finally {
       setIsLoading(false);
     }
@@ -113,38 +115,38 @@ export function TripRequestEditForm({ request, token, onClose, onUpdate }: Props
     <Drawer open={open} onOpenChange={handleOpenChange}>
       <DrawerContent className="max-w-2xl mx-auto">
         <DrawerHeader className="text-left">
-          <DrawerTitle>Editar solicitud</DrawerTitle>
+          <DrawerTitle>{t('title')}</DrawerTitle>
         </DrawerHeader>
 
         <form onSubmit={handleSubmit} className="space-y-6 pb-2">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="origin">Origen</Label>
+              <Label htmlFor="origin">{t('labelOrigin')}</Label>
               <Input
                 id="origin"
                 name="origin"
                 value={formData.origin}
                 onChange={handleChange}
                 className="mt-2"
-                placeholder="Ciudad de origen"
+                placeholder={t('originPlaceholder')}
               />
             </div>
 
             <div>
-              <Label htmlFor="destination">Destino</Label>
+              <Label htmlFor="destination">{t('labelDestination')}</Label>
               <Input
                 id="destination"
                 name="destination"
                 value={formData.destination}
                 onChange={handleChange}
                 className="mt-2"
-                placeholder="Destino de tu viaje"
+                placeholder={t('destinationPlaceholder')}
               />
             </div>
           </div>
 
           <div>
-            <Label htmlFor="numberOfPeople">Número de personas</Label>
+            <Label htmlFor="numberOfPeople">{t('labelPeople')}</Label>
             <Input
               type="number"
               id="numberOfPeople"
@@ -152,14 +154,14 @@ export function TripRequestEditForm({ request, token, onClose, onUpdate }: Props
               value={formData.numberOfPeople}
               onChange={handleChange}
               className="mt-2"
-              placeholder="Ej. 2"
+              placeholder={t('peoplePlaceholder')}
               min="1"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="startDate">Fecha de inicio</Label>
+              <Label htmlFor="startDate">{t('labelStartDate')}</Label>
               <Input
                 type="date"
                 id="startDate"
@@ -171,7 +173,7 @@ export function TripRequestEditForm({ request, token, onClose, onUpdate }: Props
             </div>
 
             <div>
-              <Label htmlFor="endDate">Fecha de fin</Label>
+              <Label htmlFor="endDate">{t('labelEndDate')}</Label>
               <Input
                 type="date"
                 id="endDate"
@@ -185,7 +187,7 @@ export function TripRequestEditForm({ request, token, onClose, onUpdate }: Props
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="budgetMin">Presupuesto mínimo</Label>
+              <Label htmlFor="budgetMin">{t('labelBudgetMin')}</Label>
               <Input
                 type="number"
                 id="budgetMin"
@@ -199,7 +201,7 @@ export function TripRequestEditForm({ request, token, onClose, onUpdate }: Props
             </div>
 
             <div>
-              <Label htmlFor="budgetMax">Presupuesto máximo</Label>
+              <Label htmlFor="budgetMax">{t('labelBudgetMax')}</Label>
               <Input
                 type="number"
                 id="budgetMax"
@@ -216,7 +218,7 @@ export function TripRequestEditForm({ request, token, onClose, onUpdate }: Props
           <div className="border-t border-border pt-6 flex gap-3">
             <Button type="submit" disabled={isLoading} className="flex-1 gap-2">
               {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
-              {isLoading ? 'Actualizando...' : 'Guardar cambios'}
+              {isLoading ? t('updating') : t('save')}
             </Button>
             <Button
               type="button"
@@ -224,7 +226,7 @@ export function TripRequestEditForm({ request, token, onClose, onUpdate }: Props
               onClick={() => handleOpenChange(false)}
               disabled={isLoading}
             >
-              Cancelar
+              {t('cancel')}
             </Button>
           </div>
         </form>

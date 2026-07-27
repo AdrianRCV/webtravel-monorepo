@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { LogOut, Menu, X } from 'lucide-react';
 import { signOut } from 'next-auth/react';
+import { useTranslations, useLocale } from 'next-intl';
+import { Link as LocaleLink, getPathname } from '@/i18n/navigation';
 import { clearChatStorage } from '@/lib/chat-storage';
 
 interface ClientHeaderProps {
@@ -10,11 +12,13 @@ interface ClientHeaderProps {
 }
 
 export function ClientHeader({ active }: ClientHeaderProps) {
+  const t = useTranslations('Client.Header');
+  const locale = useLocale();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     clearChatStorage();
-    await signOut({ redirect: true, callbackUrl: '/login' });
+    await signOut({ redirect: true, callbackUrl: getPathname({ href: '/login', locale }) });
   };
 
   const navLinkClass = (key: 'dashboard' | 'settings') =>
@@ -34,22 +38,22 @@ export function ClientHeader({ active }: ClientHeaderProps) {
 
           <div className="hidden md:flex items-center gap-6">
             <nav className="flex gap-6">
-              <a href="/chat" className="text-gray-600 hover:text-gray-900 transition">
-                Chat
-              </a>
-              <a href="/client/dashboard" className={navLinkClass('dashboard')}>
-                Mis solicitudes
-              </a>
-              <a href="/client/settings" className={navLinkClass('settings')}>
-                Ajustes
-              </a>
+              <LocaleLink href="/chat" className="text-gray-600 hover:text-gray-900 transition">
+                {t('chatLink')}
+              </LocaleLink>
+              <LocaleLink href="/client/dashboard" className={navLinkClass('dashboard')}>
+                {t('dashboardLink')}
+              </LocaleLink>
+              <LocaleLink href="/client/settings" className={navLinkClass('settings')}>
+                {t('settingsLink')}
+              </LocaleLink>
             </nav>
             <button
               onClick={handleLogout}
               className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition"
             >
               <LogOut className="h-5 w-5" />
-              Cerrar sesión
+              {t('logout')}
             </button>
           </div>
 
@@ -63,21 +67,21 @@ export function ClientHeader({ active }: ClientHeaderProps) {
 
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-gray-200 py-4 space-y-4">
-            <a href="/chat" className="block text-gray-600 hover:text-gray-900">
-              Chat
-            </a>
-            <a href="/client/dashboard" className={`block ${navLinkClass('dashboard')}`}>
-              Mis solicitudes
-            </a>
-            <a href="/client/settings" className={`block ${navLinkClass('settings')}`}>
-              Ajustes
-            </a>
+            <LocaleLink href="/chat" className="block text-gray-600 hover:text-gray-900">
+              {t('chatLink')}
+            </LocaleLink>
+            <LocaleLink href="/client/dashboard" className={`block ${navLinkClass('dashboard')}`}>
+              {t('dashboardLink')}
+            </LocaleLink>
+            <LocaleLink href="/client/settings" className={`block ${navLinkClass('settings')}`}>
+              {t('settingsLink')}
+            </LocaleLink>
             <button
               onClick={handleLogout}
               className="w-full flex items-center justify-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition"
             >
               <LogOut className="h-5 w-5" />
-              Cerrar sesión
+              {t('logout')}
             </button>
           </div>
         )}

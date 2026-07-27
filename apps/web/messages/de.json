@@ -252,6 +252,90 @@
   "Client": {
     "Layout": {
       "metaTitle": "Mein Bereich"
+    },
+    "Header": {
+      "chatLink": "Chat",
+      "dashboardLink": "Meine Anfragen",
+      "settingsLink": "Einstellungen",
+      "logout": "Abmelden"
+    },
+    "Status": {
+      "pending": "Ausstehend",
+      "inProgress": "In Bearbeitung",
+      "proposed": "Vorgeschlagen",
+      "approved": "Genehmigt",
+      "rejected": "Abgelehnt"
+    },
+    "Dashboard": {
+      "title": "Meine Reiseanfragen",
+      "subtitle": "Hier kannst du alle deine Reiseanfragen einsehen und verwalten",
+      "loadError": "Anfragen konnten nicht geladen werden"
+    },
+    "DashboardWelcome": {
+      "heading": "Willkommen! Lass uns deine Reise planen",
+      "subtitle": "Du hast noch keine Reiseanfragen. So funktioniert's:",
+      "step1": "Erzähl uns im Chat von deiner Traumreise",
+      "step2": "Unser Team erstellt einen maßgeschneiderten Vorschlag",
+      "step3": "Prüfe und bestätige deinen Reiseplan",
+      "cta": "Im Chat starten"
+    },
+    "TripRequestsTable": {
+      "colOrigin": "Abflugort",
+      "colDestination": "Reiseziel",
+      "colDates": "Termine",
+      "colPeople": "Personen",
+      "colBudget": "Budget",
+      "colStatus": "Status",
+      "colActions": "Aktionen",
+      "notSpecified": "Nicht angegeben",
+      "dateSeparator": "bis",
+      "viewDetails": "Details ansehen",
+      "editRequest": "Anfrage bearbeiten",
+      "deleteConversation": "Unterhaltung löschen",
+      "deleteError": "Die Unterhaltung konnte nicht gelöscht werden",
+      "deleteSuccess": "Unterhaltung gelöscht"
+    },
+    "TripRequestDetailModal": {
+      "title": "Details der Anfrage",
+      "labelOrigin": "Abflugort",
+      "labelDestination": "Reiseziel",
+      "labelDates": "Reisetermine",
+      "labelPeople": "Anzahl der Personen",
+      "labelBudget": "Budget",
+      "notSpecified": "Nicht angegeben",
+      "datesNotSpecified": "Nicht angegeben",
+      "dateSeparator": "bis",
+      "statusLabel": "Status",
+      "preferencesTitle": "Zusätzliche Präferenzen",
+      "continueConversation": "Unterhaltung fortsetzen",
+      "viewItinerary": "Reiseplan ansehen",
+      "close": "Schließen"
+    },
+    "TripRequestEditForm": {
+      "title": "Anfrage bearbeiten",
+      "labelOrigin": "Abflugort",
+      "originPlaceholder": "Abflugstadt",
+      "labelDestination": "Reiseziel",
+      "destinationPlaceholder": "Ziel deiner Reise",
+      "labelPeople": "Anzahl der Personen",
+      "peoplePlaceholder": "Z. B. 2",
+      "labelStartDate": "Startdatum",
+      "labelEndDate": "Enddatum",
+      "labelBudgetMin": "Mindestbudget",
+      "labelBudgetMax": "Höchstbudget",
+      "updating": "Wird aktualisiert...",
+      "save": "Änderungen speichern",
+      "cancel": "Abbrechen",
+      "successToast": "Anfrage aktualisiert",
+      "errorFallback": "Die Anfrage konnte nicht aktualisiert werden",
+      "errorGeneric": "Fehler bei der Aktualisierung"
+    },
+    "DeleteConversationDialog": {
+      "title": "Unterhaltung löschen",
+      "description": "Diese Aktion kann nicht rückgängig gemacht werden. Die gesamte Unterhaltung, die Reiseanfrage und jeder zugehörige Reiseplan werden gelöscht.",
+      "cancel": "Abbrechen",
+      "deleting": "Wird gelöscht...",
+      "confirmDelete": "Endgültig löschen"
     }
   }
 }

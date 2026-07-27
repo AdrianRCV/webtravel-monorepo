@@ -252,6 +252,90 @@
   "Client": {
     "Layout": {
       "metaTitle": "Mon espace"
+    },
+    "Header": {
+      "chatLink": "Chat",
+      "dashboardLink": "Mes demandes",
+      "settingsLink": "Paramètres",
+      "logout": "Se déconnecter"
+    },
+    "Status": {
+      "pending": "En attente",
+      "inProgress": "En cours",
+      "proposed": "Proposée",
+      "approved": "Approuvée",
+      "rejected": "Rejetée"
+    },
+    "Dashboard": {
+      "title": "Mes demandes de voyage",
+      "subtitle": "Ici, vous pouvez consulter et gérer toutes vos demandes de voyage",
+      "loadError": "Impossible de charger les demandes"
+    },
+    "DashboardWelcome": {
+      "heading": "Bienvenue ! Commençons à planifier votre voyage",
+      "subtitle": "Vous n'avez pas encore de demande de voyage. Voici comment ça marche :",
+      "step1": "Parlez-nous de votre voyage idéal dans le chat",
+      "step2": "Notre équipe prépare une proposition sur mesure",
+      "step3": "Consultez et approuvez votre itinéraire",
+      "cta": "Commencer dans le chat"
+    },
+    "TripRequestsTable": {
+      "colOrigin": "Origine",
+      "colDestination": "Destination",
+      "colDates": "Dates",
+      "colPeople": "Personnes",
+      "colBudget": "Budget",
+      "colStatus": "Statut",
+      "colActions": "Actions",
+      "notSpecified": "Non spécifié",
+      "dateSeparator": "au",
+      "viewDetails": "Voir les détails",
+      "editRequest": "Modifier la demande",
+      "deleteConversation": "Supprimer la conversation",
+      "deleteError": "Impossible de supprimer la conversation",
+      "deleteSuccess": "Conversation supprimée"
+    },
+    "TripRequestDetailModal": {
+      "title": "Détails de la demande",
+      "labelOrigin": "Origine",
+      "labelDestination": "Destination",
+      "labelDates": "Dates",
+      "labelPeople": "Nombre de personnes",
+      "labelBudget": "Budget",
+      "notSpecified": "Non spécifié",
+      "datesNotSpecified": "Non spécifiées",
+      "dateSeparator": "au",
+      "statusLabel": "Statut",
+      "preferencesTitle": "Préférences additionnelles",
+      "continueConversation": "Continuer la conversation",
+      "viewItinerary": "Voir l'itinéraire",
+      "close": "Fermer"
+    },
+    "TripRequestEditForm": {
+      "title": "Modifier la demande",
+      "labelOrigin": "Origine",
+      "originPlaceholder": "Ville de départ",
+      "labelDestination": "Destination",
+      "destinationPlaceholder": "Destination de votre voyage",
+      "labelPeople": "Nombre de personnes",
+      "peoplePlaceholder": "Ex. 2",
+      "labelStartDate": "Date de début",
+      "labelEndDate": "Date de fin",
+      "labelBudgetMin": "Budget minimum",
+      "labelBudgetMax": "Budget maximum",
+      "updating": "Mise à jour...",
+      "save": "Enregistrer les modifications",
+      "cancel": "Annuler",
+      "successToast": "Demande mise à jour",
+      "errorFallback": "Impossible de mettre à jour la demande",
+      "errorGeneric": "Erreur lors de la mise à jour"
+    },
+    "DeleteConversationDialog": {
+      "title": "Supprimer la conversation",
+      "description": "Cette action est irréversible. La conversation complète, la demande de voyage et tout itinéraire associé seront supprimés.",
+      "cancel": "Annuler",
+      "deleting": "Suppression...",
+      "confirmDelete": "Supprimer définitivement"
     }
   }
 }
