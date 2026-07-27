@@ -3,7 +3,8 @@
 import { signOut } from 'next-auth/react';
 import { LogOut, Loader2 } from 'lucide-react';
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
+import { getPathname } from '@/i18n/navigation';
 import { clearChatStorage } from '@/lib/chat-storage';
 
 interface SignOutButtonProps {
@@ -12,13 +13,14 @@ interface SignOutButtonProps {
 
 export function SignOutButton({ variant = 'dropdown' }: SignOutButtonProps) {
   const t = useTranslations('Auth.SignOut');
+  const locale = useLocale();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSignOut = async () => {
     setIsLoading(true);
     try {
       clearChatStorage();
-      await signOut({ callbackUrl: '/login' });
+      await signOut({ callbackUrl: getPathname({ href: '/login', locale }) });
     } catch (error) {
       console.error('Error signing out:', error);
       setIsLoading(false);

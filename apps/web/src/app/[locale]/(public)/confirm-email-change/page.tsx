@@ -96,12 +96,12 @@ function ConfirmEmailChangeContent() {
             <XCircle className="mx-auto h-12 w-12 text-red-500" />
             <h1 className="text-2xl font-bold text-zinc-900">{t('errorTitle')}</h1>
             <p className="text-zinc-600">{errorMessage}</p>
-            <a
+            <LocaleLink
               href="/client/settings"
               className="inline-block w-full rounded-lg border border-zinc-300 px-4 py-3 text-zinc-700 font-medium transition-colors hover:bg-zinc-50"
             >
               {t('backToSettings')}
-            </a>
+            </LocaleLink>
           </>
         )}
       </div>
