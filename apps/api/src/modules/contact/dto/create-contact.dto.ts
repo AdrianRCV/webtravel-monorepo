@@ -1,4 +1,5 @@
-import { IsEmail, IsString, IsOptional, MinLength, MaxLength } from 'class-validator';
+import { IsEmail, IsString, IsOptional, MinLength, MaxLength, IsIn } from 'class-validator';
+import { SUPPORTED_LOCALES } from '../../../common/locale';
 
 export class CreateContactDto {
   @IsString()
@@ -17,4 +18,8 @@ export class CreateContactDto {
   @IsOptional()
   @IsString()
   website?: string;
+
+  @IsOptional()
+  @IsIn(SUPPORTED_LOCALES)
+  locale?: string;
 }

@@ -14,7 +14,7 @@ import {
 import { verifyEmailTemplate, verifyEmailSubjectFor, VerifyEmailData } from './templates/verify-email.template';
 import { passwordResetTemplate, passwordResetSubjectFor, PasswordResetEmailData } from './templates/password-reset.template';
 import { googleAccountNoticeTemplate, googleAccountNoticeSubjectFor } from './templates/google-account-notice.template';
-import { contactMessageTemplate } from './templates/contact-message.template';
+import { contactMessageTemplate, contactMessageSubjectFor } from './templates/contact-message.template';
 import {
   emailChangeConfirmationTemplate,
   emailChangeConfirmationSubjectFor,
@@ -224,6 +224,7 @@ export class NotificationsService {
     name: string;
     email: string;
     message: string;
+    locale?: string;
   }): Promise<void> {
     if (!this.enabled || !this.resend) {
       this.logger.warn('Email sending skipped: service not enabled');
@@ -242,13 +243,14 @@ export class NotificationsService {
         senderName: data.name,
         senderEmail: data.email,
         message: data.message,
-        previewText: `Nuevo mensaje de contacto de ${data.name}`,
+        previewText: '',
+        locale: data.locale,
       });
 
       await this.resend.emails.send({
         from: this.from,
         to,
-        subject: `Nuevo mensaje de contacto: ${data.name}`,
+        subject: contactMessageSubjectFor(data.locale, data.name),
         html,
       });
 
