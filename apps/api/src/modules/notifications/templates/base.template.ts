@@ -124,7 +124,7 @@ export const baseTemplate = (content: string, data: BaseEmailData): string => {
         <div class="logo">✈️ YourAgencyToday</div>
       </div>
       <div class="content">
-        ${escapedRecipientName ? `<p style="font-size: 16px; color: #333; margin-bottom: 20px;">${escapeHtml(copy.greeting(escapedRecipientName))}</p>` : ''}
+        ${escapedRecipientName ? `<p style="font-size: 16px; color: #333; margin-bottom: 20px;">${copy.greeting(escapedRecipientName)}</p>` : ''}
         ${content}
       </div>
       <div class="footer">
