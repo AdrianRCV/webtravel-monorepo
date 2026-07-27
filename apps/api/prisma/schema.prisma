@@ -59,6 +59,7 @@ model User {
   emailVerified      DateTime?
   image              String?
   role               Role          @default(CLIENT)
+  locale             String        @default("es")
   password           String?
   
   accounts           Account[]
