@@ -203,7 +203,7 @@ export class AuthService {
   async forgotPassword(email: string): Promise<{ success: true }> {
     const user = await this.prisma.user.findUnique({
       where: { email },
-      select: { id: true, password: true },
+      select: { id: true, password: true, locale: true },
     });
 
     if (user) {
@@ -211,7 +211,7 @@ export class AuthService {
         // Fire-and-forget: awaiting the network call here would make this branch
         // measurably slower than the "no such account" branch, leaking account
         // existence via response timing.
-        void this.notificationsService.sendGoogleAccountNotice(email);
+        void this.notificationsService.sendGoogleAccountNotice(email, user.locale);
       } else {
         await this.prisma.verificationToken.deleteMany({
           where: { identifier: email, type: VerificationTokenType.PASSWORD_RESET },
@@ -229,10 +229,16 @@ export class AuthService {
         });
 
         const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+        const normalizedLocale = normalizeLocale(user.locale);
 
         // Fire-and-forget: see comment above, same timing-leak concern.
         void this.notificationsService.sendPasswordResetEmail(email, {
-          resetUrl: `${frontendUrl}/reset-password?token=${resetToken}`,
+          resetUrl: localizedFrontendUrl(
+            frontendUrl,
+            normalizedLocale,
+            `/reset-password?token=${resetToken}`,
+          ),
+          locale: normalizedLocale,
         });
       }
     }

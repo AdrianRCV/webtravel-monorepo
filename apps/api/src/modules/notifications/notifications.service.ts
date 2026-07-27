@@ -10,8 +10,8 @@ import {
   ItineraryCreatedEmailData,
 } from './templates/itinerary-created.template';
 import { verifyEmailTemplate, verifyEmailSubjectFor, VerifyEmailData } from './templates/verify-email.template';
-import { passwordResetTemplate, PasswordResetEmailData } from './templates/password-reset.template';
-import { googleAccountNoticeTemplate } from './templates/google-account-notice.template';
+import { passwordResetTemplate, passwordResetSubjectFor, PasswordResetEmailData } from './templates/password-reset.template';
+import { googleAccountNoticeTemplate, googleAccountNoticeSubjectFor } from './templates/google-account-notice.template';
 import { contactMessageTemplate } from './templates/contact-message.template';
 import {
   emailChangeConfirmationTemplate,
@@ -175,16 +175,12 @@ export class NotificationsService {
     }
 
     try {
-      const emailData: PasswordResetEmailData = {
-        ...data,
-        previewText: 'Restablecé tu contraseña de YourAgencyToday',
-      };
-      const html = passwordResetTemplate(emailData);
+      const html = passwordResetTemplate({ ...data, previewText: '' });
 
       await this.resend.emails.send({
         from: this.from,
         to,
-        subject: 'Restablecé tu contraseña - YourAgencyToday',
+        subject: passwordResetSubjectFor(data.locale),
         html,
       });
 
@@ -198,7 +194,7 @@ export class NotificationsService {
     }
   }
 
-  async sendGoogleAccountNotice(to: string): Promise<void> {
+  async sendGoogleAccountNotice(to: string, locale?: string | null): Promise<void> {
     if (!this.enabled || !this.resend) {
       this.logger.warn('Email sending skipped: service not enabled');
       return;
@@ -210,14 +206,12 @@ export class NotificationsService {
     }
 
     try {
-      const html = googleAccountNoticeTemplate({
-        previewText: 'Esta cuenta usa Inicio de sesión con Google',
-      });
+      const html = googleAccountNoticeTemplate({ previewText: '', locale });
 
       await this.resend.emails.send({
         from: this.from,
         to,
-        subject: 'Esta cuenta usa Google - YourAgencyToday',
+        subject: googleAccountNoticeSubjectFor(locale),
         html,
       });
 
