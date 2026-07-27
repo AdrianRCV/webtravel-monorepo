@@ -248,5 +248,151 @@
       "rightsLink": "formulaire de contact",
       "rightsSuffix": "."
     }
+  },
+  "Client": {
+    "Layout": {
+      "metaTitle": "Mon espace"
+    },
+    "Header": {
+      "chatLink": "Chat",
+      "dashboardLink": "Mes demandes",
+      "settingsLink": "Paramètres",
+      "logout": "Se déconnecter"
+    },
+    "Status": {
+      "pending": "En attente",
+      "inProgress": "En cours",
+      "proposed": "Proposée",
+      "approved": "Approuvée",
+      "rejected": "Rejetée"
+    },
+    "Dashboard": {
+      "title": "Mes demandes de voyage",
+      "subtitle": "Ici, vous pouvez consulter et gérer toutes vos demandes de voyage",
+      "loadError": "Impossible de charger les demandes"
+    },
+    "DashboardWelcome": {
+      "heading": "Bienvenue ! Commençons à planifier votre voyage",
+      "subtitle": "Vous n'avez pas encore de demande de voyage. Voici comment ça marche :",
+      "step1": "Parlez-nous de votre voyage idéal dans le chat",
+      "step2": "Notre équipe prépare une proposition sur mesure",
+      "step3": "Consultez et approuvez votre itinéraire",
+      "cta": "Commencer dans le chat"
+    },
+    "TripRequestsTable": {
+      "colOrigin": "Origine",
+      "colDestination": "Destination",
+      "colDates": "Dates",
+      "colPeople": "Personnes",
+      "colBudget": "Budget",
+      "colStatus": "Statut",
+      "colActions": "Actions",
+      "notSpecified": "Non spécifié",
+      "dateSeparator": "au",
+      "viewDetails": "Voir les détails",
+      "editRequest": "Modifier la demande",
+      "deleteConversation": "Supprimer la conversation",
+      "deleteError": "Impossible de supprimer la conversation",
+      "deleteSuccess": "Conversation supprimée"
+    },
+    "TripRequestDetailModal": {
+      "title": "Détails de la demande",
+      "labelOrigin": "Origine",
+      "labelDestination": "Destination",
+      "labelDates": "Dates",
+      "labelPeople": "Nombre de personnes",
+      "labelBudget": "Budget",
+      "notSpecified": "Non spécifié",
+      "datesNotSpecified": "Non spécifiées",
+      "dateSeparator": "au",
+      "statusLabel": "Statut",
+      "preferencesTitle": "Préférences additionnelles",
+      "continueConversation": "Continuer la conversation",
+      "viewItinerary": "Voir l'itinéraire",
+      "close": "Fermer"
+    },
+    "TripRequestEditForm": {
+      "title": "Modifier la demande",
+      "labelOrigin": "Origine",
+      "originPlaceholder": "Ville de départ",
+      "labelDestination": "Destination",
+      "destinationPlaceholder": "Destination de votre voyage",
+      "labelPeople": "Nombre de personnes",
+      "peoplePlaceholder": "Ex. 2",
+      "labelStartDate": "Date de début",
+      "labelEndDate": "Date de fin",
+      "labelBudgetMin": "Budget minimum",
+      "labelBudgetMax": "Budget maximum",
+      "updating": "Mise à jour...",
+      "save": "Enregistrer les modifications",
+      "cancel": "Annuler",
+      "successToast": "Demande mise à jour",
+      "errorFallback": "Impossible de mettre à jour la demande",
+      "errorGeneric": "Erreur lors de la mise à jour"
+    },
+    "DeleteConversationDialog": {
+      "title": "Supprimer la conversation",
+      "description": "Cette action est irréversible. La conversation complète, la demande de voyage et tout itinéraire associé seront supprimés.",
+      "cancel": "Annuler",
+      "deleting": "Suppression...",
+      "confirmDelete": "Supprimer définitivement"
+    },
+    "Settings": {
+      "title": "Paramètres du compte",
+      "subtitle": "Gérez votre mot de passe, votre email et votre compte",
+      "passwordSectionTitle": "Changer le mot de passe",
+      "emailSectionTitle": "Changer l'email"
+    },
+    "ChangePasswordForm": {
+      "currentPasswordLabel": "Mot de passe actuel",
+      "newPasswordLabel": "Nouveau mot de passe",
+      "newPasswordPlaceholder": "Au moins 8 caractères, une majuscule et un chiffre",
+      "confirmPasswordLabel": "Confirmer le nouveau mot de passe",
+      "saving": "Enregistrement...",
+      "submit": "Changer le mot de passe",
+      "successToast": "Mot de passe mis à jour.",
+      "errorFallback": "Impossible de changer le mot de passe",
+      "errorGeneric": "Erreur lors du changement de mot de passe"
+    },
+    "ChangeEmailForm": {
+      "currentPasswordLabel": "Mot de passe actuel",
+      "newEmailLabel": "Nouvel email",
+      "newEmailPlaceholder": "votre-nouveau@email.com",
+      "sending": "Envoi en cours...",
+      "submit": "Changer l'email",
+      "errorFallback": "Impossible de demander le changement d'email",
+      "errorGeneric": "Erreur lors de la demande de changement d'email",
+      "successPrefix": "Nous avons envoyé un lien de confirmation à ",
+      "successSuffix": ". Votre email actuel continue de fonctionner jusqu'à ce que vous confirmiez le changement."
+    },
+    "DeleteAccountSection": {
+      "dangerZoneTitle": "Zone de danger",
+      "warning": "La suppression de votre compte efface définitivement votre historique de conversations et vos demandes de voyage. Cette action est irréversible.",
+      "deleteButton": "Supprimer mon compte",
+      "dialogTitle": "Supprimer votre compte ?",
+      "dialogDescription": "Saisissez votre mot de passe actuel (ou « SUPPRIMER » si votre compte utilise Google) pour confirmer. Cette action est définitive.",
+      "confirmPlaceholder": "Mot de passe actuel ou SUPPRIMER",
+      "cancel": "Annuler",
+      "deleting": "Suppression...",
+      "confirmDelete": "Oui, supprimer mon compte",
+      "errorFallback": "Impossible de supprimer le compte",
+      "errorGeneric": "Erreur lors de la suppression du compte"
+    },
+    "TripItinerary": {
+      "documentTitlePrefix": "Itinéraire - ",
+      "documentTitleFallback": "votre voyage",
+      "backLink": "Retour à mes demandes",
+      "downloadPdf": "Télécharger le PDF"
+    },
+    "ItineraryPreview": {
+      "noActivities": "Aucune activité prévue pour ce jour",
+      "personSingular": "personne",
+      "personPlural": "personnes",
+      "daySingular": "jour",
+      "dayPlural": "jours",
+      "referenceLabel": "Référence :",
+      "viewDetailsFallback": "Voir les détails",
+      "createdByAdminPrefix": "Itinéraire créé par "
+    }
   }
 }

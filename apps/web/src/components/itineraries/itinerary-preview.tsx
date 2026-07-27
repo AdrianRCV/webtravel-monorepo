@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from 'next-intl';
 import { Plane, Hotel, Bus, Calendar, MapPin, Users, ExternalLink, Clock, DollarSign } from 'lucide-react';
 import type { ItineraryWithDays } from '@/lib/api';
 
@@ -24,6 +25,7 @@ const ACTIVITY_COLORS = {
 };
 
 export function ItineraryPreview({ itinerary }: ItineraryPreviewProps) {
+  const t = useTranslations('Client.ItineraryPreview');
   const totalDays = itinerary.days.length;
 
   return (
@@ -46,12 +48,12 @@ export function ItineraryPreview({ itinerary }: ItineraryPreviewProps) {
             {itinerary.tripRequest.numberOfPeople && (
               <div className="flex items-center gap-2">
                 <Users className="h-4 w-4" />
-                <span>{itinerary.tripRequest.numberOfPeople} {itinerary.tripRequest.numberOfPeople === 1 ? 'persona' : 'personas'}</span>
+                <span>{itinerary.tripRequest.numberOfPeople} {itinerary.tripRequest.numberOfPeople === 1 ? t('personSingular') : t('personPlural')}</span>
               </div>
             )}
             <div className="flex items-center gap-2">
               <Calendar className="h-4 w-4" />
-              <span>{totalDays} {totalDays === 1 ? 'día' : 'días'}</span>
+              <span>{totalDays} {totalDays === 1 ? t('daySingular') : t('dayPlural')}</span>
             </div>
             {itinerary.totalEstimatedPrice > 0 && (
               <div className="flex items-center gap-2">
@@ -78,7 +80,7 @@ export function ItineraryPreview({ itinerary }: ItineraryPreviewProps) {
         >
           <div className="border-b border-zinc-200 bg-zinc-50 px-6 py-4 dark:border-zinc-800 dark:bg-zinc-800/50">
             <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
-              Día {day.dayNumber}
+              {t('daySingular')} {day.dayNumber}
             </h2>
             {day.description && (
               <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
@@ -90,7 +92,7 @@ export function ItineraryPreview({ itinerary }: ItineraryPreviewProps) {
           <div className="divide-y divide-zinc-200 dark:divide-zinc-800">
             {day.activities.length === 0 ? (
               <div className="px-6 py-8 text-center text-sm text-zinc-500 dark:text-zinc-400">
-                No hay actividades programadas para este día
+                {t('noActivities')}
               </div>
             ) : (
               day.activities.map((activity) => {
@@ -145,7 +147,7 @@ export function ItineraryPreview({ itinerary }: ItineraryPreviewProps) {
 
                         {activity.referenceNumber && (
                           <div className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                            <span className="font-medium">Referencia:</span> {activity.referenceNumber}
+                            <span className="font-medium">{t('referenceLabel')}</span> {activity.referenceNumber}
                           </div>
                         )}
 
@@ -163,7 +165,7 @@ export function ItineraryPreview({ itinerary }: ItineraryPreviewProps) {
                             className="mt-4 inline-flex items-center gap-2 rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 transition-colors dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
                           >
                             <ExternalLink className="h-4 w-4" />
-                            {activity.bookingLinkText || 'Ver Detalles'}
+                            {activity.bookingLinkText || t('viewDetailsFallback')}
                           </a>
                         )}
                       </div>
@@ -179,7 +181,7 @@ export function ItineraryPreview({ itinerary }: ItineraryPreviewProps) {
       {itinerary.createdByAdmin && (
         <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 text-center dark:border-zinc-800 dark:bg-zinc-800/50">
           <p className="text-xs text-zinc-500 dark:text-zinc-400">
-            Itinerario creado por {itinerary.createdByAdmin.name || itinerary.createdByAdmin.email}
+            {t('createdByAdminPrefix')}{itinerary.createdByAdmin.name || itinerary.createdByAdmin.email}
           </p>
         </div>
       )}

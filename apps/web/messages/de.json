@@ -248,5 +248,151 @@
       "rightsLink": "Kontaktformular",
       "rightsSuffix": " schreibst."
     }
+  },
+  "Client": {
+    "Layout": {
+      "metaTitle": "Mein Bereich"
+    },
+    "Header": {
+      "chatLink": "Chat",
+      "dashboardLink": "Meine Anfragen",
+      "settingsLink": "Einstellungen",
+      "logout": "Abmelden"
+    },
+    "Status": {
+      "pending": "Ausstehend",
+      "inProgress": "In Bearbeitung",
+      "proposed": "Vorgeschlagen",
+      "approved": "Genehmigt",
+      "rejected": "Abgelehnt"
+    },
+    "Dashboard": {
+      "title": "Meine Reiseanfragen",
+      "subtitle": "Hier kannst du alle deine Reiseanfragen einsehen und verwalten",
+      "loadError": "Anfragen konnten nicht geladen werden"
+    },
+    "DashboardWelcome": {
+      "heading": "Willkommen! Lass uns deine Reise planen",
+      "subtitle": "Du hast noch keine Reiseanfragen. So funktioniert's:",
+      "step1": "Erzähl uns im Chat von deiner Traumreise",
+      "step2": "Unser Team erstellt einen maßgeschneiderten Vorschlag",
+      "step3": "Prüfe und bestätige deinen Reiseplan",
+      "cta": "Im Chat starten"
+    },
+    "TripRequestsTable": {
+      "colOrigin": "Abflugort",
+      "colDestination": "Reiseziel",
+      "colDates": "Termine",
+      "colPeople": "Personen",
+      "colBudget": "Budget",
+      "colStatus": "Status",
+      "colActions": "Aktionen",
+      "notSpecified": "Nicht angegeben",
+      "dateSeparator": "bis",
+      "viewDetails": "Details ansehen",
+      "editRequest": "Anfrage bearbeiten",
+      "deleteConversation": "Unterhaltung löschen",
+      "deleteError": "Die Unterhaltung konnte nicht gelöscht werden",
+      "deleteSuccess": "Unterhaltung gelöscht"
+    },
+    "TripRequestDetailModal": {
+      "title": "Details der Anfrage",
+      "labelOrigin": "Abflugort",
+      "labelDestination": "Reiseziel",
+      "labelDates": "Reisetermine",
+      "labelPeople": "Anzahl der Personen",
+      "labelBudget": "Budget",
+      "notSpecified": "Nicht angegeben",
+      "datesNotSpecified": "Nicht angegeben",
+      "dateSeparator": "bis",
+      "statusLabel": "Status",
+      "preferencesTitle": "Zusätzliche Präferenzen",
+      "continueConversation": "Unterhaltung fortsetzen",
+      "viewItinerary": "Reiseplan ansehen",
+      "close": "Schließen"
+    },
+    "TripRequestEditForm": {
+      "title": "Anfrage bearbeiten",
+      "labelOrigin": "Abflugort",
+      "originPlaceholder": "Abflugstadt",
+      "labelDestination": "Reiseziel",
+      "destinationPlaceholder": "Ziel deiner Reise",
+      "labelPeople": "Anzahl der Personen",
+      "peoplePlaceholder": "Z. B. 2",
+      "labelStartDate": "Startdatum",
+      "labelEndDate": "Enddatum",
+      "labelBudgetMin": "Mindestbudget",
+      "labelBudgetMax": "Höchstbudget",
+      "updating": "Wird aktualisiert...",
+      "save": "Änderungen speichern",
+      "cancel": "Abbrechen",
+      "successToast": "Anfrage aktualisiert",
+      "errorFallback": "Die Anfrage konnte nicht aktualisiert werden",
+      "errorGeneric": "Fehler bei der Aktualisierung"
+    },
+    "DeleteConversationDialog": {
+      "title": "Unterhaltung löschen",
+      "description": "Diese Aktion kann nicht rückgängig gemacht werden. Die gesamte Unterhaltung, die Reiseanfrage und jeder zugehörige Reiseplan werden gelöscht.",
+      "cancel": "Abbrechen",
+      "deleting": "Wird gelöscht...",
+      "confirmDelete": "Endgültig löschen"
+    },
+    "Settings": {
+      "title": "Kontoeinstellungen",
+      "subtitle": "Verwalte dein Passwort, deine E-Mail und dein Konto",
+      "passwordSectionTitle": "Passwort ändern",
+      "emailSectionTitle": "E-Mail ändern"
+    },
+    "ChangePasswordForm": {
+      "currentPasswordLabel": "Aktuelles Passwort",
+      "newPasswordLabel": "Neues Passwort",
+      "newPasswordPlaceholder": "Mindestens 8 Zeichen, ein Großbuchstabe und eine Zahl",
+      "confirmPasswordLabel": "Neues Passwort bestätigen",
+      "saving": "Wird gespeichert...",
+      "submit": "Passwort ändern",
+      "successToast": "Passwort aktualisiert.",
+      "errorFallback": "Das Passwort konnte nicht geändert werden",
+      "errorGeneric": "Fehler beim Ändern des Passworts"
+    },
+    "ChangeEmailForm": {
+      "currentPasswordLabel": "Aktuelles Passwort",
+      "newEmailLabel": "Neue E-Mail-Adresse",
+      "newEmailPlaceholder": "deine-neue@email.com",
+      "sending": "Wird gesendet...",
+      "submit": "E-Mail ändern",
+      "errorFallback": "Die E-Mail-Änderung konnte nicht angefordert werden",
+      "errorGeneric": "Fehler bei der Anforderung der E-Mail-Änderung",
+      "successPrefix": "Wir haben einen Bestätigungslink an ",
+      "successSuffix": " gesendet. Deine aktuelle E-Mail-Adresse funktioniert weiter, bis du die Änderung bestätigst."
+    },
+    "DeleteAccountSection": {
+      "dangerZoneTitle": "Gefahrenzone",
+      "warning": "Das Löschen deines Kontos entfernt deinen Gesprächsverlauf und deine Reiseanfragen dauerhaft. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "deleteButton": "Mein Konto löschen",
+      "dialogTitle": "Konto löschen?",
+      "dialogDescription": "Gib dein aktuelles Passwort ein (oder \"LÖSCHEN\", falls dein Konto Google verwendet), um zu bestätigen. Diese Aktion ist endgültig.",
+      "confirmPlaceholder": "Aktuelles Passwort oder LÖSCHEN",
+      "cancel": "Abbrechen",
+      "deleting": "Wird gelöscht...",
+      "confirmDelete": "Ja, mein Konto löschen",
+      "errorFallback": "Das Konto konnte nicht gelöscht werden",
+      "errorGeneric": "Fehler beim Löschen des Kontos"
+    },
+    "TripItinerary": {
+      "documentTitlePrefix": "Reiseplan - ",
+      "documentTitleFallback": "deine Reise",
+      "backLink": "Zurück zu meinen Anfragen",
+      "downloadPdf": "PDF herunterladen"
+    },
+    "ItineraryPreview": {
+      "noActivities": "Für diesen Tag sind keine Aktivitäten geplant",
+      "personSingular": "Person",
+      "personPlural": "Personen",
+      "daySingular": "Tag",
+      "dayPlural": "Tage",
+      "referenceLabel": "Referenz:",
+      "viewDetailsFallback": "Details ansehen",
+      "createdByAdminPrefix": "Reiseplan erstellt von "
+    }
   }
 }

@@ -4,9 +4,11 @@ import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export function ChangeEmailForm() {
   const { data: session } = useSession();
+  const t = useTranslations('Client.ChangeEmailForm');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newEmail, setNewEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -29,12 +31,12 @@ export function ChangeEmailForm() {
 
       if (!response.ok) {
         const data = await response.json().catch(() => null);
-        throw new Error(data?.message || 'No se pudo solicitar el cambio de email');
+        throw new Error(data?.message || t('errorFallback'));
       }
 
       setSubmitted(true);
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Error al solicitar el cambio de email');
+      toast.error(err instanceof Error ? err.message : t('errorGeneric'));
     } finally {
       setIsLoading(false);
     }
@@ -43,8 +45,7 @@ export function ChangeEmailForm() {
   if (submitted) {
     return (
       <p className="text-sm text-zinc-600">
-        Te enviamos un enlace de confirmación a <span className="font-medium">{newEmail}</span>.
-        Tu email actual sigue funcionando hasta que confirmes el cambio.
+        {t('successPrefix')}<span className="font-medium">{newEmail}</span>{t('successSuffix')}
       </p>
     );
   }
@@ -53,7 +54,7 @@ export function ChangeEmailForm() {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor="currentPasswordForEmail" className="block text-sm font-medium text-gray-700">
-          Contraseña actual
+          {t('currentPasswordLabel')}
         </label>
         <input
           id="currentPasswordForEmail"
@@ -66,7 +67,7 @@ export function ChangeEmailForm() {
 
       <div>
         <label htmlFor="newEmail" className="block text-sm font-medium text-gray-700">
-          Nuevo email
+          {t('newEmailLabel')}
         </label>
         <input
           id="newEmail"
@@ -74,7 +75,7 @@ export function ChangeEmailForm() {
           value={newEmail}
           onChange={(e) => setNewEmail(e.target.value)}
           className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
-          placeholder="tu-nuevo@email.com"
+          placeholder={t('newEmailPlaceholder')}
         />
       </div>
 
@@ -86,10 +87,10 @@ export function ChangeEmailForm() {
         {isLoading ? (
           <>
             <Loader2 className="inline h-4 w-4 animate-spin mr-2" />
-            Enviando...
+            {t('sending')}
           </>
         ) : (
-          'Cambiar email'
+          t('submit')
         )}
       </button>
     </form>

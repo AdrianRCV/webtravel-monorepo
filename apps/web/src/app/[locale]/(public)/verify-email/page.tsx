@@ -82,12 +82,12 @@ function VerifyEmailContent() {
             <p className="text-zinc-600">
               {t('successMessage')}
             </p>
-            <a
+            <LocaleLink
               href="/client/dashboard"
               className="inline-block w-full rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 px-4 py-3 text-white font-medium transition-all hover:shadow-lg"
             >
               {t('goToDashboard')}
-            </a>
+            </LocaleLink>
           </>
         )}
 

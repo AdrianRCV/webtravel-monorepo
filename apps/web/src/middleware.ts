@@ -19,6 +19,7 @@ const LOCALIZED_PATHS = [
   '/contacto',
   '/terminos',
   '/privacidad',
+  '/client',
 ];
 
 function stripLocale(pathname: string): string {
@@ -27,6 +28,20 @@ function stripLocale(pathname: string): string {
     if (pathname.startsWith(`/${locale}/`)) return pathname.slice(locale.length + 1);
   }
   return pathname;
+}
+
+function currentLocale(pathname: string): string | null {
+  for (const locale of routing.locales) {
+    if (pathname === `/${locale}` || pathname.startsWith(`/${locale}/`)) {
+      return locale;
+    }
+  }
+  return null;
+}
+
+function withLocale(path: string, locale: string | null): string {
+  if (!locale || locale === routing.defaultLocale) return path;
+  return `/${locale}${path}`;
 }
 
 const VALID_REDIRECT_PATHS = [
@@ -47,6 +62,7 @@ function isValidRedirectPath(path: string): boolean {
 export default async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const normalizedPath = stripLocale(pathname);
+  const locale = currentLocale(pathname);
   const isLocalizedRoute = LOCALIZED_PATHS.some(
     (route) => normalizedPath === route || normalizedPath.startsWith(route + '/')
   );
@@ -73,7 +89,7 @@ export default async function middleware(req: NextRequest) {
       if (session.user.role === 'ADMIN') {
         return NextResponse.redirect(new URL('/dashboard', req.url));
       }
-      return NextResponse.redirect(new URL('/client/dashboard', req.url));
+      return NextResponse.redirect(new URL(withLocale('/client/dashboard', locale), req.url));
     }
     return baseResponse;
   }
@@ -83,7 +99,7 @@ export default async function middleware(req: NextRequest) {
       if (session.user.role === 'ADMIN') {
         return NextResponse.redirect(new URL('/dashboard', req.url));
       }
-      return NextResponse.redirect(new URL('/chat', req.url));
+      return NextResponse.redirect(new URL(withLocale('/chat', locale), req.url));
     }
     return baseResponse;
   }
@@ -95,7 +111,7 @@ export default async function middleware(req: NextRequest) {
       loginUrl.searchParams.set('callbackUrl', redirectPath);
       return NextResponse.redirect(loginUrl);
     }
-    const loginUrl = new URL('/login', req.url);
+    const loginUrl = new URL(withLocale('/login', locale), req.url);
     const redirectPath = isValidRedirectPath(normalizedPath) ? normalizedPath : '/chat';
     loginUrl.searchParams.set('callbackUrl', redirectPath);
     return NextResponse.redirect(loginUrl);
@@ -107,7 +123,7 @@ export default async function middleware(req: NextRequest) {
   );
 
   if (isAdminRoute && session.user?.role !== 'ADMIN') {
-    return NextResponse.redirect(new URL('/unauthorized', req.url));
+    return NextResponse.redirect(new URL(withLocale('/unauthorized', locale), req.url));
   }
 
   const clientRoutes = ['/client'];
@@ -116,7 +132,7 @@ export default async function middleware(req: NextRequest) {
   );
 
   if (isClientRoute && session.user?.role !== 'CLIENT') {
-    return NextResponse.redirect(new URL('/unauthorized', req.url));
+    return NextResponse.redirect(new URL(withLocale('/unauthorized', locale), req.url));
   }
 
   return baseResponse;

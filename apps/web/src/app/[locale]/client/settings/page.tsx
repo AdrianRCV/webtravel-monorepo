@@ -2,6 +2,7 @@
 
 import { useSession } from 'next-auth/react';
 import { Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { ClientHeader } from '@/components/client/client-header';
 import { ChangePasswordForm } from '@/components/client/change-password-form';
 import { ChangeEmailForm } from '@/components/client/change-email-form';
@@ -9,6 +10,7 @@ import { DeleteAccountSection } from '@/components/client/delete-account-section
 
 export default function SettingsPage() {
   const { status } = useSession();
+  const t = useTranslations('Client.Settings');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
@@ -16,9 +18,9 @@ export default function SettingsPage() {
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900">Ajustes de cuenta</h1>
+          <h1 className="text-4xl font-bold text-gray-900">{t('title')}</h1>
           <p className="mt-2 text-gray-600">
-            Administrá tu contraseña, tu email y tu cuenta
+            {t('subtitle')}
           </p>
         </div>
 
@@ -29,14 +31,14 @@ export default function SettingsPage() {
         ) : (
           <div className="space-y-8">
             <section className="rounded-lg border border-gray-200 bg-white p-6">
-              <h2 className="text-lg font-semibold text-gray-900">Cambiar contraseña</h2>
+              <h2 className="text-lg font-semibold text-gray-900">{t('passwordSectionTitle')}</h2>
               <div className="mt-4">
                 <ChangePasswordForm />
               </div>
             </section>
 
             <section className="rounded-lg border border-gray-200 bg-white p-6">
-              <h2 className="text-lg font-semibold text-gray-900">Cambiar email</h2>
+              <h2 className="text-lg font-semibold text-gray-900">{t('emailSectionTitle')}</h2>
               <div className="mt-4">
                 <ChangeEmailForm />
               </div>

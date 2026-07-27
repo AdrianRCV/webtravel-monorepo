@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { TripRequest, ChatSession } from '@prisma/client';
 import { Calendar, MapPin, Plane, Users, DollarSign, MessageCircle, Edit2, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useTranslations, useLocale } from 'next-intl';
+import { DATE_LOCALES } from '@/i18n/date-locales';
 import { TripRequestDetailModal } from './trip-request-detail-modal';
 import { TripRequestEditForm } from './trip-request-edit-form';
 import { DeleteConversationDialog } from '@/components/shared/delete-conversation-dialog';
@@ -21,14 +23,6 @@ interface Props {
   onUpdate?: () => void;
 }
 
-const STATUS_LABELS: Record<string, string> = {
-  PENDING: 'Pendiente',
-  IN_PROGRESS: 'En proceso',
-  PROPOSED: 'Propuesta',
-  APPROVED: 'Aprobado',
-  REJECTED: 'Rechazado',
-};
-
 const STATUS_COLORS: Record<string, string> = {
   PENDING: 'bg-yellow-100 text-yellow-800',
   IN_PROGRESS: 'bg-blue-100 text-blue-800',
@@ -38,6 +32,10 @@ const STATUS_COLORS: Record<string, string> = {
 };
 
 export function TripRequestsTable({ requests, token, onUpdate }: Props) {
+  const t = useTranslations('Client.TripRequestsTable');
+  const tStatus = useTranslations('Client.Status');
+  const locale = useLocale();
+  const dateLocale = DATE_LOCALES[locale] ?? 'es-ES';
   const [selectedRequest, setSelectedRequest] = useState<TripRequestWithChat | null>(null);
   const [editingRequest, setEditingRequest] = useState<TripRequestWithChat | null>(null);
   const [deletingRequest, setDeletingRequest] = useState<TripRequestWithChat | null>(null);
@@ -55,11 +53,11 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
 
     if (!response.ok) {
       const data = await response.json().catch(() => null);
-      toast.error(data?.message || 'Error al borrar la conversación');
+      toast.error(data?.message || t('deleteError'));
       throw new Error('delete failed');
     }
 
-    toast.success('Conversación borrada');
+    toast.success(t('deleteSuccess'));
     onUpdate?.();
   };
 
@@ -70,25 +68,25 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
           <thead className="bg-gray-50 border-b border-gray-200">
             <tr>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                Origen
+                {t('colOrigin')}
               </th>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                Destino
+                {t('colDestination')}
               </th>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                Fechas
+                {t('colDates')}
               </th>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                Personas
+                {t('colPeople')}
               </th>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                Presupuesto
+                {t('colBudget')}
               </th>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                Estado
+                {t('colStatus')}
               </th>
               <th className="px-6 py-3 text-right text-sm font-semibold text-gray-900">
-                Acciones
+                {t('colActions')}
               </th>
             </tr>
           </thead>
@@ -99,7 +97,7 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
                   <div className="flex items-center gap-2">
                     <Plane className="h-5 w-5 text-gray-400" />
                     <span className="font-medium text-gray-900">
-                      {request.origin || 'No especificado'}
+                      {request.origin || t('notSpecified')}
                     </span>
                   </div>
                 </td>
@@ -107,7 +105,7 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
                   <div className="flex items-center gap-2">
                     <MapPin className="h-5 w-5 text-gray-400" />
                     <span className="font-medium text-gray-900">
-                      {request.destination || 'No especificado'}
+                      {request.destination || t('notSpecified')}
                     </span>
                   </div>
                 </td>
@@ -116,12 +114,12 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
                     <Calendar className="h-4 w-4" />
                     <span className="text-sm">
                       {request.startDate
-                        ? new Date(request.startDate).toLocaleDateString('es-ES')
+                        ? new Date(request.startDate).toLocaleDateString(dateLocale)
                         : '-'}{' '}
                       {request.endDate && (
                         <>
-                          a{' '}
-                          {new Date(request.endDate).toLocaleDateString('es-ES')}
+                          {t('dateSeparator')}{' '}
+                          {new Date(request.endDate).toLocaleDateString(dateLocale)}
                         </>
                       )}
                     </span>
@@ -155,7 +153,15 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
                       STATUS_COLORS[request.status]
                     }`}
                   >
-                    {STATUS_LABELS[request.status]}
+                    {
+                      {
+                        PENDING: tStatus('pending'),
+                        IN_PROGRESS: tStatus('inProgress'),
+                        PROPOSED: tStatus('proposed'),
+                        APPROVED: tStatus('approved'),
+                        REJECTED: tStatus('rejected'),
+                      }[request.status]
+                    }
                   </span>
                 </td>
                 <td className="px-6 py-4 text-right">
@@ -166,7 +172,7 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
                         setSelectedRequest(request);
                       }}
                       className="p-2 hover:bg-blue-100 rounded-lg transition-colors text-blue-600"
-                      title="Ver detalles"
+                      title={t('viewDetails')}
                     >
                       <MessageCircle className="h-5 w-5" />
                     </button>
@@ -176,7 +182,7 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
                         setEditingRequest(request);
                       }}
                       className="p-2 hover:bg-gray-200 rounded-lg transition-colors text-gray-600"
-                      title="Editar solicitud"
+                      title={t('editRequest')}
                     >
                       <Edit2 className="h-5 w-5" />
                     </button>
@@ -186,7 +192,7 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
                         setDeletingRequest(request);
                       }}
                       className="p-2 hover:bg-red-100 rounded-lg transition-colors text-red-600"
-                      title="Borrar conversación"
+                      title={t('deleteConversation')}
                     >
                       <Trash2 className="h-5 w-5" />
                     </button>

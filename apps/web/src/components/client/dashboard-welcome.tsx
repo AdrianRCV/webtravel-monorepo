@@ -1,13 +1,11 @@
-import Link from 'next/link';
+import { Link as LocaleLink } from '@/i18n/navigation';
 import { Plane } from 'lucide-react';
-
-const STEPS = [
-  'Contanos tu viaje ideal en el chat',
-  'Nuestro equipo prepara una propuesta a medida',
-  'Revisá y aprobá tu itinerario',
-];
+import { useTranslations } from 'next-intl';
 
 export function DashboardWelcome() {
+  const t = useTranslations('Client.DashboardWelcome');
+  const steps = [t('step1'), t('step2'), t('step3')];
+
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-12 text-center">
       <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-brand to-brand-accent shadow-lg">
@@ -15,14 +13,14 @@ export function DashboardWelcome() {
       </div>
 
       <h3 className="mt-4 text-lg font-medium text-gray-900">
-        ¡Bienvenido/a! Empecemos a planear tu viaje
+        {t('heading')}
       </h3>
       <p className="mt-2 text-sm text-gray-600">
-        Todavía no tenés solicitudes de viaje. Así funciona:
+        {t('subtitle')}
       </p>
 
       <ol className="mx-auto mt-6 max-w-sm space-y-3 text-left">
-        {STEPS.map((step, index) => (
+        {steps.map((step, index) => (
           <li key={step} className="flex items-start gap-3">
             <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gray-100 text-sm font-semibold text-gray-700">
               {index + 1}
@@ -32,12 +30,12 @@ export function DashboardWelcome() {
         ))}
       </ol>
 
-      <Link
+      <LocaleLink
         href="/chat"
         className="mt-8 inline-block rounded-lg bg-gradient-to-r from-brand to-brand-accent px-4 py-3 text-white font-medium transition-all hover:shadow-lg"
       >
-        Empezar en el chat
-      </Link>
+        {t('cta')}
+      </LocaleLink>
     </div>
   );
 }

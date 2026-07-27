@@ -248,5 +248,151 @@
       "rightsLink": "contact form",
       "rightsSuffix": "."
     }
+  },
+  "Client": {
+    "Layout": {
+      "metaTitle": "My Dashboard"
+    },
+    "Header": {
+      "chatLink": "Chat",
+      "dashboardLink": "My requests",
+      "settingsLink": "Settings",
+      "logout": "Sign out"
+    },
+    "Status": {
+      "pending": "Pending",
+      "inProgress": "In progress",
+      "proposed": "Proposed",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "Dashboard": {
+      "title": "My travel requests",
+      "subtitle": "Here you can view and manage all your travel requests",
+      "loadError": "Failed to load requests"
+    },
+    "DashboardWelcome": {
+      "heading": "Welcome! Let's start planning your trip",
+      "subtitle": "You don't have any travel requests yet. Here's how it works:",
+      "step1": "Tell us about your ideal trip in the chat",
+      "step2": "Our team prepares a tailored proposal",
+      "step3": "Review and approve your itinerary",
+      "cta": "Start in the chat"
+    },
+    "TripRequestsTable": {
+      "colOrigin": "Origin",
+      "colDestination": "Destination",
+      "colDates": "Dates",
+      "colPeople": "People",
+      "colBudget": "Budget",
+      "colStatus": "Status",
+      "colActions": "Actions",
+      "notSpecified": "Not specified",
+      "dateSeparator": "to",
+      "viewDetails": "View details",
+      "editRequest": "Edit request",
+      "deleteConversation": "Delete conversation",
+      "deleteError": "Failed to delete the conversation",
+      "deleteSuccess": "Conversation deleted"
+    },
+    "TripRequestDetailModal": {
+      "title": "Request details",
+      "labelOrigin": "Origin",
+      "labelDestination": "Destination",
+      "labelDates": "Dates",
+      "labelPeople": "Number of travelers",
+      "labelBudget": "Budget",
+      "notSpecified": "Not specified",
+      "datesNotSpecified": "Not specified",
+      "dateSeparator": "to",
+      "statusLabel": "Status",
+      "preferencesTitle": "Additional preferences",
+      "continueConversation": "Continue conversation",
+      "viewItinerary": "View itinerary",
+      "close": "Close"
+    },
+    "TripRequestEditForm": {
+      "title": "Edit request",
+      "labelOrigin": "Origin",
+      "originPlaceholder": "Origin city",
+      "labelDestination": "Destination",
+      "destinationPlaceholder": "Your trip destination",
+      "labelPeople": "Number of travelers",
+      "peoplePlaceholder": "E.g. 2",
+      "labelStartDate": "Start date",
+      "labelEndDate": "End date",
+      "labelBudgetMin": "Minimum budget",
+      "labelBudgetMax": "Maximum budget",
+      "updating": "Updating...",
+      "save": "Save changes",
+      "cancel": "Cancel",
+      "successToast": "Request updated",
+      "errorFallback": "Failed to update the request",
+      "errorGeneric": "Error updating"
+    },
+    "DeleteConversationDialog": {
+      "title": "Delete conversation",
+      "description": "This action cannot be undone. The entire conversation, the travel request, and any associated itinerary will be deleted.",
+      "cancel": "Cancel",
+      "deleting": "Deleting...",
+      "confirmDelete": "Delete permanently"
+    },
+    "Settings": {
+      "title": "Account settings",
+      "subtitle": "Manage your password, email, and account",
+      "passwordSectionTitle": "Change password",
+      "emailSectionTitle": "Change email"
+    },
+    "ChangePasswordForm": {
+      "currentPasswordLabel": "Current password",
+      "newPasswordLabel": "New password",
+      "newPasswordPlaceholder": "At least 8 characters, one uppercase letter and one number",
+      "confirmPasswordLabel": "Confirm new password",
+      "saving": "Saving...",
+      "submit": "Change password",
+      "successToast": "Password updated.",
+      "errorFallback": "Couldn't change the password",
+      "errorGeneric": "Error changing the password"
+    },
+    "ChangeEmailForm": {
+      "currentPasswordLabel": "Current password",
+      "newEmailLabel": "New email",
+      "newEmailPlaceholder": "your-new@email.com",
+      "sending": "Sending...",
+      "submit": "Change email",
+      "errorFallback": "Couldn't request the email change",
+      "errorGeneric": "Error requesting the email change",
+      "successPrefix": "We sent a confirmation link to ",
+      "successSuffix": ". Your current email keeps working until you confirm the change."
+    },
+    "DeleteAccountSection": {
+      "dangerZoneTitle": "Danger zone",
+      "warning": "Deleting your account permanently erases your conversation history and travel requests. This action cannot be undone.",
+      "deleteButton": "Delete my account",
+      "dialogTitle": "Delete your account?",
+      "dialogDescription": "Type your current password (or \"DELETE\" if your account uses Google) to confirm. This action is permanent.",
+      "confirmPlaceholder": "Current password or DELETE",
+      "cancel": "Cancel",
+      "deleting": "Deleting...",
+      "confirmDelete": "Yes, delete my account",
+      "errorFallback": "Couldn't delete the account",
+      "errorGeneric": "Error deleting the account"
+    },
+    "TripItinerary": {
+      "documentTitlePrefix": "Itinerary - ",
+      "documentTitleFallback": "your trip",
+      "backLink": "Back to my requests",
+      "downloadPdf": "Download PDF"
+    },
+    "ItineraryPreview": {
+      "noActivities": "No activities scheduled for this day",
+      "personSingular": "traveler",
+      "personPlural": "travelers",
+      "daySingular": "day",
+      "dayPlural": "days",
+      "referenceLabel": "Reference:",
+      "viewDetailsFallback": "View Details",
+      "createdByAdminPrefix": "Itinerary created by "
+    }
   }
 }

@@ -248,5 +248,151 @@
       "rightsLink": "formulario de contacto",
       "rightsSuffix": "."
     }
+  },
+  "Client": {
+    "Layout": {
+      "metaTitle": "Mi Panel"
+    },
+    "Header": {
+      "chatLink": "Chat",
+      "dashboardLink": "Mis solicitudes",
+      "settingsLink": "Ajustes",
+      "logout": "Cerrar sesión"
+    },
+    "Status": {
+      "pending": "Pendiente",
+      "inProgress": "En proceso",
+      "proposed": "Propuesta",
+      "approved": "Aprobado",
+      "rejected": "Rechazado"
+    },
+    "Dashboard": {
+      "title": "Mis solicitudes de viaje",
+      "subtitle": "Aquí puedes ver y gestionar todas tus solicitudes de viaje",
+      "loadError": "Error al cargar solicitudes"
+    },
+    "DashboardWelcome": {
+      "heading": "¡Bienvenido/a! Empecemos a planear tu viaje",
+      "subtitle": "Todavía no tenés solicitudes de viaje. Así funciona:",
+      "step1": "Contanos tu viaje ideal en el chat",
+      "step2": "Nuestro equipo prepara una propuesta a medida",
+      "step3": "Revisá y aprobá tu itinerario",
+      "cta": "Empezar en el chat"
+    },
+    "TripRequestsTable": {
+      "colOrigin": "Origen",
+      "colDestination": "Destino",
+      "colDates": "Fechas",
+      "colPeople": "Personas",
+      "colBudget": "Presupuesto",
+      "colStatus": "Estado",
+      "colActions": "Acciones",
+      "notSpecified": "No especificado",
+      "dateSeparator": "a",
+      "viewDetails": "Ver detalles",
+      "editRequest": "Editar solicitud",
+      "deleteConversation": "Borrar conversación",
+      "deleteError": "Error al borrar la conversación",
+      "deleteSuccess": "Conversación borrada"
+    },
+    "TripRequestDetailModal": {
+      "title": "Detalles de la solicitud",
+      "labelOrigin": "Origen",
+      "labelDestination": "Destino",
+      "labelDates": "Fechas",
+      "labelPeople": "Número de personas",
+      "labelBudget": "Presupuesto",
+      "notSpecified": "No especificado",
+      "datesNotSpecified": "No especificadas",
+      "dateSeparator": "a",
+      "statusLabel": "Estado",
+      "preferencesTitle": "Preferencias adicionales",
+      "continueConversation": "Continuar conversación",
+      "viewItinerary": "Ver itinerario",
+      "close": "Cerrar"
+    },
+    "TripRequestEditForm": {
+      "title": "Editar solicitud",
+      "labelOrigin": "Origen",
+      "originPlaceholder": "Ciudad de origen",
+      "labelDestination": "Destino",
+      "destinationPlaceholder": "Destino de tu viaje",
+      "labelPeople": "Número de personas",
+      "peoplePlaceholder": "Ej. 2",
+      "labelStartDate": "Fecha de inicio",
+      "labelEndDate": "Fecha de fin",
+      "labelBudgetMin": "Presupuesto mínimo",
+      "labelBudgetMax": "Presupuesto máximo",
+      "updating": "Actualizando...",
+      "save": "Guardar cambios",
+      "cancel": "Cancelar",
+      "successToast": "Solicitud actualizada",
+      "errorFallback": "Error al actualizar la solicitud",
+      "errorGeneric": "Error al actualizar"
+    },
+    "DeleteConversationDialog": {
+      "title": "Borrar conversación",
+      "description": "Esta acción no se puede deshacer. Se eliminará la conversación completa, la solicitud de viaje y cualquier itinerario asociado.",
+      "cancel": "Cancelar",
+      "deleting": "Borrando...",
+      "confirmDelete": "Borrar definitivamente"
+    },
+    "Settings": {
+      "title": "Ajustes de cuenta",
+      "subtitle": "Administrá tu contraseña, tu email y tu cuenta",
+      "passwordSectionTitle": "Cambiar contraseña",
+      "emailSectionTitle": "Cambiar email"
+    },
+    "ChangePasswordForm": {
+      "currentPasswordLabel": "Contraseña actual",
+      "newPasswordLabel": "Nueva contraseña",
+      "newPasswordPlaceholder": "Mínimo 8 caracteres, una mayúscula y un número",
+      "confirmPasswordLabel": "Confirmar nueva contraseña",
+      "saving": "Guardando...",
+      "submit": "Cambiar contraseña",
+      "successToast": "Contraseña actualizada.",
+      "errorFallback": "No se pudo cambiar la contraseña",
+      "errorGeneric": "Error al cambiar la contraseña"
+    },
+    "ChangeEmailForm": {
+      "currentPasswordLabel": "Contraseña actual",
+      "newEmailLabel": "Nuevo email",
+      "newEmailPlaceholder": "tu-nuevo@email.com",
+      "sending": "Enviando...",
+      "submit": "Cambiar email",
+      "errorFallback": "No se pudo solicitar el cambio de email",
+      "errorGeneric": "Error al solicitar el cambio de email",
+      "successPrefix": "Te enviamos un enlace de confirmación a ",
+      "successSuffix": ". Tu email actual sigue funcionando hasta que confirmes el cambio."
+    },
+    "DeleteAccountSection": {
+      "dangerZoneTitle": "Zona de peligro",
+      "warning": "Eliminar tu cuenta borra permanentemente tu historial de conversaciones y solicitudes de viaje. Esta acción no se puede deshacer.",
+      "deleteButton": "Eliminar mi cuenta",
+      "dialogTitle": "¿Eliminar tu cuenta?",
+      "dialogDescription": "Escribí tu contraseña actual (o \"ELIMINAR\" si tu cuenta usa Google) para confirmar. Esta acción es permanente.",
+      "confirmPlaceholder": "Contraseña actual o ELIMINAR",
+      "cancel": "Cancelar",
+      "deleting": "Eliminando...",
+      "confirmDelete": "Sí, eliminar mi cuenta",
+      "errorFallback": "No se pudo eliminar la cuenta",
+      "errorGeneric": "Error al eliminar la cuenta"
+    },
+    "TripItinerary": {
+      "documentTitlePrefix": "Itinerario - ",
+      "documentTitleFallback": "tu viaje",
+      "backLink": "Volver a mis solicitudes",
+      "downloadPdf": "Descargar PDF"
+    },
+    "ItineraryPreview": {
+      "noActivities": "No hay actividades programadas para este día",
+      "personSingular": "persona",
+      "personPlural": "personas",
+      "daySingular": "día",
+      "dayPlural": "días",
+      "referenceLabel": "Referencia:",
+      "viewDetailsFallback": "Ver Detalles",
+      "createdByAdminPrefix": "Itinerario creado por "
+    }
   }
 }
