@@ -248,5 +248,10 @@
       "rightsLink": "Kontaktformular",
       "rightsSuffix": " schreibst."
     }
+  },
+  "Client": {
+    "Layout": {
+      "metaTitle": "Mein Bereich"
+    }
   }
 }

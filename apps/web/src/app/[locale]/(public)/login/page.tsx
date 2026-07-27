@@ -1,5 +1,5 @@
-import { redirect } from 'next/navigation';
-import { getTranslations } from 'next-intl/server';
+import { redirect } from '@/i18n/navigation';
+import { getTranslations, getLocale } from 'next-intl/server';
 import { Link as LocaleLink } from '@/i18n/navigation';
 import { auth } from '@/auth';
 import { SignInButton } from '@/components/auth/sign-in-button';
@@ -38,7 +38,8 @@ export default async function LoginPage({
     const redirectTo = params.callbackUrl && isValidRedirectPath(params.callbackUrl)
       ? params.callbackUrl
       : '/chat';
-    redirect(redirectTo);
+    const locale = await getLocale();
+    redirect({ href: redirectTo, locale });
   }
 
   return (

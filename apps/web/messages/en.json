@@ -248,5 +248,10 @@
       "rightsLink": "contact form",
       "rightsSuffix": "."
     }
+  },
+  "Client": {
+    "Layout": {
+      "metaTitle": "My Dashboard"
+    }
   }
 }

@@ -2,7 +2,8 @@
 
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
+import { getPathname } from '@/i18n/navigation';
 import { Loader2 } from 'lucide-react';
 
 interface Props {
@@ -11,12 +12,14 @@ interface Props {
 
 export function SignInButton({ callbackUrl = '/chat' }: Props) {
   const t = useTranslations('Auth.GoogleSignIn');
+  const locale = useLocale();
+  const resolvedCallbackUrl = getPathname({ href: callbackUrl, locale });
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSignIn = async () => {
     setIsLoading(true);
     try {
-      await signIn('google', { callbackUrl });
+      await signIn('google', { callbackUrl: resolvedCallbackUrl });
     } catch (error) {
       console.error('Error signing in:', error);
       setIsLoading(false);

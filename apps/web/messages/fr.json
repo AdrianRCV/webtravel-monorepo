@@ -248,5 +248,10 @@
       "rightsLink": "formulaire de contact",
       "rightsSuffix": "."
     }
+  },
+  "Client": {
+    "Layout": {
+      "metaTitle": "Mon espace"
+    }
   }
 }

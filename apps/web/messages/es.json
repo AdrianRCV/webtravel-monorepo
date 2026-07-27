@@ -248,5 +248,10 @@
       "rightsLink": "formulario de contacto",
       "rightsSuffix": "."
     }
+  },
+  "Client": {
+    "Layout": {
+      "metaTitle": "Mi Panel"
+    }
   }
 }
