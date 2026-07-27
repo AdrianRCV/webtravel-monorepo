@@ -8,6 +8,7 @@ import {
 } from './templates/status-update.template';
 import {
   itineraryCreatedTemplate,
+  itineraryCreatedSubjectFor,
   ItineraryCreatedEmailData,
 } from './templates/itinerary-created.template';
 import { verifyEmailTemplate, verifyEmailSubjectFor, VerifyEmailData } from './templates/verify-email.template';
@@ -100,12 +101,8 @@ export class NotificationsService {
     }
 
     try {
-      const emailData: ItineraryCreatedEmailData = {
-        ...data,
-        previewText: `Tu itinerario a ${data.destination} está listo`,
-      };
-      const html = itineraryCreatedTemplate(emailData);
-      const subject = `¡Tu itinerario a ${data.destination} está listo!`;
+      const html = itineraryCreatedTemplate({ ...data, previewText: '' });
+      const subject = itineraryCreatedSubjectFor(data.locale, data.destination);
 
       await this.resend.emails.send({
         from: this.from,
