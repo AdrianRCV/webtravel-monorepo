@@ -3,6 +3,7 @@ import { Resend } from 'resend';
 import { TripStatus } from '@prisma/client';
 import {
   statusUpdateTemplate,
+  statusUpdateSubjectFor,
   StatusUpdateEmailData,
 } from './templates/status-update.template';
 import {
@@ -62,12 +63,8 @@ export class NotificationsService {
     }
 
     try {
-      const emailData: StatusUpdateEmailData = {
-        ...data,
-        previewText: `Actualización: Tu viaje a ${data.destination} - ${data.newStatus}`,
-      };
-      const html = statusUpdateTemplate(emailData);
-      const subject = `Actualización: Tu viaje a ${data.destination}`;
+      const html = statusUpdateTemplate({ ...data, previewText: '' });
+      const subject = statusUpdateSubjectFor(data.locale, data.destination, data.newStatus);
 
       await this.resend.emails.send({
         from: this.from,
