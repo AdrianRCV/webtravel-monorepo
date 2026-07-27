@@ -3,8 +3,10 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export function ContactForm() {
+  const t = useTranslations('Contact');
   const [formData, setFormData] = useState({ name: '', email: '', message: '', website: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -28,12 +30,12 @@ export function ContactForm() {
       });
 
       if (!response.ok) {
-        throw new Error('No se pudo enviar tu mensaje. Intenta de nuevo.');
+        throw new Error(t('genericError'));
       }
 
       setSubmitted(true);
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'No se pudo enviar tu mensaje.');
+      toast.error(err instanceof Error ? err.message : t('genericError'));
     } finally {
       setIsLoading(false);
     }
@@ -42,7 +44,7 @@ export function ContactForm() {
   if (submitted) {
     return (
       <p className="text-center text-zinc-600">
-        ¡Gracias! Recibimos tu mensaje y te responderemos a la brevedad.
+        {t('successMessage')}
       </p>
     );
   }
@@ -51,7 +53,7 @@ export function ContactForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-          Nombre
+          {t('nameLabel')}
         </label>
         <input
           id="name"
@@ -60,13 +62,13 @@ export function ContactForm() {
           onChange={handleChange}
           required
           className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
-          placeholder="Tu nombre"
+          placeholder={t('namePlaceholder')}
         />
       </div>
 
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-          Correo electrónico
+          {t('emailLabel')}
         </label>
         <input
           id="email"
@@ -76,13 +78,13 @@ export function ContactForm() {
           onChange={handleChange}
           required
           className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
-          placeholder="tu@email.com"
+          placeholder={t('emailPlaceholder')}
         />
       </div>
 
       <div>
         <label htmlFor="message" className="block text-sm font-medium text-gray-700">
-          Mensaje
+          {t('messageLabel')}
         </label>
         <textarea
           id="message"
@@ -92,7 +94,7 @@ export function ContactForm() {
           required
           rows={5}
           className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
-          placeholder="Contanos en qué podemos ayudarte"
+          placeholder={t('messagePlaceholder')}
         />
       </div>
 
@@ -115,10 +117,10 @@ export function ContactForm() {
         {isLoading ? (
           <>
             <Loader2 className="inline h-4 w-4 animate-spin mr-2" />
-            Enviando...
+            {t('submitting')}
           </>
         ) : (
-          'Enviar mensaje'
+          t('submit')
         )}
       </button>
     </form>

@@ -137,5 +137,116 @@
       "signingOut": "Abmeldung läuft...",
       "signOut": "Abmelden"
     }
+  },
+  "Chat": {
+    "Interface": {
+      "title": "Reise-Chat",
+      "subtitlePrefix": "Erzähl uns von deiner nächsten Reise und wir helfen dir bei der Planung · ",
+      "helpLink": "Nicht gefunden, wonach du gesucht hast? Schreib uns",
+      "newConversationTooltip": "Neue Unterhaltung",
+      "initError": "Die Chat-Sitzung konnte nicht gestartet werden. Bitte lade die Seite neu.",
+      "sendError": "Die Nachricht konnte nicht gesendet werden.",
+      "retry": "Erneut versuchen",
+      "loading": "Unterhaltung wird gestartet...",
+      "defaultGreeting": "Hallo! Ich bin dein Reiseassistent. Wohin möchtest du reisen?"
+    },
+    "History": {
+      "newConversation": "Neue Unterhaltung",
+      "newConversationFallbackLabel": "Neue Unterhaltung",
+      "empty": "Du hast noch keine vorherigen Unterhaltungen",
+      "historyTooltip": "Gesprächsverlauf",
+      "drawerTitle": "Unterhaltungen"
+    },
+    "Input": {
+      "placeholder": "Schreib deine Nachricht...",
+      "send": "Senden"
+    },
+    "Suggestions": {
+      "s1": "Ich möchte im März 15 Tage nach Japan reisen",
+      "s2": "Ich suche eine Reise nach Italien mit einem Budget von 1500 €",
+      "s3": "Ich brauche einen 10-tägigen Plan für Griechenland",
+      "s4": "Reise nach Portugal zu zweit, vom 10. bis 20. Juni"
+    },
+    "TripSummary": {
+      "title": "Deine Anfrage",
+      "subtitle": "Das haben wir bisher verstanden",
+      "origin": "Abflugort",
+      "destination": "Reiseziel",
+      "dates": "Daten",
+      "people": "Personen",
+      "budget": "Budget",
+      "contactEmail": "Kontakt-E-Mail",
+      "notDefined": "Noch nicht festgelegt",
+      "statusLabel": "Status der Anfrage",
+      "statusPending": "Wird geprüft",
+      "statusInProgress": "In Bearbeitung",
+      "statusProposed": "Vorschlag gesendet",
+      "statusApproved": "Genehmigt",
+      "statusRejected": "Abgelehnt"
+    }
+  },
+  "Contact": {
+    "metaTitle": "Kontakt",
+    "metaDescription": "Schreib uns und ein Spezialist von YourAgencyToday antwortet dir in Kürze.",
+    "title": "Brauchst du Hilfe?",
+    "subtitle": "Schreib uns und ein Spezialist antwortet dir in Kürze.",
+    "nameLabel": "Name",
+    "namePlaceholder": "Dein Name",
+    "emailLabel": "E-Mail-Adresse",
+    "emailPlaceholder": "du@email.com",
+    "messageLabel": "Nachricht",
+    "messagePlaceholder": "Erzähl uns, wie wir dir helfen können",
+    "submitting": "Wird gesendet...",
+    "submit": "Nachricht senden",
+    "genericError": "Deine Nachricht konnte nicht gesendet werden. Versuche es erneut.",
+    "successMessage": "Danke! Wir haben deine Nachricht erhalten und melden uns in Kürze."
+  },
+  "Legal": {
+    "Layout": {
+      "lastUpdated": "Letzte Aktualisierung: Juli 2026."
+    },
+    "Links": {
+      "terminos": "AGB",
+      "privacidad": "Datenschutz",
+      "contacto": "Kontakt"
+    },
+    "Terminos": {
+      "metaTitle": "Allgemeine Geschäftsbedingungen",
+      "metaDescription": "Allgemeine Geschäftsbedingungen für die Nutzung von YourAgencyToday.",
+      "title": "Allgemeine Geschäftsbedingungen",
+      "intro": "Diese Allgemeinen Geschäftsbedingungen regeln die Nutzung der Website und des Reiseplanungs-Chats von YourAgencyToday („wir“, „die Agentur“). Durch die Nutzung der Website akzeptierst du diese Bedingungen.",
+      "whatWeOfferTitle": "Was wir anbieten",
+      "whatWeOfferBody": "Über unseren KI-gestützten Chat erfassen wir deine Reisedaten (Reiseziel, Daten, Budget, Abflugort und Anzahl der Personen), damit einer unserer Spezialisten einen maßgeschneiderten Reiseplan-Vorschlag erstellt. Der endgültige Vorschlag und seine Verfügbarkeit unterliegen der Bestätigung durch einen Menschen.",
+      "accountTitle": "Dein Konto",
+      "accountItem1": "Du bist dafür verantwortlich, dein Passwort geheim zu halten.",
+      "accountItem2": "Die Angaben, die du uns machst, müssen wahrheitsgemäß sein.",
+      "accountItem3Prefix": "Du kannst jederzeit über unser ",
+      "accountItem3Link": "Kontaktformular",
+      "accountItem3Suffix": " die Löschung deines Kontos und deiner Daten beantragen.",
+      "liabilityTitle": "Haftungsbeschränkung",
+      "liabilityBody": "Die vorgeschlagenen Reisepläne hängen von der tatsächlichen Verfügbarkeit externer Anbieter (Fluggesellschaften, Hotels, Transportunternehmen) zum Zeitpunkt der Buchung ab. Wir garantieren weder Preise noch Verfügbarkeit, bis eine Buchung ausdrücklich von einem Spezialisten bestätigt wurde.",
+      "changesTitle": "Änderungen dieser Bedingungen",
+      "changesBody": "Wir können diese Bedingungen gelegentlich aktualisieren. Wesentliche Änderungen werden auf dieser Seite dargestellt."
+    },
+    "Privacidad": {
+      "metaTitle": "Datenschutzerklärung",
+      "metaDescription": "Wie YourAgencyToday deine Daten erhebt, nutzt und schützt.",
+      "title": "Datenschutzerklärung",
+      "intro": "Diese Richtlinie erklärt, welche Daten wir bei YourAgencyToday erheben, wofür wir sie verwenden und welche Rechte du in Bezug auf sie hast.",
+      "dataCollectedTitle": "Welche Daten wir erheben",
+      "dataItem1": "Deine E-Mail-Adresse und ein verschlüsselt gespeichertes Passwort (oder dein Google-Konto, falls du diese Anmeldemethode wählst).",
+      "dataItem2": "Die Reisedetails, die du im Chat teilst: Reiseziel, Abflugort, Daten, Budget und Anzahl der Personen.",
+      "dataItem3": "Der Inhalt der Nachrichten, die du an unseren Chat sendest und die von einem externen Anbieter für künstliche Intelligenz zur Erstellung von Antworten verarbeitet werden.",
+      "dataUseTitle": "Wofür wir sie verwenden",
+      "dataUseItem1": "Um einen maßgeschneiderten Reiseplan zu entwerfen und vorzuschlagen.",
+      "dataUseItem2": "Um dir per E-Mail Updates zum Status deiner Anfrage zu senden.",
+      "dataUseItem3": "Um deinen Gesprächsverlauf mit deinem Konto verknüpft zu halten.",
+      "cookiesTitle": "Cookies",
+      "cookiesBody": "Wir verwenden ein unbedingt erforderliches Sitzungs-Cookie, um deine Anmeldung aktiv zu halten. Wir verwenden keine Werbe-Tracking-Cookies.",
+      "rightsTitle": "Deine Rechte",
+      "rightsPrefix": "Du kannst uns bitten, auf deine Daten zuzugreifen oder sie vollständig zu löschen, indem du uns über unser ",
+      "rightsLink": "Kontaktformular",
+      "rightsSuffix": " schreibst."
+    }
   }
 }

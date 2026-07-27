@@ -137,5 +137,116 @@
       "signingOut": "Cerrando sesión...",
       "signOut": "Cerrar Sesión"
     }
+  },
+  "Chat": {
+    "Interface": {
+      "title": "Chat de Viajes",
+      "subtitlePrefix": "Cuéntanos sobre tu próximo viaje y te ayudaremos a planificarlo · ",
+      "helpLink": "¿No encontraste lo que buscabas? Escribinos",
+      "newConversationTooltip": "Nueva conversación",
+      "initError": "No se pudo iniciar la sesión de chat. Por favor, recarga la página.",
+      "sendError": "No se pudo enviar el mensaje.",
+      "retry": "Reintentar",
+      "loading": "Iniciando conversación...",
+      "defaultGreeting": "¡Hola! Soy tu asistente de viajes. ¿A dónde te gustaría viajar?"
+    },
+    "History": {
+      "newConversation": "Nueva conversación",
+      "newConversationFallbackLabel": "Nueva conversación",
+      "empty": "Aún no tienes conversaciones anteriores",
+      "historyTooltip": "Historial de conversaciones",
+      "drawerTitle": "Conversaciones"
+    },
+    "Input": {
+      "placeholder": "Escribe tu mensaje...",
+      "send": "Enviar"
+    },
+    "Suggestions": {
+      "s1": "Quiero viajar a Japón 15 días en marzo",
+      "s2": "Busco un viaje a Italia con presupuesto de 1500€",
+      "s3": "Necesito un plan para 10 días en Grecia",
+      "s4": "Viajar a Portugal en pareja, del 10 al 20 de junio"
+    },
+    "TripSummary": {
+      "title": "Tu solicitud",
+      "subtitle": "Esto es lo que hemos entendido hasta ahora",
+      "origin": "Origen",
+      "destination": "Destino",
+      "dates": "Fechas",
+      "people": "Personas",
+      "budget": "Presupuesto",
+      "contactEmail": "Email de contacto",
+      "notDefined": "Aún sin definir",
+      "statusLabel": "Estado de la solicitud",
+      "statusPending": "Pendiente de revisión",
+      "statusInProgress": "En proceso",
+      "statusProposed": "Propuesta enviada",
+      "statusApproved": "Aprobada",
+      "statusRejected": "Rechazada"
+    }
+  },
+  "Contact": {
+    "metaTitle": "Contacto",
+    "metaDescription": "Escribinos y un especialista de YourAgencyToday te responderá a la brevedad.",
+    "title": "¿Necesitas ayuda?",
+    "subtitle": "Escribinos y un especialista te responderá a la brevedad.",
+    "nameLabel": "Nombre",
+    "namePlaceholder": "Tu nombre",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "tu@email.com",
+    "messageLabel": "Mensaje",
+    "messagePlaceholder": "Contanos en qué podemos ayudarte",
+    "submitting": "Enviando...",
+    "submit": "Enviar mensaje",
+    "genericError": "No se pudo enviar tu mensaje. Intenta de nuevo.",
+    "successMessage": "¡Gracias! Recibimos tu mensaje y te responderemos a la brevedad."
+  },
+  "Legal": {
+    "Layout": {
+      "lastUpdated": "Última actualización: julio de 2026."
+    },
+    "Links": {
+      "terminos": "Términos",
+      "privacidad": "Privacidad",
+      "contacto": "Contacto"
+    },
+    "Terminos": {
+      "metaTitle": "Términos y Condiciones",
+      "metaDescription": "Términos y condiciones de uso de YourAgencyToday.",
+      "title": "Términos y Condiciones",
+      "intro": "Estos Términos y Condiciones regulan el uso del sitio web y el chat de planificación de viajes de YourAgencyToday (\"nosotros\", \"la agencia\"). Al usar el sitio, aceptás estos términos.",
+      "whatWeOfferTitle": "Qué ofrecemos",
+      "whatWeOfferBody": "A través de nuestro chat con inteligencia artificial recopilamos los datos de tu viaje (destino, fechas, presupuesto, origen y número de personas) para que uno de nuestros especialistas diseñe una propuesta de itinerario a medida. La propuesta final y su disponibilidad quedan sujetas a confirmación humana.",
+      "accountTitle": "Tu cuenta",
+      "accountItem1": "Sos responsable de mantener tu contraseña en privado.",
+      "accountItem2": "La información que nos brindes debe ser veraz.",
+      "accountItem3Prefix": "Podés solicitar la eliminación de tu cuenta y tus datos en cualquier momento a través de nuestro ",
+      "accountItem3Link": "formulario de contacto",
+      "accountItem3Suffix": ".",
+      "liabilityTitle": "Limitación de responsabilidad",
+      "liabilityBody": "Los itinerarios propuestos dependen de la disponibilidad real de proveedores externos (aerolíneas, hoteles, transportes) al momento de la reserva. No garantizamos precios ni disponibilidad hasta que una reserva quede confirmada explícitamente por un especialista.",
+      "changesTitle": "Cambios a estos términos",
+      "changesBody": "Podemos actualizar estos términos ocasionalmente. Los cambios importantes se reflejarán en esta misma página."
+    },
+    "Privacidad": {
+      "metaTitle": "Política de Privacidad",
+      "metaDescription": "Cómo YourAgencyToday recopila, usa y protege tus datos.",
+      "title": "Política de Privacidad",
+      "intro": "Esta política explica qué datos recopilamos en YourAgencyToday, para qué los usamos y qué derechos tenés sobre ellos.",
+      "dataCollectedTitle": "Qué datos recopilamos",
+      "dataItem1": "Tu email y una contraseña almacenada de forma cifrada (o tu cuenta de Google, si elegís ese método de acceso).",
+      "dataItem2": "Los detalles de viaje que compartís en el chat: destino, origen, fechas, presupuesto y número de personas.",
+      "dataItem3": "El contenido de los mensajes que enviás a nuestro chat, que se procesan mediante un proveedor externo de inteligencia artificial para generar respuestas.",
+      "dataUseTitle": "Para qué los usamos",
+      "dataUseItem1": "Diseñar y proponerte un itinerario de viaje a medida.",
+      "dataUseItem2": "Enviarte por email actualizaciones sobre el estado de tu solicitud.",
+      "dataUseItem3": "Mantener tu historial de conversaciones asociado a tu cuenta.",
+      "cookiesTitle": "Cookies",
+      "cookiesBody": "Usamos una cookie de sesión estrictamente necesaria para mantener tu inicio de sesión activo. No usamos cookies de seguimiento publicitario.",
+      "rightsTitle": "Tus derechos",
+      "rightsPrefix": "Podés pedirnos acceder a tus datos o eliminarlos por completo escribiéndonos desde nuestro ",
+      "rightsLink": "formulario de contacto",
+      "rightsSuffix": "."
+    }
   }
 }

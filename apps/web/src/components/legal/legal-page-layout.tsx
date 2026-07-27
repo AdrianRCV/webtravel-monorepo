@@ -1,23 +1,26 @@
-import Link from 'next/link';
+import { Link as LocaleLink } from '@/i18n/navigation';
 import { Plane } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 
-export function LegalPageLayout({
+export async function LegalPageLayout({
   title,
   children,
 }: {
   title: string;
   children: React.ReactNode;
 }) {
+  const t = await getTranslations('Legal.Layout');
+
   return (
     <div className="min-h-screen bg-white px-4 py-16">
       <div className="mx-auto max-w-2xl">
-        <Link
+        <LocaleLink
           href="/"
           className="inline-flex items-center gap-2 text-sm font-medium text-brand hover:text-brand-accent transition-colors"
         >
           <Plane className="h-4 w-4" />
           YourAgencyToday
-        </Link>
+        </LocaleLink>
 
         <h1 className="mt-8 text-3xl font-bold text-zinc-900">{title}</h1>
 
@@ -25,7 +28,7 @@ export function LegalPageLayout({
           {children}
         </div>
 
-        <p className="mt-12 text-xs text-zinc-400">Última actualización: julio de 2026.</p>
+        <p className="mt-12 text-xs text-zinc-400">{t('lastUpdated')}</p>
       </div>
     </div>
   );

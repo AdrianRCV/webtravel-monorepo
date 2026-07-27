@@ -15,6 +15,10 @@ const LOCALIZED_PATHS = [
   '/verify-email',
   '/confirm-email-change',
   '/unauthorized',
+  '/chat',
+  '/contacto',
+  '/terminos',
+  '/privacidad',
 ];
 
 function stripLocale(pathname: string): string {

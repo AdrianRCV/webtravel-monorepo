@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { useRouter } from '@/i18n/navigation';
 import { MessageSquarePlus, Loader2, History } from 'lucide-react';
 import { getMyChatSessions, ChatSessionSummary } from '@/lib/api';
 import {
@@ -56,6 +57,7 @@ function HistoryList({
   onSelect: (id: string) => void;
   onNewConversation: () => void;
 }) {
+  const t = useTranslations('Chat.History');
   return (
     <>
       <div className="p-4 border-b border-border">
@@ -64,7 +66,7 @@ function HistoryList({
           className="w-full flex items-center justify-center gap-2 rounded-lg border border-input px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
         >
           <MessageSquarePlus className="h-4 w-4" />
-          Nueva conversación
+          {t('newConversation')}
         </button>
       </div>
 
@@ -75,13 +77,13 @@ function HistoryList({
           </div>
         ) : sessions.length === 0 ? (
           <p className="text-center text-xs text-muted-foreground px-4 py-6">
-            Aún no tienes conversaciones anteriores
+            {t('empty')}
           </p>
         ) : (
           <ul className="space-y-1">
             {sessions.map((s) => {
               const isActive = s.id === activeSessionId;
-              const label = s.tripRequest?.destination || 'Nueva conversación';
+              const label = s.tripRequest?.destination || t('newConversationFallbackLabel');
               const preview = s.messages[0]?.content;
 
               return (
@@ -137,6 +139,7 @@ export function MobileChatHistoryDrawer({
   refreshKey,
   onNewConversation,
 }: Props) {
+  const t = useTranslations('Chat.History');
   const router = useRouter();
   const { sessions, isLoading } = useChatSessions(accessToken, refreshKey);
   const [open, setOpen] = useState(false);
@@ -151,14 +154,14 @@ export function MobileChatHistoryDrawer({
       <DrawerTrigger asChild>
         <button
           className="flex items-center gap-2 rounded-lg border border-input px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground shrink-0"
-          title="Historial de conversaciones"
+          title={t('historyTooltip')}
         >
           <History className="h-4 w-4" />
         </button>
       </DrawerTrigger>
       <DrawerContent className="inset-y-0 left-0 right-auto mt-0 h-full w-72 rounded-t-none rounded-r-[10px]">
         <DrawerHeader className="text-left">
-          <DrawerTitle>Conversaciones</DrawerTitle>
+          <DrawerTitle>{t('drawerTitle')}</DrawerTitle>
         </DrawerHeader>
         <div className="flex flex-1 flex-col overflow-hidden -mt-2">
           <HistoryList

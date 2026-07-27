@@ -137,5 +137,116 @@
       "signingOut": "Déconnexion en cours...",
       "signOut": "Se déconnecter"
     }
+  },
+  "Chat": {
+    "Interface": {
+      "title": "Chat de voyage",
+      "subtitlePrefix": "Parlez-nous de votre prochain voyage et nous vous aiderons à le planifier · ",
+      "helpLink": "Vous n'avez pas trouvé ce que vous cherchiez ? Écrivez-nous",
+      "newConversationTooltip": "Nouvelle conversation",
+      "initError": "Impossible de démarrer la session de chat. Veuillez recharger la page.",
+      "sendError": "Impossible d'envoyer le message.",
+      "retry": "Réessayer",
+      "loading": "Démarrage de la conversation...",
+      "defaultGreeting": "Bonjour ! Je suis votre assistant de voyage. Où aimeriez-vous partir ?"
+    },
+    "History": {
+      "newConversation": "Nouvelle conversation",
+      "newConversationFallbackLabel": "Nouvelle conversation",
+      "empty": "Vous n'avez pas encore de conversations précédentes",
+      "historyTooltip": "Historique des conversations",
+      "drawerTitle": "Conversations"
+    },
+    "Input": {
+      "placeholder": "Écrivez votre message...",
+      "send": "Envoyer"
+    },
+    "Suggestions": {
+      "s1": "Je veux voyager au Japon 15 jours en mars",
+      "s2": "Je cherche un voyage en Italie avec un budget de 1500 €",
+      "s3": "J'ai besoin d'un plan de 10 jours pour la Grèce",
+      "s4": "Voyager au Portugal en couple, du 10 au 20 juin"
+    },
+    "TripSummary": {
+      "title": "Votre demande",
+      "subtitle": "Voici ce que nous avons compris jusqu'à présent",
+      "origin": "Origine",
+      "destination": "Destination",
+      "dates": "Dates",
+      "people": "Personnes",
+      "budget": "Budget",
+      "contactEmail": "Email de contact",
+      "notDefined": "Pas encore défini",
+      "statusLabel": "Statut de la demande",
+      "statusPending": "En attente de révision",
+      "statusInProgress": "En cours",
+      "statusProposed": "Proposition envoyée",
+      "statusApproved": "Approuvée",
+      "statusRejected": "Rejetée"
+    }
+  },
+  "Contact": {
+    "metaTitle": "Contact",
+    "metaDescription": "Écrivez-nous et un spécialiste de YourAgencyToday vous répondra rapidement.",
+    "title": "Besoin d'aide ?",
+    "subtitle": "Écrivez-nous et un spécialiste vous répondra rapidement.",
+    "nameLabel": "Nom",
+    "namePlaceholder": "Votre nom",
+    "emailLabel": "Adresse email",
+    "emailPlaceholder": "vous@email.com",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Dites-nous comment nous pouvons vous aider",
+    "submitting": "Envoi en cours...",
+    "submit": "Envoyer le message",
+    "genericError": "Impossible d'envoyer votre message. Réessayez.",
+    "successMessage": "Merci ! Nous avons reçu votre message et vous répondrons rapidement."
+  },
+  "Legal": {
+    "Layout": {
+      "lastUpdated": "Dernière mise à jour : juillet 2026."
+    },
+    "Links": {
+      "terminos": "Conditions",
+      "privacidad": "Confidentialité",
+      "contacto": "Contact"
+    },
+    "Terminos": {
+      "metaTitle": "Conditions générales",
+      "metaDescription": "Conditions générales d'utilisation de YourAgencyToday.",
+      "title": "Conditions générales",
+      "intro": "Ces Conditions générales régissent l'utilisation du site web et du chat de planification de voyage de YourAgencyToday (« nous », « l'agence »). En utilisant le site, vous acceptez ces conditions.",
+      "whatWeOfferTitle": "Ce que nous proposons",
+      "whatWeOfferBody": "Grâce à notre chat basé sur l'intelligence artificielle, nous recueillons les détails de votre voyage (destination, dates, budget, origine et nombre de personnes) afin qu'un de nos spécialistes conçoive une proposition d'itinéraire sur mesure. La proposition finale et sa disponibilité sont soumises à une confirmation humaine.",
+      "accountTitle": "Votre compte",
+      "accountItem1": "Vous êtes responsable de garder votre mot de passe confidentiel.",
+      "accountItem2": "Les informations que vous nous fournissez doivent être exactes.",
+      "accountItem3Prefix": "Vous pouvez demander la suppression de votre compte et de vos données à tout moment via notre ",
+      "accountItem3Link": "formulaire de contact",
+      "accountItem3Suffix": ".",
+      "liabilityTitle": "Limitation de responsabilité",
+      "liabilityBody": "Les itinéraires proposés dépendent de la disponibilité réelle des prestataires externes (compagnies aériennes, hôtels, transports) au moment de la réservation. Nous ne garantissons ni les prix ni la disponibilité tant qu'une réservation n'a pas été explicitement confirmée par un spécialiste.",
+      "changesTitle": "Modifications de ces conditions",
+      "changesBody": "Nous pouvons mettre à jour ces conditions occasionnellement. Les changements importants seront reflétés sur cette même page."
+    },
+    "Privacidad": {
+      "metaTitle": "Politique de confidentialité",
+      "metaDescription": "Comment YourAgencyToday collecte, utilise et protège vos données.",
+      "title": "Politique de confidentialité",
+      "intro": "Cette politique explique quelles données nous collectons chez YourAgencyToday, à quoi elles servent et quels droits vous avez sur elles.",
+      "dataCollectedTitle": "Quelles données nous collectons",
+      "dataItem1": "Votre email et un mot de passe stocké de manière chiffrée (ou votre compte Google, si vous choisissez cette méthode de connexion).",
+      "dataItem2": "Les détails de voyage que vous partagez dans le chat : destination, origine, dates, budget et nombre de personnes.",
+      "dataItem3": "Le contenu des messages que vous envoyez à notre chat, traités par un fournisseur externe d'intelligence artificielle pour générer des réponses.",
+      "dataUseTitle": "À quoi nous les utilisons",
+      "dataUseItem1": "Concevoir et vous proposer un itinéraire de voyage sur mesure.",
+      "dataUseItem2": "Vous envoyer par email des mises à jour sur l'état de votre demande.",
+      "dataUseItem3": "Conserver votre historique de conversations associé à votre compte.",
+      "cookiesTitle": "Cookies",
+      "cookiesBody": "Nous utilisons un cookie de session strictement nécessaire pour maintenir votre connexion active. Nous n'utilisons pas de cookies de suivi publicitaire.",
+      "rightsTitle": "Vos droits",
+      "rightsPrefix": "Vous pouvez nous demander d'accéder à vos données ou de les supprimer entièrement en nous écrivant via notre ",
+      "rightsLink": "formulaire de contact",
+      "rightsSuffix": "."
+    }
   }
 }
