@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { toast } from 'sonner';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { Loader2, Eye, EyeOff } from 'lucide-react';
 import { Link as LocaleLink, useRouter } from '@/i18n/navigation';
 
@@ -30,6 +30,7 @@ function getPasswordStrength(password: string): PasswordStrength {
 
 export function RegisterForm() {
   const router = useRouter();
+  const locale = useLocale();
   const t = useTranslations('Auth.Register');
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -68,6 +69,7 @@ export function RegisterForm() {
             email: formData.email,
             password: formData.password,
             passwordConfirm: formData.passwordConfirm,
+            locale,
           }),
         }
       );

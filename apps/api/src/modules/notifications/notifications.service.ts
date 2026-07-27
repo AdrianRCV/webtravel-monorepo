@@ -9,7 +9,7 @@ import {
   itineraryCreatedTemplate,
   ItineraryCreatedEmailData,
 } from './templates/itinerary-created.template';
-import { verifyEmailTemplate, VerifyEmailData } from './templates/verify-email.template';
+import { verifyEmailTemplate, verifyEmailSubjectFor, VerifyEmailData } from './templates/verify-email.template';
 import { passwordResetTemplate, PasswordResetEmailData } from './templates/password-reset.template';
 import { googleAccountNoticeTemplate } from './templates/google-account-notice.template';
 import { contactMessageTemplate } from './templates/contact-message.template';
@@ -141,16 +141,12 @@ export class NotificationsService {
     }
 
     try {
-      const emailData: VerifyEmailData = {
-        ...data,
-        previewText: 'Confirma tu correo electrónico para activar tu cuenta',
-      };
-      const html = verifyEmailTemplate(emailData);
+      const html = verifyEmailTemplate({ ...data, previewText: '' });
 
       await this.resend.emails.send({
         from: this.from,
         to,
-        subject: 'Confirma tu correo electrónico - YourAgencyToday',
+        subject: verifyEmailSubjectFor(data.locale),
         html,
       });
 

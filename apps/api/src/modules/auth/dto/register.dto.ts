@@ -1,4 +1,5 @@
-import { IsEmail, MinLength, Matches } from 'class-validator';
+import { IsEmail, MinLength, Matches, IsOptional, IsIn } from 'class-validator';
+import { SUPPORTED_LOCALES } from '../../../common/locale';
 
 export class RegisterDto {
   @IsEmail()
@@ -15,4 +16,8 @@ export class RegisterDto {
 
   @MinLength(8)
   passwordConfirm!: string;
+
+  @IsOptional()
+  @IsIn(SUPPORTED_LOCALES)
+  locale?: string;
 }

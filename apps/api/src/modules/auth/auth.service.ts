@@ -9,6 +9,7 @@ import { NotificationsService } from '../notifications/notifications.service';
 import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
 import { VerificationTokenType } from '@prisma/client';
+import { normalizeLocale, localizedFrontendUrl } from '../../common/locale';
 
 const VERIFICATION_TOKEN_TTL_MS = 24 * 60 * 60 * 1000;
 const PASSWORD_RESET_TOKEN_TTL_MS = 60 * 60 * 1000;
@@ -60,7 +61,12 @@ export class AuthService {
     };
   }
 
-  async registerUser(email: string, password: string, passwordConfirm: string) {
+  async registerUser(
+    email: string,
+    password: string,
+    passwordConfirm: string,
+    locale?: string,
+  ) {
     if (password !== passwordConfirm) {
       throw new BadRequestException(
         'Las contraseñas no coinciden',
@@ -79,6 +85,7 @@ export class AuthService {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const normalizedLocale = normalizeLocale(locale);
 
     // Si ya existe una cuenta con este email pero nunca se verificó, se
     // trata como una reserva no confirmada: cualquiera pudo haberla creado
@@ -95,6 +102,7 @@ export class AuthService {
             name: true,
             role: true,
             image: true,
+            locale: true,
           },
         })
       : await this.prisma.user.create({
@@ -102,6 +110,7 @@ export class AuthService {
             email,
             password: hashedPassword,
             role: 'CLIENT',
+            locale: normalizedLocale,
           },
           select: {
             id: true,
@@ -109,6 +118,7 @@ export class AuthService {
             name: true,
             role: true,
             image: true,
+            locale: true,
           },
         });
 
@@ -122,7 +132,7 @@ export class AuthService {
       role: user.role,
     });
 
-    await this.sendVerificationEmail(email);
+    await this.sendVerificationEmail(email, user.locale);
 
     return {
       success: true,
@@ -132,7 +142,7 @@ export class AuthService {
     };
   }
 
-  private async sendVerificationEmail(email: string): Promise<void> {
+  private async sendVerificationEmail(email: string, locale: string): Promise<void> {
     const verificationToken = crypto.randomBytes(32).toString('hex');
 
     await this.prisma.verificationToken.create({
@@ -145,9 +155,15 @@ export class AuthService {
     });
 
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+    const normalizedLocale = normalizeLocale(locale);
 
     await this.notificationsService.sendVerificationEmail(email, {
-      verificationUrl: `${frontendUrl}/verify-email?token=${verificationToken}`,
+      verificationUrl: localizedFrontendUrl(
+        frontendUrl,
+        normalizedLocale,
+        `/verify-email?token=${verificationToken}`,
+      ),
+      locale: normalizedLocale,
     });
   }
 
