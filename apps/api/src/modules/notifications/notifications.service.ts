@@ -15,6 +15,7 @@ import { googleAccountNoticeTemplate, googleAccountNoticeSubjectFor } from './te
 import { contactMessageTemplate } from './templates/contact-message.template';
 import {
   emailChangeConfirmationTemplate,
+  emailChangeConfirmationSubjectFor,
   EmailChangeConfirmationData,
 } from './templates/email-change-confirmation.template';
 
@@ -282,16 +283,12 @@ export class NotificationsService {
     }
 
     try {
-      const emailData: EmailChangeConfirmationData = {
-        ...data,
-        previewText: 'Confirmá tu nuevo email de YourAgencyToday',
-      };
-      const html = emailChangeConfirmationTemplate(emailData);
+      const html = emailChangeConfirmationTemplate({ ...data, previewText: '' });
 
       await this.resend.emails.send({
         from: this.from,
         to,
-        subject: 'Confirmá tu nuevo email - YourAgencyToday',
+        subject: emailChangeConfirmationSubjectFor(data.locale),
         html,
       });
 
