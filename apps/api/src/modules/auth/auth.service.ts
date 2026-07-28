@@ -2,6 +2,7 @@ import {
   Injectable,
   ConflictException,
   BadRequestException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../../prisma/prisma.service';
@@ -284,5 +285,98 @@ export class AuthService {
     });
 
     return { success: true };
+  }
+
+  async exchangeOAuthSession(
+    email: string,
+    name?: string,
+    image?: string,
+  ): Promise<{
+    user: {
+      id: string;
+      email: string;
+      name: string | null;
+      role: string;
+      image: string | null;
+      locale: string;
+    };
+    accessToken: string;
+  }> {
+    const existingUser = await this.prisma.user.findUnique({
+      where: { email },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        role: true,
+        image: true,
+        emailVerified: true,
+        locale: true,
+      },
+    });
+
+    if (existingUser && existingUser.role === 'ADMIN') {
+      throw new ForbiddenException(
+        'Esta cuenta no puede iniciar sesión con Google',
+      );
+    }
+
+    // Si ya existe una cuenta CLIENT con este email, Google ya probó que
+    // quien está iniciando sesión controla ese correo — mismo criterio que
+    // ya usa la reactivación de cuentas no verificadas en registerUser().
+    // Se vincula a la misma fila en vez de crear una cuenta separada.
+    const user = existingUser
+      ? await this.prisma.user.update({
+          where: { id: existingUser.id },
+          data: {
+            emailVerified: existingUser.emailVerified ?? new Date(),
+            name: existingUser.name ?? name,
+            image: existingUser.image ?? image,
+          },
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            role: true,
+            image: true,
+            locale: true,
+          },
+        })
+      : await this.prisma.user.create({
+          data: {
+            email,
+            name,
+            image,
+            role: 'CLIENT',
+            emailVerified: new Date(),
+            locale: 'es',
+          },
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            role: true,
+            image: true,
+            locale: true,
+          },
+        });
+
+    const accessToken = this.jwtService.sign({
+      sub: user.id,
+      email: user.email as string,
+      role: user.role,
+    });
+
+    return {
+      user: {
+        id: user.id,
+        email: user.email as string,
+        name: user.name,
+        role: user.role,
+        image: user.image,
+        locale: user.locale,
+      },
+      accessToken,
+    };
   }
 }
