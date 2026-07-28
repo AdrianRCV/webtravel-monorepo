@@ -83,7 +83,9 @@ export class TripRequestsService {
             messages: {
               orderBy: { createdAt: 'asc' },
             },
-            user: true,
+            user: {
+              select: { id: true, name: true, email: true, image: true },
+            },
           },
         },
         itineraries: {
