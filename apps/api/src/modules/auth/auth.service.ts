@@ -95,7 +95,7 @@ export class AuthService {
     const user = existingUser
       ? await this.prisma.user.update({
           where: { id: existingUser.id },
-          data: { password: hashedPassword },
+          data: { password: hashedPassword, locale: normalizedLocale },
           select: {
             id: true,
             email: true,
