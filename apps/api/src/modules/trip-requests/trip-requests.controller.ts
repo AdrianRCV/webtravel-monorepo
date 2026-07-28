@@ -14,6 +14,9 @@ import { UpdateMyTripRequestDto } from './dto/update-my-trip-request.dto';
 import { TripStatus } from '@prisma/client';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
+import { Public } from '../auth/public.decorator';
+import { OptionalJwtAuthGuard } from '../auth/optional-jwt-auth.guard';
+import { CurrentUserData } from '../auth/current-user.decorator';
 
 @Controller('trip-requests')
 export class TripRequestsController {
@@ -40,10 +43,15 @@ export class TripRequestsController {
     return this.tripRequestsService.getStats(user);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @Public()
+  @UseGuards(OptionalJwtAuthGuard)
   @Get(':id')
-  findOne(@Param('id') id: string, @CurrentUser() user: any) {
-    return this.tripRequestsService.findOne(id, user);
+  findOne(
+    @Param('id') id: string,
+    @CurrentUser() user: CurrentUserData | null,
+    @Query('token') token?: string,
+  ) {
+    return this.tripRequestsService.findOne(id, user, token);
   }
 
   @UseGuards(JwtAuthGuard)

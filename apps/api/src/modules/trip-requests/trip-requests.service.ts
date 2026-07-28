@@ -7,6 +7,7 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { TripStatus } from '@prisma/client';
 import { NotificationsService } from '../notifications/notifications.service';
 import { normalizeLocale, INTL_LOCALE } from '../../common/locale';
+import { CurrentUserData } from '../auth/current-user.decorator';
 
 @Injectable()
 export class TripRequestsService {
@@ -73,7 +74,7 @@ export class TripRequestsService {
     };
   }
 
-  async findOne(id: string, user: { id: string; role: string }) {
+  async findOne(id: string, user: CurrentUserData | null, token?: string) {
     const tripRequest = await this.prisma.tripRequest.findUnique({
       where: { id },
       include: {
@@ -109,16 +110,25 @@ export class TripRequestsService {
       throw new NotFoundException(`Trip request with ID ${id} not found`);
     }
 
-    if (
-      user.role === 'CLIENT' &&
-      tripRequest.chatSession?.userId !== user.id
-    ) {
-      throw new ForbiddenException(
-        'No tienes permiso para ver esta solicitud',
-      );
+    if (user) {
+      if (
+        user.role === 'CLIENT' &&
+        tripRequest.chatSession?.userId !== user.id
+      ) {
+        throw new ForbiddenException(
+          'No tienes permiso para ver esta solicitud',
+        );
+      }
+      return tripRequest;
     }
 
-    return tripRequest;
+    if (token && token === tripRequest.viewToken) {
+      return tripRequest;
+    }
+
+    throw new ForbiddenException(
+      'No tienes permiso para ver esta solicitud',
+    );
   }
 
   async updateStatus(id: string, status: TripStatus, user: { id: string; role: string }) {

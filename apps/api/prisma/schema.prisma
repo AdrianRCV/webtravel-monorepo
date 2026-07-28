@@ -115,6 +115,7 @@ model TripRequest {
   endDate       DateTime?
   rawPreferences Json?
   clientEmail   String?
+  viewToken     String      @unique @default(uuid())
 
   itineraries   Itinerary[]
 
