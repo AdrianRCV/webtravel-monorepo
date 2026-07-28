@@ -118,6 +118,7 @@ export const baseTemplate = (content: string, data: BaseEmailData): string => {
   </style>
 </head>
 <body>
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;">${escapeHtml(data.previewText)}</div>
   <div class="wrapper">
     <div class="container">
       <div class="header">
