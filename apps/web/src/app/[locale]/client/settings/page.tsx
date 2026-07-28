@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { ClientHeader } from '@/components/client/client-header';
 import { ChangePasswordForm } from '@/components/client/change-password-form';
 import { ChangeEmailForm } from '@/components/client/change-email-form';
+import { LocalePreferenceForm } from '@/components/client/locale-preference-form';
 import { DeleteAccountSection } from '@/components/client/delete-account-section';
 
 export default function SettingsPage() {
@@ -41,6 +42,13 @@ export default function SettingsPage() {
               <h2 className="text-lg font-semibold text-gray-900">{t('emailSectionTitle')}</h2>
               <div className="mt-4">
                 <ChangeEmailForm />
+              </div>
+            </section>
+
+            <section className="rounded-lg border border-gray-200 bg-white p-6">
+              <h2 className="text-lg font-semibold text-gray-900">{t('localeSectionTitle')}</h2>
+              <div className="mt-4">
+                <LocalePreferenceForm />
               </div>
             </section>
 

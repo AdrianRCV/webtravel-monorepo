@@ -4,6 +4,7 @@ import { Itinerary } from '@prisma/client';
 import { CreateItineraryDto } from './dto/create-itinerary.dto';
 import { UpdateItineraryDto } from './dto/update-itinerary.dto';
 import { NotificationsService } from '../notifications/notifications.service';
+import { normalizeLocale, INTL_LOCALE } from '../../common/locale';
 
 @Injectable()
 export class ItinerariesService {
@@ -196,26 +197,29 @@ export class ItinerariesService {
       const firstDay = days.find((d) => d.dayNumber === 1);
       const firstDayPreview =
         firstDay?.description || firstDay?.activities?.[0]?.description;
+      const normalizedLocale = normalizeLocale(tripRequest.chatSession?.user?.locale);
+      const intlLocale = INTL_LOCALE[normalizedLocale];
 
       await this.notificationsService.sendItineraryCreatedEmail(
         tripRequest.clientEmail,
         {
           recipientName: tripRequest.chatSession?.user?.name || 'Cliente',
           destination: tripRequest.destination || 'tu destino',
+          locale: normalizedLocale,
           startDate: tripRequest.startDate
-            ? new Date(tripRequest.startDate).toLocaleDateString('es-ES', {
+            ? new Date(tripRequest.startDate).toLocaleDateString(intlLocale, {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
               })
-            : 'Por definir',
+            : undefined,
           endDate: tripRequest.endDate
-            ? new Date(tripRequest.endDate).toLocaleDateString('es-ES', {
+            ? new Date(tripRequest.endDate).toLocaleDateString(intlLocale, {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
               })
-            : 'Por definir',
+            : undefined,
           totalDays,
           totalEstimatedPrice: itinerary.totalEstimatedPrice,
           itineraryTitle: itinerary.title,

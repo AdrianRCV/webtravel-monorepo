@@ -341,7 +341,8 @@
       "title": "Account settings",
       "subtitle": "Manage your password, email, and account",
       "passwordSectionTitle": "Change password",
-      "emailSectionTitle": "Change email"
+      "emailSectionTitle": "Change email",
+      "localeSectionTitle": "Language"
     },
     "ChangePasswordForm": {
       "currentPasswordLabel": "Current password",
@@ -364,6 +365,13 @@
       "errorGeneric": "Error requesting the email change",
       "successPrefix": "We sent a confirmation link to ",
       "successSuffix": ". Your current email keeps working until you confirm the change."
+    },
+    "LocalePreferenceForm": {
+      "label": "Language for emails",
+      "saving": "Saving...",
+      "submit": "Save",
+      "successToast": "Language updated.",
+      "errorGeneric": "Couldn't update the language"
     },
     "DeleteAccountSection": {
       "dangerZoneTitle": "Danger zone",

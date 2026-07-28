@@ -8,6 +8,7 @@ import { NotificationsService } from '../notifications/notifications.service';
 import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
 import { Prisma, VerificationTokenType } from '@prisma/client';
+import { normalizeLocale, localizedFrontendUrl } from '../../common/locale';
 
 const EMAIL_CHANGE_TOKEN_TTL_MS = 60 * 60 * 1000;
 
@@ -21,7 +22,7 @@ export class AccountService {
   private async requirePassword(userId: string, currentPassword: string) {
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
-      select: { password: true, email: true },
+      select: { password: true, email: true, locale: true },
     });
 
     if (!user) {
@@ -60,6 +61,15 @@ export class AccountService {
     await this.prisma.user.update({
       where: { id: userId },
       data: { password: hashedPassword },
+    });
+
+    return { success: true };
+  }
+
+  async updateLocale(userId: string, locale: string): Promise<{ success: true }> {
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { locale },
     });
 
     return { success: true };
@@ -105,9 +115,15 @@ export class AccountService {
     });
 
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+    const normalizedLocale = normalizeLocale(user.locale);
 
     await this.notificationsService.sendEmailChangeConfirmation(newEmail, {
-      confirmUrl: `${frontendUrl}/confirm-email-change?token=${changeToken}`,
+      confirmUrl: localizedFrontendUrl(
+        frontendUrl,
+        normalizedLocale,
+        `/confirm-email-change?token=${changeToken}`,
+      ),
+      locale: normalizedLocale,
     });
 
     return { success: true };

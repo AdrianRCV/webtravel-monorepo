@@ -10,12 +10,13 @@ export class ContactService {
     email: string,
     message: string,
     honeypot?: string,
+    locale?: string,
   ): Promise<{ success: true }> {
     if (honeypot) {
       return { success: true };
     }
 
-    await this.notificationsService.sendContactMessage({ name, email, message });
+    await this.notificationsService.sendContactMessage({ name, email, message, locale });
 
     return { success: true };
   }

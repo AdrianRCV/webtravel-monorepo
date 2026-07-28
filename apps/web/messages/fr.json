@@ -341,7 +341,8 @@
       "title": "Paramètres du compte",
       "subtitle": "Gérez votre mot de passe, votre email et votre compte",
       "passwordSectionTitle": "Changer le mot de passe",
-      "emailSectionTitle": "Changer l'email"
+      "emailSectionTitle": "Changer l'email",
+      "localeSectionTitle": "Langue"
     },
     "ChangePasswordForm": {
       "currentPasswordLabel": "Mot de passe actuel",
@@ -364,6 +365,13 @@
       "errorGeneric": "Erreur lors de la demande de changement d'email",
       "successPrefix": "Nous avons envoyé un lien de confirmation à ",
       "successSuffix": ". Votre email actuel continue de fonctionner jusqu'à ce que vous confirmiez le changement."
+    },
+    "LocalePreferenceForm": {
+      "label": "Langue pour les emails",
+      "saving": "Enregistrement...",
+      "submit": "Enregistrer",
+      "successToast": "Langue mise à jour.",
+      "errorGeneric": "Impossible de mettre à jour la langue"
     },
     "DeleteAccountSection": {
       "dangerZoneTitle": "Zone de danger",

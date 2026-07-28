@@ -15,6 +15,7 @@ export class ContactController {
       dto.email,
       dto.message,
       dto.website,
+      dto.locale,
     );
   }
 }

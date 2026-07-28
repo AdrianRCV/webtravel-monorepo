@@ -12,6 +12,7 @@ import { ChangePasswordDto } from './dto/change-password.dto';
 import { ChangeEmailDto } from './dto/change-email.dto';
 import { ConfirmEmailChangeDto } from './dto/confirm-email-change.dto';
 import { DeleteAccountDto } from './dto/delete-account.dto';
+import { UpdateLocaleDto } from './dto/update-locale.dto';
 import { CurrentUser } from '../auth/current-user.decorator';
 import { Public } from '../auth/public.decorator';
 
@@ -36,6 +37,20 @@ export class AccountController {
       dto.newPassword,
       dto.newPasswordConfirm,
     );
+  }
+
+  @Patch('locale')
+  async updateLocale(
+    @CurrentUser() user: any,
+    @Body(ValidationPipe) dto: UpdateLocaleDto,
+  ) {
+    if (user.role !== 'CLIENT') {
+      throw new ForbiddenException(
+        'Esta función solo está disponible para cuentas de cliente',
+      );
+    }
+
+    return this.accountService.updateLocale(user.id, dto.locale);
   }
 
   @Post('email/change')

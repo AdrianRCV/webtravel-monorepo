@@ -9,6 +9,7 @@ import { NotificationsService } from '../notifications/notifications.service';
 import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
 import { VerificationTokenType } from '@prisma/client';
+import { normalizeLocale, localizedFrontendUrl } from '../../common/locale';
 
 const VERIFICATION_TOKEN_TTL_MS = 24 * 60 * 60 * 1000;
 const PASSWORD_RESET_TOKEN_TTL_MS = 60 * 60 * 1000;
@@ -60,7 +61,12 @@ export class AuthService {
     };
   }
 
-  async registerUser(email: string, password: string, passwordConfirm: string) {
+  async registerUser(
+    email: string,
+    password: string,
+    passwordConfirm: string,
+    locale?: string,
+  ) {
     if (password !== passwordConfirm) {
       throw new BadRequestException(
         'Las contraseñas no coinciden',
@@ -79,6 +85,7 @@ export class AuthService {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const normalizedLocale = normalizeLocale(locale);
 
     // Si ya existe una cuenta con este email pero nunca se verificó, se
     // trata como una reserva no confirmada: cualquiera pudo haberla creado
@@ -88,13 +95,14 @@ export class AuthService {
     const user = existingUser
       ? await this.prisma.user.update({
           where: { id: existingUser.id },
-          data: { password: hashedPassword },
+          data: { password: hashedPassword, locale: normalizedLocale },
           select: {
             id: true,
             email: true,
             name: true,
             role: true,
             image: true,
+            locale: true,
           },
         })
       : await this.prisma.user.create({
@@ -102,6 +110,7 @@ export class AuthService {
             email,
             password: hashedPassword,
             role: 'CLIENT',
+            locale: normalizedLocale,
           },
           select: {
             id: true,
@@ -109,6 +118,7 @@ export class AuthService {
             name: true,
             role: true,
             image: true,
+            locale: true,
           },
         });
 
@@ -122,7 +132,7 @@ export class AuthService {
       role: user.role,
     });
 
-    await this.sendVerificationEmail(email);
+    await this.sendVerificationEmail(email, user.locale);
 
     return {
       success: true,
@@ -132,7 +142,7 @@ export class AuthService {
     };
   }
 
-  private async sendVerificationEmail(email: string): Promise<void> {
+  private async sendVerificationEmail(email: string, locale: string): Promise<void> {
     const verificationToken = crypto.randomBytes(32).toString('hex');
 
     await this.prisma.verificationToken.create({
@@ -145,9 +155,15 @@ export class AuthService {
     });
 
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+    const normalizedLocale = normalizeLocale(locale);
 
     await this.notificationsService.sendVerificationEmail(email, {
-      verificationUrl: `${frontendUrl}/verify-email?token=${verificationToken}`,
+      verificationUrl: localizedFrontendUrl(
+        frontendUrl,
+        normalizedLocale,
+        `/verify-email?token=${verificationToken}`,
+      ),
+      locale: normalizedLocale,
     });
   }
 
@@ -187,7 +203,7 @@ export class AuthService {
   async forgotPassword(email: string): Promise<{ success: true }> {
     const user = await this.prisma.user.findUnique({
       where: { email },
-      select: { id: true, password: true },
+      select: { id: true, password: true, locale: true },
     });
 
     if (user) {
@@ -195,7 +211,7 @@ export class AuthService {
         // Fire-and-forget: awaiting the network call here would make this branch
         // measurably slower than the "no such account" branch, leaking account
         // existence via response timing.
-        void this.notificationsService.sendGoogleAccountNotice(email);
+        void this.notificationsService.sendGoogleAccountNotice(email, user.locale);
       } else {
         await this.prisma.verificationToken.deleteMany({
           where: { identifier: email, type: VerificationTokenType.PASSWORD_RESET },
@@ -213,10 +229,16 @@ export class AuthService {
         });
 
         const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+        const normalizedLocale = normalizeLocale(user.locale);
 
         // Fire-and-forget: see comment above, same timing-leak concern.
         void this.notificationsService.sendPasswordResetEmail(email, {
-          resetUrl: `${frontendUrl}/reset-password?token=${resetToken}`,
+          resetUrl: localizedFrontendUrl(
+            frontendUrl,
+            normalizedLocale,
+            `/reset-password?token=${resetToken}`,
+          ),
+          locale: normalizedLocale,
         });
       }
     }

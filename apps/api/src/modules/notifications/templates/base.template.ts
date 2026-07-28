@@ -1,18 +1,48 @@
 import { escapeHtml } from './escape';
+import { SupportedLocale, normalizeLocale } from '../../../common/locale';
 
 export interface BaseEmailData {
   recipientName?: string;
   previewText: string;
+  locale?: string | null;
 }
 
+const WRAPPER_COPY: Record<
+  SupportedLocale,
+  { greeting: (name: string) => string; footerLine1: string; footerLine2: string }
+> = {
+  es: {
+    greeting: (name) => `Hola ${name},`,
+    footerLine1: 'YourAgencyToday - Tu agencia de viajes de confianza',
+    footerLine2: 'Este es un correo automático, por favor no responder directamente.',
+  },
+  en: {
+    greeting: (name) => `Hi ${name},`,
+    footerLine1: 'YourAgencyToday - Your trusted travel agency',
+    footerLine2: "This is an automated email, please don't reply directly.",
+  },
+  fr: {
+    greeting: (name) => `Bonjour ${name},`,
+    footerLine1: 'YourAgencyToday - Votre agence de voyage de confiance',
+    footerLine2: "Ceci est un e-mail automatique, merci de ne pas y répondre directement.",
+  },
+  de: {
+    greeting: (name) => `Hallo ${name},`,
+    footerLine1: 'YourAgencyToday - Dein vertrauenswürdiges Reisebüro',
+    footerLine2: 'Dies ist eine automatische E-Mail, bitte antworte nicht direkt darauf.',
+  },
+};
+
 export const baseTemplate = (content: string, data: BaseEmailData): string => {
+  const locale = normalizeLocale(data.locale);
+  const copy = WRAPPER_COPY[locale];
   const escapedRecipientName = data.recipientName
     ? escapeHtml(data.recipientName)
     : undefined;
 
   return `
 <!DOCTYPE html>
-<html lang="es">
+<html lang="${locale}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -88,19 +118,20 @@ export const baseTemplate = (content: string, data: BaseEmailData): string => {
   </style>
 </head>
 <body>
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;">${escapeHtml(data.previewText)}</div>
   <div class="wrapper">
     <div class="container">
       <div class="header">
         <div class="logo">✈️ YourAgencyToday</div>
       </div>
       <div class="content">
-        ${escapedRecipientName ? `<p style="font-size: 16px; color: #333; margin-bottom: 20px;">Hola ${escapedRecipientName},</p>` : ''}
+        ${escapedRecipientName ? `<p style="font-size: 16px; color: #333; margin-bottom: 20px;">${copy.greeting(escapedRecipientName)}</p>` : ''}
         ${content}
       </div>
       <div class="footer">
-        <p style="margin: 0 0 10px 0;">YourAgencyToday - Tu agencia de viajes de confianza</p>
+        <p style="margin: 0 0 10px 0;">${copy.footerLine1}</p>
         <p style="margin: 0; font-size: 13px; color: #999;">
-          Este es un correo automático, por favor no responder directamente.
+          ${copy.footerLine2}
         </p>
       </div>
     </div>

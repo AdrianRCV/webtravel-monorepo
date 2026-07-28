@@ -3,18 +3,21 @@ import { Resend } from 'resend';
 import { TripStatus } from '@prisma/client';
 import {
   statusUpdateTemplate,
+  statusUpdateSubjectFor,
   StatusUpdateEmailData,
 } from './templates/status-update.template';
 import {
   itineraryCreatedTemplate,
+  itineraryCreatedSubjectFor,
   ItineraryCreatedEmailData,
 } from './templates/itinerary-created.template';
-import { verifyEmailTemplate, VerifyEmailData } from './templates/verify-email.template';
-import { passwordResetTemplate, PasswordResetEmailData } from './templates/password-reset.template';
-import { googleAccountNoticeTemplate } from './templates/google-account-notice.template';
-import { contactMessageTemplate } from './templates/contact-message.template';
+import { verifyEmailTemplate, verifyEmailSubjectFor, VerifyEmailData } from './templates/verify-email.template';
+import { passwordResetTemplate, passwordResetSubjectFor, PasswordResetEmailData } from './templates/password-reset.template';
+import { googleAccountNoticeTemplate, googleAccountNoticeSubjectFor } from './templates/google-account-notice.template';
+import { contactMessageTemplate, contactMessageSubjectFor } from './templates/contact-message.template';
 import {
   emailChangeConfirmationTemplate,
+  emailChangeConfirmationSubjectFor,
   EmailChangeConfirmationData,
 } from './templates/email-change-confirmation.template';
 
@@ -61,12 +64,8 @@ export class NotificationsService {
     }
 
     try {
-      const emailData: StatusUpdateEmailData = {
-        ...data,
-        previewText: `Actualización: Tu viaje a ${data.destination} - ${data.newStatus}`,
-      };
-      const html = statusUpdateTemplate(emailData);
-      const subject = `Actualización: Tu viaje a ${data.destination}`;
+      const html = statusUpdateTemplate({ ...data, previewText: '' });
+      const subject = statusUpdateSubjectFor(data.locale, data.destination, data.newStatus);
 
       await this.resend.emails.send({
         from: this.from,
@@ -102,12 +101,8 @@ export class NotificationsService {
     }
 
     try {
-      const emailData: ItineraryCreatedEmailData = {
-        ...data,
-        previewText: `Tu itinerario a ${data.destination} está listo`,
-      };
-      const html = itineraryCreatedTemplate(emailData);
-      const subject = `¡Tu itinerario a ${data.destination} está listo!`;
+      const html = itineraryCreatedTemplate({ ...data, previewText: '' });
+      const subject = itineraryCreatedSubjectFor(data.locale, data.destination);
 
       await this.resend.emails.send({
         from: this.from,
@@ -141,16 +136,12 @@ export class NotificationsService {
     }
 
     try {
-      const emailData: VerifyEmailData = {
-        ...data,
-        previewText: 'Confirma tu correo electrónico para activar tu cuenta',
-      };
-      const html = verifyEmailTemplate(emailData);
+      const html = verifyEmailTemplate({ ...data, previewText: '' });
 
       await this.resend.emails.send({
         from: this.from,
         to,
-        subject: 'Confirma tu correo electrónico - YourAgencyToday',
+        subject: verifyEmailSubjectFor(data.locale),
         html,
       });
 
@@ -179,16 +170,12 @@ export class NotificationsService {
     }
 
     try {
-      const emailData: PasswordResetEmailData = {
-        ...data,
-        previewText: 'Restablecé tu contraseña de YourAgencyToday',
-      };
-      const html = passwordResetTemplate(emailData);
+      const html = passwordResetTemplate({ ...data, previewText: '' });
 
       await this.resend.emails.send({
         from: this.from,
         to,
-        subject: 'Restablecé tu contraseña - YourAgencyToday',
+        subject: passwordResetSubjectFor(data.locale),
         html,
       });
 
@@ -202,7 +189,7 @@ export class NotificationsService {
     }
   }
 
-  async sendGoogleAccountNotice(to: string): Promise<void> {
+  async sendGoogleAccountNotice(to: string, locale?: string | null): Promise<void> {
     if (!this.enabled || !this.resend) {
       this.logger.warn('Email sending skipped: service not enabled');
       return;
@@ -214,14 +201,12 @@ export class NotificationsService {
     }
 
     try {
-      const html = googleAccountNoticeTemplate({
-        previewText: 'Esta cuenta usa Inicio de sesión con Google',
-      });
+      const html = googleAccountNoticeTemplate({ previewText: '', locale });
 
       await this.resend.emails.send({
         from: this.from,
         to,
-        subject: 'Esta cuenta usa Google - YourAgencyToday',
+        subject: googleAccountNoticeSubjectFor(locale),
         html,
       });
 
@@ -239,6 +224,7 @@ export class NotificationsService {
     name: string;
     email: string;
     message: string;
+    locale?: string;
   }): Promise<void> {
     if (!this.enabled || !this.resend) {
       this.logger.warn('Email sending skipped: service not enabled');
@@ -257,13 +243,14 @@ export class NotificationsService {
         senderName: data.name,
         senderEmail: data.email,
         message: data.message,
-        previewText: `Nuevo mensaje de contacto de ${data.name}`,
+        previewText: '',
+        locale: data.locale,
       });
 
       await this.resend.emails.send({
         from: this.from,
         to,
-        subject: `Nuevo mensaje de contacto: ${data.name}`,
+        subject: contactMessageSubjectFor(data.locale, data.name),
         html,
       });
 
@@ -292,16 +279,12 @@ export class NotificationsService {
     }
 
     try {
-      const emailData: EmailChangeConfirmationData = {
-        ...data,
-        previewText: 'Confirmá tu nuevo email de YourAgencyToday',
-      };
-      const html = emailChangeConfirmationTemplate(emailData);
+      const html = emailChangeConfirmationTemplate({ ...data, previewText: '' });
 
       await this.resend.emails.send({
         from: this.from,
         to,
-        subject: 'Confirmá tu nuevo email - YourAgencyToday',
+        subject: emailChangeConfirmationSubjectFor(data.locale),
         html,
       });
 

@@ -24,6 +24,7 @@ export class AuthController {
       dto.email,
       dto.password,
       dto.passwordConfirm,
+      dto.locale,
     );
   }
 

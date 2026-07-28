@@ -6,6 +6,7 @@ import {
 import { PrismaService } from '../../prisma/prisma.service';
 import { TripStatus } from '@prisma/client';
 import { NotificationsService } from '../notifications/notifications.service';
+import { normalizeLocale, INTL_LOCALE } from '../../common/locale';
 
 @Injectable()
 export class TripRequestsService {
@@ -162,6 +163,10 @@ export class TripRequestsService {
 
       if (shouldNotify && updatedTripRequest.clientEmail) {
         const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+        const normalizedLocale = normalizeLocale(
+          updatedTripRequest.chatSession?.user?.locale,
+        );
+        const intlLocale = INTL_LOCALE[normalizedLocale];
 
         await this.notificationsService.sendStatusUpdateEmail(
           updatedTripRequest.clientEmail,
@@ -173,9 +178,10 @@ export class TripRequestsService {
             newStatus: status,
             tripRequestId: updatedTripRequest.id,
             frontendUrl,
+            locale: normalizedLocale,
             startDate: updatedTripRequest.startDate
               ? new Date(updatedTripRequest.startDate).toLocaleDateString(
-                  'es-ES',
+                  intlLocale,
                   {
                     year: 'numeric',
                     month: 'long',
@@ -185,7 +191,7 @@ export class TripRequestsService {
               : undefined,
             endDate: updatedTripRequest.endDate
               ? new Date(updatedTripRequest.endDate).toLocaleDateString(
-                  'es-ES',
+                  intlLocale,
                   {
                     year: 'numeric',
                     month: 'long',
