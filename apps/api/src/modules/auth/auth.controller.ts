@@ -57,7 +57,7 @@ export class AuthController {
     @Headers('x-internal-auth') internalAuth: string | undefined,
     @Body(ValidationPipe) dto: OAuthSessionDto,
   ) {
-    if (internalAuth !== process.env.AUTH_SECRET) {
+    if (internalAuth !== process.env.INTERNAL_API_SECRET) {
       throw new UnauthorizedException();
     }
 

@@ -48,6 +48,13 @@ async function bootstrap() {
     limiter(10, 'Demasiados intentos. Intenta de nuevo en 15 minutos.'),
   );
   app.use(
+    '/auth/oauth-session',
+    limiter(
+      10,
+      'Demasiados intentos de inicio de sesión. Intenta de nuevo en 15 minutos.',
+    ),
+  );
+  app.use(
     '/contact',
     limiter(5, 'Demasiados mensajes enviados. Intenta de nuevo en 15 minutos.'),
   );

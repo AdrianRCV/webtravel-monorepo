@@ -69,9 +69,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   
   callbacks: {
-    async signIn({ user, account }) {
+    async signIn({ user, account, profile }) {
       if (account?.provider === "google") {
-        if (!user.email) return false;
+        if (!user.email || profile?.email_verified !== true) return false;
 
         try {
           const apiUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
@@ -80,7 +80,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'X-Internal-Auth': process.env.AUTH_SECRET!,
+              'X-Internal-Auth': process.env.INTERNAL_API_SECRET!,
             },
             body: JSON.stringify({
               email: user.email,
