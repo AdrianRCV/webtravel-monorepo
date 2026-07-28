@@ -135,6 +135,13 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL(withLocale('/unauthorized', locale), req.url));
   }
 
+  if (isClientRoute && !session.accessToken) {
+    const loginUrl = new URL(withLocale('/login', locale), req.url);
+    const redirectPath = isValidRedirectPath(normalizedPath) ? normalizedPath : '/chat';
+    loginUrl.searchParams.set('callbackUrl', redirectPath);
+    return NextResponse.redirect(loginUrl);
+  }
+
   return baseResponse;
 }
 

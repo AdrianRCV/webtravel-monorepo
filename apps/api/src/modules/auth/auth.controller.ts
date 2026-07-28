@@ -1,10 +1,11 @@
-import { Controller, Post, Body, ValidationPipe } from '@nestjs/common';
+import { Controller, Post, Body, Headers, ValidationPipe, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ValidateCredentialsDto } from './dto/validate-credentials.dto';
 import { RegisterDto } from './dto/register.dto';
 import { VerifyEmailDto } from './dto/verify-email.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { OAuthSessionDto } from './dto/oauth-session.dto';
 import { Public } from './public.decorator';
 
 @Controller('auth')
@@ -48,5 +49,18 @@ export class AuthController {
       dto.password,
       dto.passwordConfirm,
     );
+  }
+
+  @Public()
+  @Post('oauth-session')
+  async oauthSession(
+    @Headers('x-internal-auth') internalAuth: string | undefined,
+    @Body(ValidationPipe) dto: OAuthSessionDto,
+  ) {
+    if (internalAuth !== process.env.INTERNAL_API_SECRET) {
+      throw new UnauthorizedException();
+    }
+
+    return this.authService.exchangeOAuthSession(dto.email, dto.name, dto.image);
   }
 }

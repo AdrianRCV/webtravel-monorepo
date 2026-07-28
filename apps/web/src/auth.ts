@@ -69,24 +69,53 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   
   callbacks: {
-    async signIn({ user, account }) {
+    async signIn({ user, account, profile }) {
       if (account?.provider === "google") {
-        return true;
+        if (!user.email || profile?.email_verified !== true) return false;
+
+        try {
+          const apiUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+
+          const response = await fetch(`${apiUrl}/auth/oauth-session`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Internal-Auth': process.env.INTERNAL_API_SECRET!,
+            },
+            body: JSON.stringify({
+              email: user.email,
+              name: user.name,
+              image: user.image,
+            }),
+          });
+
+          if (!response.ok) return false;
+          const result = await response.json();
+
+          user.id = result.user.id;
+          user.role = result.user.role;
+          user.accessToken = result.accessToken;
+
+          return true;
+        } catch (error) {
+          console.error('Error exchanging Google session:', error);
+          return false;
+        }
       }
-      
+
       return true;
     },
-    
-    async jwt({ token, user, account }) {
+
+    async jwt({ token, user }) {
       if (user) {
         token.userId = user.id;
-        token.role = user.role || (account?.provider === "google" ? "CLIENT" : undefined);
+        token.role = user.role;
         token.accessToken = user.accessToken;
       }
-      
+
       return token;
     },
-    
+
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.userId as string;
