@@ -220,6 +220,30 @@ export class ChatService {
     return { success: true };
   }
 
+  async renameSession(sessionId: string, title: string, user: CurrentUserData) {
+    const session = await this.prisma.chatSession.findUnique({
+      where: { id: sessionId },
+      select: { id: true, userId: true },
+    });
+
+    if (!session) {
+      throw new NotFoundException(
+        `Chat session with ID ${sessionId} not found`,
+      );
+    }
+
+    if (user.role !== 'ADMIN' && session.userId !== user.id) {
+      throw new ForbiddenException(
+        'No tienes permiso para renombrar esta conversación',
+      );
+    }
+
+    return this.prisma.chatSession.update({
+      where: { id: sessionId },
+      data: { title },
+    });
+  }
+
   private extractIntent(message: string): ExtractedIntent {
     const intent: ExtractedIntent = { hasIntent: false };
 
