@@ -8,7 +8,7 @@ import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import { MessageSquarePlus } from 'lucide-react';
 import { ChatMessage, TripRequest } from '@webtravel/shared-types';
-import { createChatSession, sendChatMessage, getChatSession } from '@/lib/api';
+import { createChatSession, sendChatMessage, getChatSession, deleteChatSession, renameChatSession } from '@/lib/api';
 import { MessageList } from './MessageList';
 import { ChatInput } from './ChatInput';
 import { SuggestionChips } from './SuggestionChips';
@@ -165,6 +165,31 @@ export function ChatInterface() {
     }
   };
 
+  const handleDeleteSession = async (id: string) => {
+    try {
+      await deleteChatSession(id, authSession?.accessToken);
+      if (id === sessionId) {
+        handleNewConversation();
+      } else {
+        setHistoryRefreshKey((k) => k + 1);
+      }
+    } catch (err) {
+      console.error('Error deleting session:', err);
+      toast.error(t('deleteError'));
+      throw err;
+    }
+  };
+
+  const handleRenameSession = async (id: string, title: string) => {
+    try {
+      await renameChatSession(id, title, authSession?.accessToken);
+      setHistoryRefreshKey((k) => k + 1);
+    } catch (err) {
+      console.error('Error renaming session:', err);
+      toast.error(t('renameError'));
+    }
+  };
+
   return (
     <div className="flex h-screen bg-gray-50">
       {authSession?.accessToken && (
@@ -173,6 +198,8 @@ export function ChatInterface() {
           activeSessionId={sessionId}
           refreshKey={historyRefreshKey}
           onNewConversation={handleNewConversation}
+          onDelete={handleDeleteSession}
+          onRename={handleRenameSession}
         />
       )}
 
@@ -195,6 +222,8 @@ export function ChatInterface() {
                   activeSessionId={sessionId}
                   refreshKey={historyRefreshKey}
                   onNewConversation={handleNewConversation}
+                  onDelete={handleDeleteSession}
+                  onRename={handleRenameSession}
                 />
               )}
               <button

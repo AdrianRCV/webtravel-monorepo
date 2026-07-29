@@ -111,6 +111,18 @@ export async function deleteChatSession(
   });
 }
 
+export async function renameChatSession(
+  sessionId: string,
+  title: string,
+  accessToken?: string,
+): Promise<void> {
+  await fetchAPI<{ id: string }>(`/chat/sessions/${sessionId}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ title }),
+    accessToken,
+  });
+}
+
 export async function getItinerariesByTripRequest(
   tripRequestId: string,
   accessToken?: string,
@@ -229,6 +241,7 @@ export async function sendChatMessage(
 
 export interface ChatSessionSummary {
   id: string;
+  title: string | null;
   updatedAt: string;
   tripRequest: {
     id: string;

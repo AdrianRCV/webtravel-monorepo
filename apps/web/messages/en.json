@@ -146,6 +146,8 @@
       "newConversationTooltip": "New conversation",
       "initError": "Couldn't start the chat session. Please reload the page.",
       "sendError": "Couldn't send the message.",
+      "deleteError": "Couldn't delete the conversation.",
+      "renameError": "Couldn't rename the conversation.",
       "retry": "Retry",
       "loading": "Starting conversation...",
       "defaultGreeting": "Hi! I'm your travel assistant. Where would you like to go?"
@@ -155,6 +157,8 @@
       "newConversationFallbackLabel": "New conversation",
       "empty": "You don't have any previous conversations yet",
       "historyTooltip": "Conversation history",
+      "renameTooltip": "Rename conversation",
+      "deleteTooltip": "Delete conversation",
       "drawerTitle": "Conversations"
     },
     "Input": {

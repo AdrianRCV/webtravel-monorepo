@@ -3,8 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
-import { MessageSquarePlus, Loader2, History } from 'lucide-react';
+import { MessageSquarePlus, Loader2, History, Pencil, Trash2 } from 'lucide-react';
 import { getMyChatSessions, ChatSessionSummary } from '@/lib/api';
+import { DeleteConversationDialog } from '@/components/shared/delete-conversation-dialog';
 import {
   Drawer,
   DrawerContent,
@@ -18,6 +19,8 @@ interface Props {
   activeSessionId: string | null;
   refreshKey: number;
   onNewConversation: () => void;
+  onDelete: (id: string) => Promise<void>;
+  onRename: (id: string, title: string) => Promise<void>;
 }
 
 function useChatSessions(accessToken: string, refreshKey: number) {
@@ -50,14 +53,40 @@ function HistoryList({
   activeSessionId,
   onSelect,
   onNewConversation,
+  onDelete,
+  onRename,
+  alwaysShowActions,
 }: {
   sessions: ChatSessionSummary[];
   isLoading: boolean;
   activeSessionId: string | null;
   onSelect: (id: string) => void;
   onNewConversation: () => void;
+  onDelete: (id: string) => Promise<void>;
+  onRename: (id: string, title: string) => Promise<void>;
+  alwaysShowActions: boolean;
 }) {
   const t = useTranslations('Chat.History');
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editValue, setEditValue] = useState('');
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  const startEditing = (s: ChatSessionSummary) => {
+    setEditingId(s.id);
+    setEditValue(s.title || '');
+  };
+
+  const commitEdit = async (id: string) => {
+    const value = editValue.trim();
+    setEditingId(null);
+    if (!value) return;
+    await onRename(id, value);
+  };
+
+  const actionClass = alwaysShowActions
+    ? 'flex items-center gap-1'
+    : 'flex items-center gap-1 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto focus-within:opacity-100 focus-within:pointer-events-auto transition-opacity';
+
   return (
     <>
       <div className="p-4 border-b border-border">
@@ -83,30 +112,82 @@ function HistoryList({
           <ul className="space-y-1">
             {sessions.map((s) => {
               const isActive = s.id === activeSessionId;
-              const label = s.tripRequest?.destination || t('newConversationFallbackLabel');
+              const label = s.title || s.tripRequest?.destination || t('newConversationFallbackLabel');
               const preview = s.messages[0]?.content;
+              const isEditing = editingId === s.id;
 
               return (
-                <li key={s.id}>
-                  <button
-                    onClick={() => onSelect(s.id)}
-                    className={`w-full text-left rounded-lg px-3 py-2 transition-colors ${
-                      isActive
-                        ? 'bg-accent text-accent-foreground'
-                        : 'hover:bg-accent/60 text-foreground'
-                    }`}
-                  >
-                    <p className="text-sm font-medium truncate">{label}</p>
-                    {preview && (
-                      <p className="text-xs text-muted-foreground truncate mt-0.5">{preview}</p>
-                    )}
-                  </button>
+                <li key={s.id} className="group relative">
+                  {isEditing ? (
+                    <input
+                      autoFocus
+                      value={editValue}
+                      onChange={(e) => setEditValue(e.target.value)}
+                      onBlur={() => commitEdit(s.id)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.currentTarget.blur();
+                        } else if (e.key === 'Escape') {
+                          setEditingId(null);
+                        }
+                      }}
+                      maxLength={100}
+                      placeholder={label}
+                      className="w-full rounded-lg px-3 py-2 text-sm font-medium bg-background border border-input focus:outline-none focus:ring-2 focus:ring-ring"
+                    />
+                  ) : (
+                    <button
+                      onClick={() => onSelect(s.id)}
+                      className={`w-full text-left rounded-lg px-3 py-2 pr-16 transition-colors ${
+                        isActive
+                          ? 'bg-accent text-accent-foreground'
+                          : 'hover:bg-accent/60 text-foreground'
+                      }`}
+                    >
+                      <p className="text-sm font-medium truncate">{label}</p>
+                      {preview && (
+                        <p className="text-xs text-muted-foreground truncate mt-0.5">{preview}</p>
+                      )}
+                    </button>
+                  )}
+
+                  {!isEditing && (
+                    <div className={`absolute right-2 top-1/2 -translate-y-1/2 ${actionClass}`}>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          startEditing(s);
+                        }}
+                        className="p-1.5 rounded-md hover:bg-accent text-muted-foreground hover:text-foreground"
+                        title={t('renameTooltip')}
+                      >
+                        <Pencil className="h-3.5 w-3.5" />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setDeletingId(s.id);
+                        }}
+                        className="p-1.5 rounded-md hover:bg-accent text-muted-foreground hover:text-red-600"
+                        title={t('deleteTooltip')}
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                  )}
                 </li>
               );
             })}
           </ul>
         )}
       </div>
+
+      {deletingId && (
+        <DeleteConversationDialog
+          onClose={() => setDeletingId(null)}
+          onConfirm={() => onDelete(deletingId)}
+        />
+      )}
     </>
   );
 }
@@ -116,6 +197,8 @@ export function ChatHistorySidebar({
   activeSessionId,
   refreshKey,
   onNewConversation,
+  onDelete,
+  onRename,
 }: Props) {
   const router = useRouter();
   const { sessions, isLoading } = useChatSessions(accessToken, refreshKey);
@@ -128,6 +211,9 @@ export function ChatHistorySidebar({
         activeSessionId={activeSessionId}
         onSelect={(id) => router.push(`/chat?sessionId=${id}`)}
         onNewConversation={onNewConversation}
+        onDelete={onDelete}
+        onRename={onRename}
+        alwaysShowActions={false}
       />
     </aside>
   );
@@ -138,6 +224,8 @@ export function MobileChatHistoryDrawer({
   activeSessionId,
   refreshKey,
   onNewConversation,
+  onDelete,
+  onRename,
 }: Props) {
   const t = useTranslations('Chat.History');
   const router = useRouter();
@@ -173,6 +261,12 @@ export function MobileChatHistoryDrawer({
               setOpen(false);
               onNewConversation();
             }}
+            onDelete={async (id) => {
+              await onDelete(id);
+              setOpen(false);
+            }}
+            onRename={onRename}
+            alwaysShowActions={true}
           />
         </div>
       </DrawerContent>

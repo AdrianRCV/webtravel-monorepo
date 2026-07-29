@@ -146,6 +146,8 @@
       "newConversationTooltip": "Nueva conversación",
       "initError": "No se pudo iniciar la sesión de chat. Por favor, recarga la página.",
       "sendError": "No se pudo enviar el mensaje.",
+      "deleteError": "No se pudo borrar la conversación.",
+      "renameError": "No se pudo renombrar la conversación.",
       "retry": "Reintentar",
       "loading": "Iniciando conversación...",
       "defaultGreeting": "¡Hola! Soy tu asistente de viajes. ¿A dónde te gustaría viajar?"
@@ -155,6 +157,8 @@
       "newConversationFallbackLabel": "Nueva conversación",
       "empty": "Aún no tienes conversaciones anteriores",
       "historyTooltip": "Historial de conversaciones",
+      "renameTooltip": "Renombrar conversación",
+      "deleteTooltip": "Borrar conversación",
       "drawerTitle": "Conversaciones"
     },
     "Input": {
