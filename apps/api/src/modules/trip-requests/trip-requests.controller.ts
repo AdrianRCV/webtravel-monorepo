@@ -5,6 +5,7 @@ import {
   Patch,
   Body,
   Query,
+  Headers,
   ValidationPipe,
   UseGuards,
 } from '@nestjs/common';
@@ -14,6 +15,7 @@ import { UpdateMyTripRequestDto } from './dto/update-my-trip-request.dto';
 import { TripStatus } from '@prisma/client';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
+import { Public } from '../auth/public.decorator';
 
 @Controller('trip-requests')
 export class TripRequestsController {
@@ -40,9 +42,13 @@ export class TripRequestsController {
     return this.tripRequestsService.getStats(user);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @Public()
   @Get(':id')
-  findOne(@Param('id') id: string, @CurrentUser() user: any) {
+  findOne(
+    @Param('id') id: string,
+    @Headers('authorization') authHeader?: string,
+  ) {
+    const user = this.tripRequestsService.extractUser(authHeader);
     return this.tripRequestsService.findOne(id, user);
   }
 

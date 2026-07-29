@@ -390,7 +390,9 @@
       "documentTitlePrefix": "Reiseplan - ",
       "documentTitleFallback": "deine Reise",
       "backLink": "Zurück zu meinen Anfragen",
-      "downloadPdf": "PDF herunterladen"
+      "downloadPdf": "PDF herunterladen",
+      "anonymousBannerText": "Erstelle ein Konto mit dieser E-Mail-Adresse, um deinen Reiseverlauf zu speichern und alle deine Anfragen an einem Ort zu sehen.",
+      "anonymousBannerButton": "Konto erstellen"
     },
     "ItineraryPreview": {
       "noActivities": "Für diesen Tag sind keine Aktivitäten geplant",

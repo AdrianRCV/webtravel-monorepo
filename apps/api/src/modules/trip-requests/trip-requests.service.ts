@@ -3,6 +3,7 @@ import {
   NotFoundException,
   ForbiddenException,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../../prisma/prisma.service';
 import { TripStatus } from '@prisma/client';
 import { NotificationsService } from '../notifications/notifications.service';
@@ -13,7 +14,23 @@ export class TripRequestsService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly notificationsService: NotificationsService,
+    private readonly jwtService: JwtService,
   ) {}
+
+  extractUser(authHeader?: string): { id: string; role: string } | undefined {
+    if (!authHeader?.startsWith('Bearer ')) {
+      return undefined;
+    }
+
+    try {
+      const payload = this.jwtService.verify<{ sub: string; role: string }>(
+        authHeader.slice('Bearer '.length),
+      );
+      return { id: payload.sub, role: payload.role };
+    } catch {
+      return undefined;
+    }
+  }
 
   async findAll(status: TripStatus | undefined, user: { id: string; role: string }) {
     if (user.role !== 'ADMIN') {
@@ -73,7 +90,7 @@ export class TripRequestsService {
     };
   }
 
-  async findOne(id: string, user: { id: string; role: string }) {
+  async findOne(id: string, user?: { id: string; role: string } | null) {
     const tripRequest = await this.prisma.tripRequest.findUnique({
       where: { id },
       include: {
@@ -107,6 +124,18 @@ export class TripRequestsService {
 
     if (!tripRequest) {
       throw new NotFoundException(`Trip request with ID ${id} not found`);
+    }
+
+    const isLinkedToAccount = tripRequest.chatSession?.userId != null;
+
+    if (!isLinkedToAccount) {
+      return tripRequest;
+    }
+
+    if (!user) {
+      throw new ForbiddenException(
+        'No tienes permiso para ver esta solicitud',
+      );
     }
 
     if (

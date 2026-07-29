@@ -51,6 +51,8 @@ const VALID_REDIRECT_PATHS = [
   '/chat',
   '/admin/login',
   '/client/dashboard',
+  '/client/trips',
+  '/client/settings',
 ];
 
 function isValidRedirectPath(path: string): boolean {
@@ -111,6 +113,11 @@ export default async function middleware(req: NextRequest) {
       loginUrl.searchParams.set('callbackUrl', redirectPath);
       return NextResponse.redirect(loginUrl);
     }
+    // Allow unauthenticated access to specific client routes (e.g., /client/trips/[id])
+    // Other client routes will handle their own auth logic per-page
+    if (normalizedPath.startsWith('/client/trips/')) {
+      return baseResponse;
+    }
     const loginUrl = new URL(withLocale('/login', locale), req.url);
     const redirectPath = isValidRedirectPath(normalizedPath) ? normalizedPath : '/chat';
     loginUrl.searchParams.set('callbackUrl', redirectPath);
@@ -131,11 +138,14 @@ export default async function middleware(req: NextRequest) {
     normalizedPath === route || normalizedPath.startsWith(`${route}/`)
   );
 
-  if (isClientRoute && session.user?.role !== 'CLIENT') {
+  // Allow unauthenticated access to trip detail pages
+  const isTripDetailPage = normalizedPath.startsWith('/client/trips/');
+
+  if (isClientRoute && !isTripDetailPage && session.user?.role !== 'CLIENT') {
     return NextResponse.redirect(new URL(withLocale('/unauthorized', locale), req.url));
   }
 
-  if (isClientRoute && !session.accessToken) {
+  if (isClientRoute && !isTripDetailPage && !session.accessToken) {
     const loginUrl = new URL(withLocale('/login', locale), req.url);
     const redirectPath = isValidRedirectPath(normalizedPath) ? normalizedPath : '/chat';
     loginUrl.searchParams.set('callbackUrl', redirectPath);

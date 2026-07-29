@@ -28,7 +28,11 @@ function getPasswordStrength(password: string): PasswordStrength {
   return { score: 4, feedbackKey: 'strong', color: 'bg-green-500' };
 }
 
-export function RegisterForm() {
+interface RegisterFormProps {
+  initialEmail?: string;
+}
+
+export function RegisterForm({ initialEmail }: RegisterFormProps) {
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations('Auth.Register');
@@ -36,7 +40,7 @@ export function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
-    email: '',
+    email: initialEmail ?? '',
     password: '',
     passwordConfirm: '',
   });
