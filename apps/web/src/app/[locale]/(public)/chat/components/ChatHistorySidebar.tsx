@@ -85,7 +85,7 @@ function HistoryList({
 
   const actionClass = alwaysShowActions
     ? 'flex items-center gap-1'
-    : 'flex items-center gap-1 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity';
+    : 'flex items-center gap-1 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto focus-within:opacity-100 focus-within:pointer-events-auto transition-opacity';
 
   return (
     <>
@@ -132,6 +132,7 @@ function HistoryList({
                         }
                       }}
                       maxLength={100}
+                      placeholder={label}
                       className="w-full rounded-lg px-3 py-2 text-sm font-medium bg-background border border-input focus:outline-none focus:ring-2 focus:ring-ring"
                     />
                   ) : (
@@ -260,7 +261,10 @@ export function MobileChatHistoryDrawer({
               setOpen(false);
               onNewConversation();
             }}
-            onDelete={onDelete}
+            onDelete={async (id) => {
+              await onDelete(id);
+              setOpen(false);
+            }}
             onRename={onRename}
             alwaysShowActions={true}
           />

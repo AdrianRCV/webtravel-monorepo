@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Patch, Delete, Body, Param, Headers, ValidationPipe } from '@nestjs/common';
+import { Controller, Post, Get, Patch, Delete, Body, Param, Headers } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { SendMessageDto } from './dto/send-message.dto';
 import { RenameChatSessionDto } from './dto/rename-chat-session.dto';
@@ -25,7 +25,7 @@ export class ChatController {
   @Patch('sessions/:id')
   async renameSession(
     @Param('id') id: string,
-    @Body(ValidationPipe) dto: RenameChatSessionDto,
+    @Body() dto: RenameChatSessionDto,
     @CurrentUser() user: CurrentUserData,
   ) {
     return this.chatService.renameSession(id, dto.title, user);
