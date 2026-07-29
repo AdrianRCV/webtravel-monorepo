@@ -10,7 +10,7 @@ import { LegalLinks } from '@/components/layout/legal-links';
 export default async function RegisterPage({
   searchParams,
 }: {
-  searchParams: Promise<{ tab?: string }>;
+  searchParams: Promise<{ tab?: string; email?: string }>;
 }) {
   const session = await auth();
   const params = await searchParams;
@@ -64,7 +64,7 @@ export default async function RegisterPage({
         <div className="space-y-6 pt-4">
           {tab === 'register' ? (
             <>
-              <RegisterForm />
+              <RegisterForm initialEmail={params.email} />
 
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">

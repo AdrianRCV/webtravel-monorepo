@@ -390,7 +390,9 @@
       "documentTitlePrefix": "Itinerary - ",
       "documentTitleFallback": "your trip",
       "backLink": "Back to my requests",
-      "downloadPdf": "Download PDF"
+      "downloadPdf": "Download PDF",
+      "anonymousBannerText": "Create an account with this email to save your trip history and see all your requests in one place.",
+      "anonymousBannerButton": "Create account"
     },
     "ItineraryPreview": {
       "noActivities": "No activities scheduled for this day",

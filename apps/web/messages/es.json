@@ -390,7 +390,9 @@
       "documentTitlePrefix": "Itinerario - ",
       "documentTitleFallback": "tu viaje",
       "backLink": "Volver a mis solicitudes",
-      "downloadPdf": "Descargar PDF"
+      "downloadPdf": "Descargar PDF",
+      "anonymousBannerText": "Creá una cuenta con este email para guardar tu historial de viajes y ver todas tus solicitudes en un solo lugar.",
+      "anonymousBannerButton": "Crear cuenta"
     },
     "ItineraryPreview": {
       "noActivities": "No hay actividades programadas para este día",
