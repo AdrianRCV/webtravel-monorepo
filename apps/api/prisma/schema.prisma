@@ -75,10 +75,10 @@ model User {
 model ChatSession {
   id           String        @id @default(uuid())
   status       ChatStatus    @default(OPEN)
-  
+
   userId       String?
   user         User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+
   messages     ChatMessage[]
   tripRequest  TripRequest?
 
@@ -115,6 +115,7 @@ model TripRequest {
   endDate       DateTime?
   rawPreferences Json?
   clientEmail   String?
+  viewToken     String        @unique @default(dbgenerated("gen_random_uuid()"))
 
   itineraries   Itinerary[]
 
