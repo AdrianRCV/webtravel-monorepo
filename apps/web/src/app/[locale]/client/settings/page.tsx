@@ -1,8 +1,10 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useRouter } from '@/i18n/navigation';
 import { ClientHeader } from '@/components/client/client-header';
 import { ChangePasswordForm } from '@/components/client/change-password-form';
 import { ChangeEmailForm } from '@/components/client/change-email-form';
@@ -11,7 +13,14 @@ import { DeleteAccountSection } from '@/components/client/delete-account-section
 
 export default function SettingsPage() {
   const { status } = useSession();
+  const router = useRouter();
   const t = useTranslations('Client.Settings');
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push({ pathname: '/login', query: { callbackUrl: '/client/settings' } });
+    }
+  }, [status, router]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
@@ -25,7 +34,7 @@ export default function SettingsPage() {
           </p>
         </div>
 
-        {status === 'loading' ? (
+        {status === 'loading' || status === 'unauthenticated' ? (
           <div className="flex items-center justify-center py-12">
             <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
           </div>

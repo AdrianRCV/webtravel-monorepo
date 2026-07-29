@@ -60,7 +60,7 @@ export type ItineraryWithDays = Itinerary & {
 export type TripRequestDetail = TripRequest & {
   chatSession: ChatSession & {
     messages: ChatMessage[];
-    user: User;
+    user: User | null;
   };
   itineraries: ItineraryWithDays[];
 };
