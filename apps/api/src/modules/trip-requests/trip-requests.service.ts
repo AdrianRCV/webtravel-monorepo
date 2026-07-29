@@ -128,13 +128,14 @@ export class TripRequestsService {
 
     const isLinkedToAccount = tripRequest.chatSession?.userId != null;
 
-    if (!user) {
-      if (isLinkedToAccount) {
-        throw new ForbiddenException(
-          'No tienes permiso para ver esta solicitud',
-        );
-      }
+    if (!isLinkedToAccount) {
       return tripRequest;
+    }
+
+    if (!user) {
+      throw new ForbiddenException(
+        'No tienes permiso para ver esta solicitud',
+      );
     }
 
     if (

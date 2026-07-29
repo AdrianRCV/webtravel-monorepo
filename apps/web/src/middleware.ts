@@ -51,6 +51,8 @@ const VALID_REDIRECT_PATHS = [
   '/chat',
   '/admin/login',
   '/client/dashboard',
+  '/client/trips',
+  '/client/settings',
 ];
 
 function isValidRedirectPath(path: string): boolean {
