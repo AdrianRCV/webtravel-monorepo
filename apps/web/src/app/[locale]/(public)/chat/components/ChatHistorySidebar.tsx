@@ -71,9 +71,9 @@ function HistoryList({
   const [editValue, setEditValue] = useState('');
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
-  const startEditing = (s: ChatSessionSummary, currentLabel: string) => {
+  const startEditing = (s: ChatSessionSummary) => {
     setEditingId(s.id);
-    setEditValue(s.title || currentLabel);
+    setEditValue(s.title || '');
   };
 
   const commitEdit = async (id: string) => {
@@ -155,7 +155,7 @@ function HistoryList({
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
-                          startEditing(s, label);
+                          startEditing(s);
                         }}
                         className="p-1.5 rounded-md hover:bg-accent text-muted-foreground hover:text-foreground"
                         title={t('renameTooltip')}
