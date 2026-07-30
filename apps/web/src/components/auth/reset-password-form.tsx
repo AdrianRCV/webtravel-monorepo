@@ -57,7 +57,7 @@ export function ResetPasswordForm() {
 
   if (!token) {
     return (
-      <p className="text-center text-sm text-red-600">
+      <p className="text-center text-sm text-destructive">
         {t('missingToken')}
       </p>
     );
@@ -66,7 +66,7 @@ export function ResetPasswordForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="password" className="block text-sm font-medium text-foreground">
           {t('newPasswordLabel')}
         </label>
         <div className="relative">
@@ -75,13 +75,13 @@ export function ResetPasswordForm() {
             type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 pr-12 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+            className="mt-2 w-full border border-input bg-background px-4 py-3 pr-12 text-foreground placeholder:text-muted-foreground/70 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/30"
             placeholder={t('passwordPlaceholder')}
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-5 text-gray-400 hover:text-gray-600"
+            className="absolute right-3 top-5 text-muted-foreground hover:text-foreground"
           >
             {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </button>
@@ -89,7 +89,7 @@ export function ResetPasswordForm() {
       </div>
 
       <div>
-        <label htmlFor="passwordConfirm" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="passwordConfirm" className="block text-sm font-medium text-foreground">
           {t('passwordConfirmLabel')}
         </label>
         <input
@@ -97,7 +97,7 @@ export function ResetPasswordForm() {
           type={showPassword ? 'text' : 'password'}
           value={passwordConfirm}
           onChange={(e) => setPasswordConfirm(e.target.value)}
-          className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+          className="mt-2 w-full border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/30"
           placeholder={t('passwordConfirmPlaceholder')}
         />
         {passwordConfirm && (
@@ -110,7 +110,7 @@ export function ResetPasswordForm() {
       <button
         type="submit"
         disabled={isLoading || !isValid}
-        className="w-full rounded-lg bg-gradient-to-r from-brand to-brand-accent px-4 py-3 text-white font-medium transition-all hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
+        className="w-full border border-primary bg-primary px-4 py-3 text-primary-foreground font-medium transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isLoading ? (
           <>

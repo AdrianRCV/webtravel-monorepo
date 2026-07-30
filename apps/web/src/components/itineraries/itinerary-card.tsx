@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { CheckCircle2, Circle, Loader2 } from 'lucide-react';
-import type { ItineraryWithDays } from '@/lib/api';
+import { useState } from "react";
+import { CheckCircle2, Circle, Loader2 } from "lucide-react";
+import type { ItineraryWithDays } from "@/lib/api";
 
 interface ItineraryCardProps {
   itinerary: ItineraryWithDays;
@@ -10,7 +10,11 @@ interface ItineraryCardProps {
   onToggleStatus: (id: string, newStatus: boolean) => Promise<void>;
 }
 
-export function ItineraryCard({ itinerary, isActive, onToggleStatus }: ItineraryCardProps) {
+export function ItineraryCard({
+  itinerary,
+  isActive,
+  onToggleStatus,
+}: ItineraryCardProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleToggle = async () => {
@@ -25,41 +29,39 @@ export function ItineraryCard({ itinerary, isActive, onToggleStatus }: Itinerary
   return (
     <div
       className={`rounded-lg border p-4 transition-all ${
-        isActive
-          ? 'border-green-300 bg-green-50 dark:border-green-700 dark:bg-green-900/20'
-          : 'border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900'
+        isActive ? "border-green-300 bg-green-50" : "border-border bg-card"
       }`}
     >
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 space-y-2">
           <div className="flex items-center gap-2">
-            <h4 className="font-semibold text-zinc-900 dark:text-zinc-100">
-              {itinerary.title}
-            </h4>
+            <h4 className="font-semibold text-foreground">{itinerary.title}</h4>
             {isActive && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900/30 dark:text-green-400">
+              <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800">
                 <CheckCircle2 className="h-3 w-3" />
                 Activo
               </span>
             )}
           </div>
 
-          <div className="flex items-center gap-4 text-sm text-zinc-600 dark:text-zinc-400">
+          <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <span>Versión {itinerary.version}</span>
             <span>•</span>
             <span>
-              {itinerary.days.length} {itinerary.days.length === 1 ? 'día' : 'días'}
+              {itinerary.days.length}{" "}
+              {itinerary.days.length === 1 ? "día" : "días"}
             </span>
             <span>•</span>
-            <span className="font-medium text-zinc-900 dark:text-zinc-100">
-              ${itinerary.totalEstimatedPrice.toLocaleString('es-ES', {
+            <span className="font-medium text-foreground">
+              $
+              {itinerary.totalEstimatedPrice.toLocaleString("es-ES", {
                 minimumFractionDigits: 2,
               })}
             </span>
           </div>
 
           {itinerary.notes && (
-            <p className="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2">
+            <p className="text-sm text-muted-foreground line-clamp-2">
               {itinerary.notes}
             </p>
           )}
@@ -70,8 +72,8 @@ export function ItineraryCard({ itinerary, isActive, onToggleStatus }: Itinerary
           disabled={isLoading || isActive}
           className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
             isActive
-              ? 'cursor-not-allowed bg-zinc-100 text-zinc-400 dark:bg-zinc-800 dark:text-zinc-600'
-              : 'bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600'
+              ? "cursor-not-allowed bg-muted text-muted-foreground"
+              : "border border-primary bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           }`}
         >
           {isLoading ? (
@@ -81,7 +83,7 @@ export function ItineraryCard({ itinerary, isActive, onToggleStatus }: Itinerary
           ) : (
             <Circle className="h-4 w-4" />
           )}
-          {isActive ? 'Activo' : 'Activar'}
+          {isActive ? "Activo" : "Activar"}
         </button>
       </div>
     </div>

@@ -4,7 +4,7 @@ import { Link as LocaleLink } from '@/i18n/navigation';
 import { auth } from '@/auth';
 import { SignInButton } from '@/components/auth/sign-in-button';
 import { RegisterForm } from '@/components/auth/register-form';
-import { Plane } from 'lucide-react';
+import { AuthShell, AuthDivider } from '@/components/auth/auth-shell';
 import { LegalLinks } from '@/components/layout/legal-links';
 
 export default async function RegisterPage({
@@ -23,88 +23,60 @@ export default async function RegisterPage({
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-teal-50 via-white to-indigo-50 px-4">
-      <div className="w-full max-w-md space-y-8 rounded-2xl border border-zinc-200 bg-white/80 backdrop-blur-sm p-10 shadow-2xl">
-        <div className="text-center">
-          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-brand to-brand-accent shadow-lg">
-            <Plane className="h-10 w-10 text-white" />
-          </div>
-          <h1 className="mt-6 text-4xl font-bold tracking-tight bg-gradient-to-r from-brand to-brand-accent bg-clip-text text-transparent">
-            YourAgencyToday
-          </h1>
-          <p className="mt-4 text-base text-zinc-600">
-            {t('subtitle')}
-          </p>
-        </div>
-
-        {/* Tabs */}
-        <div className="flex gap-2 border-b border-gray-200">
-          <LocaleLink
-            href="/register?tab=register"
-            className={`flex-1 py-3 px-4 text-center text-sm font-medium transition-colors ${
-              tab === 'register'
-                ? 'border-b-2 border-brand text-brand'
-                : 'text-gray-600 hover:text-gray-900'
-            }`}
-          >
-            {t('tabRegister')}
-          </LocaleLink>
-          <LocaleLink
-            href="/login"
-            className={`flex-1 py-3 px-4 text-center text-sm font-medium transition-colors ${
-              tab === 'login'
-                ? 'border-b-2 border-brand text-brand'
-                : 'text-gray-600 hover:text-gray-900'
-            }`}
-          >
-            {t('tabLogin')}
-          </LocaleLink>
-        </div>
-
-        <div className="space-y-6 pt-4">
-          {tab === 'register' ? (
-            <>
-              <RegisterForm initialEmail={params.email} />
-
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-zinc-200"></div>
-                </div>
-                <div className="relative flex justify-center text-xs">
-                  <span className="bg-white px-3 text-zinc-400">
-                    {t('orDivider')}
-                  </span>
-                </div>
-              </div>
-
-              <SignInButton />
-            </>
-          ) : (
-            <>
-              <div className="rounded-lg bg-gradient-to-br from-teal-50 to-indigo-50 p-6 text-center">
-                <p className="text-sm text-zinc-700 leading-relaxed">
-                  {t('googleContinuePrompt')}
-                </p>
-              </div>
-              <SignInButton />
-            </>
-          )}
-        </div>
-
-        <div className="text-center pt-4">
-          <p className="text-xs text-zinc-400">
-            {t('adminPrompt')}
-            <a
-              href="/admin/login"
-              className="font-medium text-brand hover:text-brand-accent transition-colors"
-            >
-              {t('adminLink')}
-            </a>
-          </p>
-        </div>
-
-        <LegalLinks className="text-zinc-400 mt-4" />
+    <AuthShell title="YourAgencyToday" subtitle={t('subtitle')}>
+      <div className="flex gap-2 border-b border-border -mt-2">
+        <LocaleLink
+          href="/register?tab=register"
+          className={`flex-1 py-3 px-4 text-center text-sm font-medium transition-colors ${
+            tab === 'register'
+              ? 'border-b-2 border-brand text-brand'
+              : 'text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          {t('tabRegister')}
+        </LocaleLink>
+        <LocaleLink
+          href="/login"
+          className={`flex-1 py-3 px-4 text-center text-sm font-medium transition-colors ${
+            tab === 'login'
+              ? 'border-b-2 border-brand text-brand'
+              : 'text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          {t('tabLogin')}
+        </LocaleLink>
       </div>
-    </div>
+
+      {tab === 'register' ? (
+        <>
+          <RegisterForm initialEmail={params.email} />
+          <AuthDivider label={t('orDivider')} />
+          <SignInButton />
+        </>
+      ) : (
+        <>
+          <div className="border border-dashed border-border p-6 text-center">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {t('googleContinuePrompt')}
+            </p>
+          </div>
+          <SignInButton />
+        </>
+      )}
+
+      <div className="text-center border-t border-border pt-6">
+        <p className="text-xs text-muted-foreground">
+          {t('adminPrompt')}
+          <a
+            href="/admin/login"
+            className="font-medium text-brand hover:text-brand-accent transition-colors"
+          >
+            {t('adminLink')}
+          </a>
+        </p>
+      </div>
+
+      <LegalLinks className="text-muted-foreground" />
+    </AuthShell>
   );
 }

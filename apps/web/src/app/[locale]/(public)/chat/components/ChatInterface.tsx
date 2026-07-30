@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import { Link as LocaleLink, useRouter } from '@/i18n/navigation';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
-import { MessageSquarePlus } from 'lucide-react';
+import { MessageSquarePlus, Plane } from 'lucide-react';
 import { ChatMessage, TripRequest } from '@webtravel/shared-types';
 import { createChatSession, sendChatMessage, getChatSession, deleteChatSession, renameChatSession } from '@/lib/api';
 import { MessageList } from './MessageList';
@@ -191,7 +191,7 @@ export function ChatInterface() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-background">
       {authSession?.accessToken && (
         <ChatHistorySidebar
           accessToken={authSession.accessToken}
@@ -204,13 +204,14 @@ export function ChatInterface() {
       )}
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="bg-white border-b px-4 py-4 shadow-sm">
+        <div className="h-1 airmail-stripe" />
+        <header className="bg-card border-b border-border px-4 py-4">
           <div className="max-w-4xl mx-auto flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">{t('title')}</h1>
-              <p className="text-sm text-gray-600 mt-1">
+              <h1 className="font-heading text-2xl text-foreground">{t('title')}</h1>
+              <p className="text-sm text-muted-foreground mt-1">
                 {t('subtitlePrefix')}
-                <LocaleLink href="/contacto" className="underline hover:text-gray-900">
+                <LocaleLink href="/contacto" className="underline hover:text-foreground">
                   {t('helpLink')}
                 </LocaleLink>
               </p>
@@ -228,7 +229,7 @@ export function ChatInterface() {
               )}
               <button
                 onClick={handleNewConversation}
-                className="flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors shrink-0"
+                className="flex items-center gap-2 border border-input px-3 py-2 text-sm font-medium text-foreground hover:bg-accent transition-colors shrink-0"
                 title={t('newConversationTooltip')}
               >
                 <MessageSquarePlus className="h-4 w-4" />
@@ -246,9 +247,9 @@ export function ChatInterface() {
 
           {messages.length === 0 && !isSessionLoading ? (
             <div className="flex-1 flex items-center justify-center px-4">
-              <div className="text-center text-gray-500">
+              <div className="text-center text-muted-foreground">
                 <svg
-                  className="mx-auto h-12 w-12 text-gray-400"
+                  className="mx-auto h-12 w-12 text-muted-foreground/60"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -266,10 +267,10 @@ export function ChatInterface() {
           ) : messages.length <= 1 ? (
             <div className="flex-1 overflow-y-auto flex flex-col items-center justify-center gap-6 px-4 py-6">
               <div className="max-w-lg text-center">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 text-2xl mb-4">
-                  ✈️
+                <div className="mx-auto flex h-14 w-14 items-center justify-center border-2 border-dashed border-stamp-foreground/50 bg-stamp text-stamp-foreground mb-4 rotate-3">
+                  <Plane className="h-6 w-6" strokeWidth={1.5} />
                 </div>
-                <p className="text-gray-700 whitespace-pre-wrap">
+                <p className="text-foreground whitespace-pre-wrap">
                   {messages[0]?.content || t('defaultGreeting')}
                 </p>
               </div>

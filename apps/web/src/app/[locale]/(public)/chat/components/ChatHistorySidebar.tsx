@@ -168,7 +168,7 @@ function HistoryList({
                           e.stopPropagation();
                           setDeletingId(s.id);
                         }}
-                        className="p-1.5 rounded-md hover:bg-accent text-muted-foreground hover:text-red-600"
+                        className="p-1.5 rounded-md hover:bg-accent text-muted-foreground hover:text-destructive"
                         title={t('deleteTooltip')}
                       >
                         <Trash2 className="h-3.5 w-3.5" />

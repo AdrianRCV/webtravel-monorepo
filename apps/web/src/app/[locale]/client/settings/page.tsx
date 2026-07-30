@@ -23,39 +23,39 @@ export default function SettingsPage() {
   }, [status, router]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
+    <div className="min-h-screen bg-background">
       <ClientHeader active="settings" />
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900">{t('title')}</h1>
-          <p className="mt-2 text-gray-600">
+          <h1 className="font-heading text-4xl text-foreground">{t('title')}</h1>
+          <p className="mt-2 text-muted-foreground">
             {t('subtitle')}
           </p>
         </div>
 
         {status === 'loading' || status === 'unauthenticated' ? (
           <div className="flex items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
           </div>
         ) : (
           <div className="space-y-8">
-            <section className="rounded-lg border border-gray-200 bg-white p-6">
-              <h2 className="text-lg font-semibold text-gray-900">{t('passwordSectionTitle')}</h2>
+            <section className="border border-border bg-card p-6">
+              <h2 className="font-heading text-lg text-foreground">{t('passwordSectionTitle')}</h2>
               <div className="mt-4">
                 <ChangePasswordForm />
               </div>
             </section>
 
-            <section className="rounded-lg border border-gray-200 bg-white p-6">
-              <h2 className="text-lg font-semibold text-gray-900">{t('emailSectionTitle')}</h2>
+            <section className="border border-border bg-card p-6">
+              <h2 className="font-heading text-lg text-foreground">{t('emailSectionTitle')}</h2>
               <div className="mt-4">
                 <ChangeEmailForm />
               </div>
             </section>
 
-            <section className="rounded-lg border border-gray-200 bg-white p-6">
-              <h2 className="text-lg font-semibold text-gray-900">{t('localeSectionTitle')}</h2>
+            <section className="border border-border bg-card p-6">
+              <h2 className="font-heading text-lg text-foreground">{t('localeSectionTitle')}</h2>
               <div className="mt-4">
                 <LocalePreferenceForm />
               </div>

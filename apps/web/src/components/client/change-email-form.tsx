@@ -44,7 +44,7 @@ export function ChangeEmailForm() {
 
   if (submitted) {
     return (
-      <p className="text-sm text-zinc-600">
+      <p className="text-sm text-muted-foreground">
         {t('successPrefix')}<span className="font-medium">{newEmail}</span>{t('successSuffix')}
       </p>
     );
@@ -53,7 +53,7 @@ export function ChangeEmailForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="currentPasswordForEmail" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="currentPasswordForEmail" className="block text-sm font-medium text-foreground">
           {t('currentPasswordLabel')}
         </label>
         <input
@@ -61,12 +61,12 @@ export function ChangeEmailForm() {
           type="password"
           value={currentPassword}
           onChange={(e) => setCurrentPassword(e.target.value)}
-          className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+          className="mt-2 w-full border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/30"
         />
       </div>
 
       <div>
-        <label htmlFor="newEmail" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="newEmail" className="block text-sm font-medium text-foreground">
           {t('newEmailLabel')}
         </label>
         <input
@@ -74,7 +74,7 @@ export function ChangeEmailForm() {
           type="email"
           value={newEmail}
           onChange={(e) => setNewEmail(e.target.value)}
-          className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+          className="mt-2 w-full border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/30"
           placeholder={t('newEmailPlaceholder')}
         />
       </div>
@@ -82,7 +82,7 @@ export function ChangeEmailForm() {
       <button
         type="submit"
         disabled={isLoading || !currentPassword || !newEmail}
-        className="rounded-lg bg-gradient-to-r from-brand to-brand-accent px-4 py-3 text-white font-medium transition-all hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
+        className="border border-primary bg-primary px-4 py-3 text-primary-foreground font-medium transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isLoading ? (
           <>
