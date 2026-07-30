@@ -6,11 +6,11 @@ interface StatusBadgeProps {
 
 export function StatusBadge({ status }: StatusBadgeProps) {
   const styles = {
-    PENDING: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
-    IN_PROGRESS: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
-    PROPOSED: 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400',
-    APPROVED: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-    REJECTED: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
+    PENDING: 'bg-stamp text-stamp-foreground',
+    IN_PROGRESS: 'bg-brand-accent/15 text-brand-accent',
+    PROPOSED: 'bg-accent text-accent-foreground',
+    APPROVED: 'bg-green-100 text-green-800',
+    REJECTED: 'bg-destructive/15 text-destructive',
   };
 
   const labels = {

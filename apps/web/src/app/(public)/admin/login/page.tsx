@@ -37,27 +37,30 @@ export default async function AdminLoginPage({
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-zinc-900 to-zinc-950 px-4">
-      <div className="w-full max-w-md space-y-8 rounded-xl border border-zinc-800 bg-zinc-900 p-8 shadow-2xl">
+    <div className="dark flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="w-full max-w-md border border-border bg-card p-10 shadow-[0_24px_48px_-18px_oklch(0_0_0/0.5)]">
+        <div className="h-1 -mx-10 -mt-10 mb-8 airmail-stripe" />
         <div className="text-center">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand">
-            <Lock className="h-8 w-8 text-white" />
+          <div className="mx-auto flex h-16 w-16 items-center justify-center border-2 border-dashed border-stamp-foreground/50 bg-stamp text-stamp-foreground">
+            <Lock className="h-7 w-7" strokeWidth={1.5} />
           </div>
-          <h1 className="mt-6 text-3xl font-bold tracking-tight text-zinc-100">
+          <h1 className="mt-6 font-heading text-3xl tracking-tight text-foreground">
             Acceso Administrativo
           </h1>
-          <p className="mt-3 text-sm text-zinc-400">
+          <p className="mt-3 text-sm text-muted-foreground">
             Panel exclusivo para administradores del sistema
           </p>
         </div>
 
-        <CredentialsForm />
+        <div className="mt-8">
+          <CredentialsForm />
+        </div>
 
-        <div className="text-center">
-          <p className="text-xs text-zinc-500">
-            ¿Eres un cliente? {' '}
-            <a 
-              href="/login" 
+        <div className="mt-6 text-center">
+          <p className="text-xs text-muted-foreground">
+            ¿Eres un cliente?{' '}
+            <a
+              href="/login"
               className="font-medium text-brand hover:text-brand-accent transition-colors"
             >
               Inicia sesión aquí

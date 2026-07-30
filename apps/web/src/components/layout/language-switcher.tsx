@@ -17,11 +17,11 @@ export function LanguageSwitcher({ className }: { className?: string }) {
       aria-label="Idioma / Language"
       className={
         className ??
-        'rounded-md border border-white/20 bg-white/10 px-2 py-1 text-sm text-white/80 backdrop-blur-sm'
+        'border border-input bg-background px-2 py-1 text-sm text-foreground'
       }
     >
       {routing.locales.map((l) => (
-        <option key={l} value={l} className="text-zinc-900">
+        <option key={l} value={l}>
           {LOCALE_LABELS[l]}
         </option>
       ))}

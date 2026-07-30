@@ -44,26 +44,27 @@ export function Sidebar({ session }: SidebarProps) {
   }
 
   return (
-    <aside className="flex h-full w-64 flex-col bg-zinc-950 text-zinc-100">
-      <div className="flex h-16 items-center gap-2 border-b border-zinc-800 px-6">
-        <Plane className="h-6 w-6 text-zinc-400" />
-        <span className="text-lg font-semibold">YourAgencyToday Admin</span>
+    <aside className="dark flex h-full w-64 flex-col bg-sidebar text-sidebar-foreground">
+      <div className="h-1 airmail-stripe" />
+      <div className="flex h-[calc(4rem-4px)] items-center gap-2 border-b border-sidebar-border px-6">
+        <Plane className="h-6 w-6 text-sidebar-foreground/70" strokeWidth={1.5} />
+        <span className="font-heading text-lg">YourAgencyToday Admin</span>
       </div>
-      
+
       <nav className="flex-1 space-y-1 p-4">
         {routes.map((route) => {
           const isActive = pathname === route.href
           const Icon = route.icon
-          
+
           return (
             <Link
               key={route.href}
               href={route.href}
               className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                "flex items-center gap-3 px-3 py-2.5 text-sm font-medium transition-colors",
                 isActive
-                  ? "bg-zinc-800 text-zinc-100 border-l-4 border-zinc-400"
-                  : "text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100"
+                  ? "bg-sidebar-accent text-sidebar-accent-foreground border-l-2 border-brand-accent"
+                  : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
               )}
             >
               <Icon className="h-5 w-5 shrink-0" />

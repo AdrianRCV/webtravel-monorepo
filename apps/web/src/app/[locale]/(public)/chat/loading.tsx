@@ -2,8 +2,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ChatLoading() {
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
-      <header className="bg-white border-b px-4 py-4 shadow-sm">
+    <div className="flex flex-col h-screen bg-background">
+      <header className="bg-card border-b border-border px-4 py-4">
         <div className="max-w-4xl mx-auto">
           <Skeleton className="h-8 w-48 mb-2" />
           <Skeleton className="h-4 w-96" />
@@ -17,7 +17,7 @@ export default function ChatLoading() {
         </div>
       </div>
 
-      <div className="border-t bg-white p-4">
+      <div className="border-t border-border bg-card p-4">
         <div className="max-w-4xl mx-auto">
           <Skeleton className="h-24 w-full rounded-lg" />
         </div>
