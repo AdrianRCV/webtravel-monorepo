@@ -32,7 +32,7 @@ export function DashboardWelcome() {
 
       <LocaleLink
         href="/chat"
-        className="mt-8 inline-block border border-primary bg-primary px-4 py-3 text-primary-foreground font-medium transition-colors hover:bg-primary/90"
+        className="mt-8 inline-block border border-primary bg-primary px-4 py-3 text-primary-foreground font-medium transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
         {t('cta')}
       </LocaleLink>

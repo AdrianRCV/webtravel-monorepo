@@ -44,7 +44,7 @@ export default async function LandingPage() {
               <LocaleLink href="/chat">
                 <Button
                   size="lg"
-                  className="h-auto rounded-none border border-primary bg-primary px-7 py-4 text-base text-primary-foreground hover:bg-primary/90"
+                  className="h-auto rounded-none border border-primary bg-primary px-7 py-4 text-base text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   {t('heroCta')}
                   <MessageCircle className="w-4 h-4 ml-2" />
@@ -120,7 +120,7 @@ export default async function LandingPage() {
               <LocaleLink href="/chat">
                 <Button
                   size="lg"
-                  className="h-auto rounded-none border border-primary bg-primary px-7 py-4 text-base text-primary-foreground hover:bg-primary/90"
+                  className="h-auto rounded-none border border-primary bg-primary px-7 py-4 text-base text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   {t('ctaButton')}
                 </Button>

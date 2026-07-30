@@ -60,7 +60,7 @@ export function ForgotPasswordForm() {
       <button
         type="submit"
         disabled={isLoading || !email}
-        className="w-full border border-primary bg-primary px-4 py-3 text-primary-foreground font-medium transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
+        className="w-full border border-primary bg-primary px-4 py-3 text-primary-foreground font-medium transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isLoading ? (
           <>

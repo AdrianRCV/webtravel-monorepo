@@ -38,7 +38,7 @@ export function TripItineraryContent({ tripRequest, itinerary }: Props) {
 
           <button
             onClick={() => window.print()}
-            className="inline-flex items-center gap-2 border border-primary bg-primary px-4 py-2 text-primary-foreground font-medium transition-colors hover:bg-primary/90"
+            className="inline-flex items-center gap-2 border border-primary bg-primary px-4 py-2 text-primary-foreground font-medium transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             <Download className="h-4 w-4" />
             {t('downloadPdf')}

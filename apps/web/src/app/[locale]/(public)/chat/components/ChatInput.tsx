@@ -48,7 +48,7 @@ export function ChatInput({ value, onChange, onSendMessage, disabled = false }: 
         <button
           onClick={handleSend}
           disabled={disabled || !value.trim()}
-          className="border border-primary bg-primary px-6 py-3 text-primary-foreground font-medium hover:bg-primary/90 disabled:border-border disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed transition-colors"
+          className="border border-primary bg-primary px-6 py-3 text-primary-foreground font-medium hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:border-border disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed transition-colors"
         >
           {t('send')}
         </button>
