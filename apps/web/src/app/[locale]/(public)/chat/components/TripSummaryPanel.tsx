@@ -21,19 +21,19 @@ function Field({
   const isFilled = Boolean(value);
   return (
     <div className="flex items-start gap-3">
-      <div className={`mt-0.5 ${isFilled ? 'text-blue-600' : 'text-gray-300'}`}>
+      <div className={`mt-0.5 ${isFilled ? 'text-brand-accent' : 'text-muted-foreground/40'}`}>
         <Icon className="h-4 w-4" />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-xs text-gray-500">{label}</p>
-        <p className={`text-sm truncate ${isFilled ? 'text-gray-900 font-medium' : 'text-gray-400 italic'}`}>
+        <p className="text-xs text-muted-foreground">{label}</p>
+        <p className={`text-sm truncate ${isFilled ? 'text-foreground font-medium' : 'text-muted-foreground italic'}`}>
           {value || emptyLabel}
         </p>
       </div>
       {isFilled ? (
-        <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />
+        <CheckCircle2 className="h-4 w-4 text-brand-accent shrink-0" />
       ) : (
-        <Circle className="h-4 w-4 text-gray-300 shrink-0" />
+        <Circle className="h-4 w-4 text-muted-foreground/40 shrink-0" />
       )}
     </div>
   );
@@ -59,9 +59,9 @@ export function TripSummaryPanel({ tripRequest }: Props) {
       : null;
 
   return (
-    <aside className="hidden lg:flex w-72 shrink-0 flex-col border-l bg-white p-6">
-      <h2 className="text-sm font-semibold text-gray-900 mb-1">{t('title')}</h2>
-      <p className="text-xs text-gray-500 mb-6">
+    <aside className="hidden lg:flex w-72 shrink-0 flex-col border-l border-border bg-card p-6">
+      <h2 className="font-heading text-sm font-semibold text-foreground mb-1">{t('title')}</h2>
+      <p className="text-xs text-muted-foreground mb-6">
         {t('subtitle')}
       </p>
 
@@ -80,9 +80,9 @@ export function TripSummaryPanel({ tripRequest }: Props) {
       </div>
 
       {tripRequest?.status && (
-        <div className="mt-8 pt-6 border-t">
-          <p className="text-xs text-gray-500">{t('statusLabel')}</p>
-          <p className="text-sm font-medium text-gray-900 mt-1">
+        <div className="mt-8 pt-6 border-t border-border">
+          <p className="text-xs text-muted-foreground">{t('statusLabel')}</p>
+          <p className="text-sm font-medium text-foreground mt-1">
             {
               {
                 PENDING: t('statusPending'),

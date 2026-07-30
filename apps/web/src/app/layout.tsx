@@ -1,18 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Piazzolla, Archivo, Courier_Prime } from "next/font/google";
 import { getLocale } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
 import { SessionProvider } from "@/components/providers/session-provider";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const heading = Piazzolla({
+  variable: "--font-heading",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const body = Archivo({
+  variable: "--font-body",
+  subsets: ["latin"],
+});
+
+const postmark = Courier_Prime({
+  variable: "--font-postmark",
+  weight: ["400", "700"],
   subsets: ["latin"],
 });
 
@@ -50,9 +56,27 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${heading.variable} ${body.variable} ${postmark.variable} h-full antialiased`}
     >
       <body className="h-full">
+        {/*
+          THESIS: chat isn't a bot window, it's writing home about a trip about
+          to happen — every exchange composes toward a real keepsake, refusing
+          the sterile-assistant-chat default and the OTA beach-photo default.
+          OWN-WORLD: kraft/cream ground, ink type, airmail red+blue stripe as
+          the one recurring accent (borders/stamps only, never a wash);
+          Piazzolla display serif for voice, Archivo for UI, Courier Prime for
+          postmark/metadata labels.
+          STORY: a traveler describes a trip in chat and believes, within
+          seconds, that a real person will finish what the AI starts.
+          FIRST VIEWPORT: an oversized postal composition — serif headline on
+          kraft paper, the chat input set as the postcard's message lines, one
+          stamp-corner CTA. No stock hero photo.
+          FORM: postal / correo aéreo, position 5 of 7 in the grounded list
+          derived from the traveler's own world; seed key a3213872.
+          FINISH: unreviewed and undocumented is unfinished; this build ends
+          with the finish review, the verdict, and DESIGN.md.
+        */}
         <NextIntlClientProvider>
           <SessionProvider>{children}</SessionProvider>
           <Toaster position="bottom-right" />
