@@ -44,7 +44,7 @@ export function ContactForm() {
 
   if (submitted) {
     return (
-      <p className="text-center text-zinc-600">
+      <p className="text-center text-muted-foreground">
         {t('successMessage')}
       </p>
     );
@@ -53,7 +53,7 @@ export function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="name" className="block text-sm font-medium text-foreground">
           {t('nameLabel')}
         </label>
         <input
@@ -62,13 +62,13 @@ export function ContactForm() {
           value={formData.name}
           onChange={handleChange}
           required
-          className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+          className="mt-2 w-full border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/30"
           placeholder={t('namePlaceholder')}
         />
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="email" className="block text-sm font-medium text-foreground">
           {t('emailLabel')}
         </label>
         <input
@@ -78,13 +78,13 @@ export function ContactForm() {
           value={formData.email}
           onChange={handleChange}
           required
-          className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+          className="mt-2 w-full border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/30"
           placeholder={t('emailPlaceholder')}
         />
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="message" className="block text-sm font-medium text-foreground">
           {t('messageLabel')}
         </label>
         <textarea
@@ -94,7 +94,7 @@ export function ContactForm() {
           onChange={handleChange}
           required
           rows={5}
-          className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+          className="mt-2 w-full border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/30"
           placeholder={t('messagePlaceholder')}
         />
       </div>
@@ -113,7 +113,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={isLoading || !formData.name || !formData.email || !formData.message}
-        className="w-full rounded-lg bg-gradient-to-r from-brand to-brand-accent px-4 py-3 text-white font-medium transition-all hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
+        className="w-full border border-primary bg-primary px-4 py-3 text-primary-foreground font-medium transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isLoading ? (
           <>
