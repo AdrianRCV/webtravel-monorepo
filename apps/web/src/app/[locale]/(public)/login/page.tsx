@@ -4,7 +4,7 @@ import { Link as LocaleLink } from '@/i18n/navigation';
 import { auth } from '@/auth';
 import { SignInButton } from '@/components/auth/sign-in-button';
 import { ClientLoginForm } from '@/components/auth/client-login-form';
-import { Plane } from 'lucide-react';
+import { AuthShell, AuthDivider } from '@/components/auth/auth-shell';
 import { LegalLinks } from '@/components/layout/legal-links';
 
 const VALID_REDIRECT_PATHS = [
@@ -43,70 +43,45 @@ export default async function LoginPage({
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-teal-50 via-white to-indigo-50 px-4 py-12">
-      <div className="w-full max-w-md space-y-8 rounded-2xl border border-zinc-200 bg-white/80 backdrop-blur-sm p-10 shadow-2xl">
-        <div className="text-center">
-          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-brand to-brand-accent shadow-lg">
-            <Plane className="h-10 w-10 text-white" />
-          </div>
-          <h1 className="mt-6 text-4xl font-bold tracking-tight bg-gradient-to-r from-brand to-brand-accent bg-clip-text text-transparent">
-            YourAgencyToday
-          </h1>
-          <p className="mt-4 text-base text-zinc-600">
-            {t('subtitle')}
-          </p>
-        </div>
+    <AuthShell title="YourAgencyToday" subtitle={t('subtitle')}>
+      <SignInButton callbackUrl={callbackUrl} />
 
-        <div className="space-y-6 pt-4">
-          <SignInButton callbackUrl={callbackUrl} />
+      <AuthDivider label={t('orDivider')} />
 
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-zinc-200"></div>
-            </div>
-            <div className="relative flex justify-center text-xs">
-              <span className="bg-white px-3 text-zinc-400">
-                {t('orDivider')}
-              </span>
-            </div>
-          </div>
+      <ClientLoginForm callbackUrl={callbackUrl} />
 
-          <ClientLoginForm callbackUrl={callbackUrl} />
+      <p className="text-center text-sm">
+        <LocaleLink
+          href="/forgot-password"
+          className="font-medium text-brand hover:text-brand-accent transition-colors"
+        >
+          {t('forgotPassword')}
+        </LocaleLink>
+      </p>
 
-          <p className="text-center text-sm">
-            <LocaleLink
-              href="/forgot-password"
-              className="font-medium text-brand hover:text-brand-accent transition-colors"
-            >
-              {t('forgotPassword')}
-            </LocaleLink>
-          </p>
+      <p className="text-center text-sm text-muted-foreground">
+        {t('noAccount')}{' '}
+        <LocaleLink
+          href="/register"
+          className="font-medium text-brand hover:text-brand-accent transition-colors"
+        >
+          {t('registerLink')}
+        </LocaleLink>
+      </p>
 
-          <p className="text-center text-sm text-zinc-600">
-            {t('noAccount')}{' '}
-            <LocaleLink
-              href="/register"
-              className="font-medium text-brand hover:text-brand-accent transition-colors"
-            >
-              {t('registerLink')}
-            </LocaleLink>
-          </p>
-        </div>
-
-        <div className="text-center pt-4">
-          <p className="text-xs text-zinc-400">
-            {t('adminPrompt')}
-            <a
-              href="/admin/login"
-              className="font-medium text-brand hover:text-brand-accent transition-colors"
-            >
-              {t('adminLink')}
-            </a>
-          </p>
-        </div>
-
-        <LegalLinks className="text-zinc-400 mt-4" />
+      <div className="text-center border-t border-border pt-6">
+        <p className="text-xs text-muted-foreground">
+          {t('adminPrompt')}
+          <a
+            href="/admin/login"
+            className="font-medium text-brand hover:text-brand-accent transition-colors"
+          >
+            {t('adminLink')}
+          </a>
+        </p>
       </div>
-    </div>
+
+      <LegalLinks className="text-muted-foreground" />
+    </AuthShell>
   );
 }

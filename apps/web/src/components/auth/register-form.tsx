@@ -21,11 +21,11 @@ function getPasswordStrength(password: string): PasswordStrength {
   if (/[0-9]/.test(password)) score++;
   if (/[^A-Za-z0-9]/.test(password)) score++;
 
-  if (score === 0) return { score: 0, feedbackKey: '', color: 'bg-gray-300' };
-  if (score === 1) return { score: 1, feedbackKey: 'weak', color: 'bg-red-500' };
-  if (score === 2) return { score: 2, feedbackKey: 'fair', color: 'bg-yellow-500' };
-  if (score === 3) return { score: 3, feedbackKey: 'good', color: 'bg-blue-500' };
-  return { score: 4, feedbackKey: 'strong', color: 'bg-green-500' };
+  if (score === 0) return { score: 0, feedbackKey: '', color: 'bg-muted' };
+  if (score === 1) return { score: 1, feedbackKey: 'weak', color: 'bg-destructive' };
+  if (score === 2) return { score: 2, feedbackKey: 'fair', color: 'bg-chart-3' };
+  if (score === 3) return { score: 3, feedbackKey: 'good', color: 'bg-brand-accent' };
+  return { score: 4, feedbackKey: 'strong', color: 'bg-green-600' };
 }
 
 export function RegisterForm() {
@@ -103,7 +103,7 @@ export function RegisterForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="email" className="block text-sm font-medium text-foreground">
           {t('emailLabel')}
         </label>
         <input
@@ -113,13 +113,13 @@ export function RegisterForm() {
           value={formData.email}
           onChange={handleChange}
           required
-          className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+          className="mt-2 w-full border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/30"
           placeholder={t('emailPlaceholder')}
         />
       </div>
 
       <div>
-        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="password" className="block text-sm font-medium text-foreground">
           {t('passwordLabel')}
         </label>
         <div className="relative">
@@ -129,13 +129,13 @@ export function RegisterForm() {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 pr-12 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+            className="mt-2 w-full border border-input bg-background px-4 py-3 pr-12 text-foreground placeholder:text-muted-foreground/70 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/30"
             placeholder={t('passwordPlaceholder')}
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-5 text-gray-400 hover:text-gray-600"
+            className="absolute right-3 top-5 text-muted-foreground hover:text-foreground"
           >
             {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </button>
@@ -144,7 +144,7 @@ export function RegisterForm() {
         {formData.password && (
           <div className="mt-3 space-y-2">
             <div className="flex items-center gap-2 text-sm">
-              <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div className="flex-1 h-1.5 bg-muted overflow-hidden">
                 <div
                   className={`h-full ${passwordStrength.color} transition-all`}
                   style={{
@@ -152,7 +152,7 @@ export function RegisterForm() {
                   }}
                 />
               </div>
-              <span className="text-gray-600">
+              <span className="text-muted-foreground">
                 {passwordStrength.feedbackKey && {
                   weak: t('strengthWeak'),
                   fair: t('strengthFair'),
@@ -161,7 +161,7 @@ export function RegisterForm() {
                 }[passwordStrength.feedbackKey]}
               </span>
             </div>
-            <ul className="text-xs text-gray-600 space-y-1">
+            <ul className="text-xs text-muted-foreground space-y-1">
               <li className={formData.password.length >= 8 ? 'text-green-600' : ''}>
                 {t('reqMinLength')}
               </li>
@@ -177,7 +177,7 @@ export function RegisterForm() {
       </div>
 
       <div>
-        <label htmlFor="passwordConfirm" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="passwordConfirm" className="block text-sm font-medium text-foreground">
           {t('passwordConfirmLabel')}
         </label>
         <div className="relative">
@@ -187,13 +187,13 @@ export function RegisterForm() {
             name="passwordConfirm"
             value={formData.passwordConfirm}
             onChange={handleChange}
-            className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 pr-12 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+            className="mt-2 w-full border border-input bg-background px-4 py-3 pr-12 text-foreground placeholder:text-muted-foreground/70 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/30"
             placeholder={t('passwordConfirmPlaceholder')}
           />
           <button
             type="button"
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            className="absolute right-3 top-5 text-gray-400 hover:text-gray-600"
+            className="absolute right-3 top-5 text-muted-foreground hover:text-foreground"
           >
             {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </button>
@@ -210,7 +210,7 @@ export function RegisterForm() {
         )}
       </div>
 
-      <p className="text-xs text-zinc-500 text-center">
+      <p className="text-xs text-muted-foreground text-center">
         {t('termsPrefix')}
         <LocaleLink href="/terminos" className="underline hover:text-brand">
           {t('termsLink')}
@@ -225,7 +225,7 @@ export function RegisterForm() {
       <button
         type="submit"
         disabled={isLoading || !isValidated}
-        className="w-full rounded-lg bg-gradient-to-r from-brand to-brand-accent px-4 py-3 text-white font-medium transition-all hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
+        className="w-full border border-primary bg-primary px-4 py-3 text-primary-foreground font-medium transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isLoading ? (
           <>

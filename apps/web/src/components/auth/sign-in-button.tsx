@@ -30,7 +30,7 @@ export function SignInButton({ callbackUrl = '/chat' }: Props) {
     <button
       onClick={handleSignIn}
       disabled={isLoading}
-      className="flex w-full items-center justify-center gap-3 rounded-lg border border-zinc-300 bg-white px-4 py-3 text-sm font-medium text-zinc-700 shadow-sm transition-all hover:bg-zinc-50 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700"
+      className="flex w-full items-center justify-center gap-3 border border-input bg-card px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent disabled:cursor-not-allowed disabled:opacity-60"
     >
       {isLoading ? (
         <>

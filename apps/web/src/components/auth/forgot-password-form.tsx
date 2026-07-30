@@ -31,7 +31,7 @@ export function ForgotPasswordForm() {
 
   if (submitted) {
     return (
-      <p className="text-center text-sm text-zinc-600">
+      <p className="text-center text-sm text-muted-foreground">
         {t('confirmedPrefix')}
         <span className="font-medium">{email}</span>
         {t('confirmedSuffix')}
@@ -42,7 +42,7 @@ export function ForgotPasswordForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="email" className="block text-sm font-medium text-foreground">
           {t('emailLabel')}
         </label>
         <input
@@ -52,7 +52,7 @@ export function ForgotPasswordForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+          className="mt-2 w-full border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/30"
           placeholder={t('emailPlaceholder')}
         />
       </div>
@@ -60,7 +60,7 @@ export function ForgotPasswordForm() {
       <button
         type="submit"
         disabled={isLoading || !email}
-        className="w-full rounded-lg bg-gradient-to-r from-brand to-brand-accent px-4 py-3 text-white font-medium transition-all hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
+        className="w-full border border-primary bg-primary px-4 py-3 text-primary-foreground font-medium transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isLoading ? (
           <>
