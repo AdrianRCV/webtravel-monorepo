@@ -37,9 +37,9 @@ export function CredentialsForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label 
-          htmlFor="email" 
-          className="block text-sm font-medium text-zinc-700 dark:text-zinc-300"
+        <label
+          htmlFor="email"
+          className="block text-sm font-medium text-foreground"
         >
           Email
         </label>
@@ -49,15 +49,15 @@ export function CredentialsForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+          className="mt-1 block w-full border border-input bg-background px-3 py-2 text-sm text-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
           placeholder="admin@youragencytoday.com"
         />
       </div>
 
       <div>
-        <label 
-          htmlFor="password" 
-          className="block text-sm font-medium text-zinc-700 dark:text-zinc-300"
+        <label
+          htmlFor="password"
+          className="block text-sm font-medium text-foreground"
         >
           Contraseña
         </label>
@@ -68,7 +68,7 @@ export function CredentialsForm() {
           onChange={(e) => setPassword(e.target.value)}
           required
           minLength={6}
-          className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+          className="mt-1 block w-full border border-input bg-background px-3 py-2 text-sm text-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
           placeholder="••••••••"
         />
       </div>
@@ -76,7 +76,7 @@ export function CredentialsForm() {
       <button
         type="submit"
         disabled={isLoading}
-        className="flex w-full items-center justify-center gap-2 rounded-lg bg-brand px-4 py-3 text-sm font-medium text-white transition-colors hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+        className="flex w-full items-center justify-center gap-2 border border-primary bg-primary px-4 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isLoading ? (
           <>

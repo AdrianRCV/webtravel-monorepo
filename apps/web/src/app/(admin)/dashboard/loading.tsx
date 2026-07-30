@@ -11,7 +11,10 @@ export default function AdminLoading() {
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-8">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+            <div
+              key={i}
+              className="rounded-lg border border-border bg-card p-6 shadow-sm"
+            >
               <Skeleton className="h-6 w-40 mb-4" />
               <Skeleton className="h-12 w-20 mb-2" />
               <Skeleton className="h-4 w-32" />
@@ -19,8 +22,8 @@ export default function AdminLoading() {
           ))}
         </div>
 
-        <div className="rounded-lg border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-          <div className="border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
+        <div className="rounded-lg border border-border bg-card shadow-sm">
+          <div className="border-b border-border px-6 py-4">
             <Skeleton className="h-6 w-48 mb-2" />
             <Skeleton className="h-4 w-64" />
           </div>

@@ -20,10 +20,10 @@ export function MessageBubble({ sender, content, timestamp }: MessageBubbleProps
     >
       <div className={`max-w-[75%] ${isUser ? 'order-2' : 'order-1'}`}>
         <div
-          className={`rounded-2xl px-4 py-3 ${
+          className={`px-4 py-3 border ${
             isUser
-              ? 'bg-blue-600 text-white rounded-tr-sm'
-              : 'bg-gray-200 text-gray-900 rounded-tl-sm'
+              ? 'bg-primary text-primary-foreground border-primary rounded-lg rounded-tr-none'
+              : 'bg-card text-card-foreground border-border rounded-lg rounded-tl-none'
           }`}
         >
           <div className="text-sm break-words space-y-0.5">
@@ -34,7 +34,7 @@ export function MessageBubble({ sender, content, timestamp }: MessageBubbleProps
             )}
           </div>
         </div>
-        <div className={`text-xs text-gray-500 mt-1 px-2 ${isUser ? 'text-right' : 'text-left'}`}>
+        <div className={`text-xs text-muted-foreground mt-1 px-2 ${isUser ? 'text-right' : 'text-left'}`}>
           {new Date(timestamp).toLocaleTimeString(dateLocale, {
             hour: '2-digit',
             minute: '2-digit'

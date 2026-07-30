@@ -1,17 +1,24 @@
-'use client';
+"use client";
 
-import type { TripRequest, TripStatus } from '@webtravel/shared-types';
-import type { Session } from 'next-auth';
-import type { DashboardStats } from '@/lib/api';
+import type { TripRequest, TripStatus } from "@webtravel/shared-types";
+import type { Session } from "next-auth";
+import type { DashboardStats } from "@/lib/api";
+import { StatusBadge } from "@/components/trip-requests/status-badge";
 
-const STATUS_ORDER: TripStatus[] = ['PENDING', 'IN_PROGRESS', 'PROPOSED', 'APPROVED', 'REJECTED'];
+const STATUS_ORDER: TripStatus[] = [
+  "PENDING",
+  "IN_PROGRESS",
+  "PROPOSED",
+  "APPROVED",
+  "REJECTED",
+];
 
 const STATUS_LABELS: Record<TripStatus, string> = {
-  PENDING: 'Pendiente',
-  IN_PROGRESS: 'En Progreso',
-  PROPOSED: 'Propuesto',
-  APPROVED: 'Aprobado',
-  REJECTED: 'Rechazado',
+  PENDING: "Pendiente",
+  IN_PROGRESS: "En Progreso",
+  PROPOSED: "Propuesto",
+  APPROVED: "Aprobado",
+  REJECTED: "Rechazado",
 };
 
 interface HomeContentProps {
@@ -23,194 +30,194 @@ interface HomeContentProps {
   session: Session | null;
 }
 
-function getStatusBadge(status: TripStatus) {
-  const styles = {
-    PENDING: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
-    IN_PROGRESS: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
-    PROPOSED: 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400',
-    APPROVED: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-    REJECTED: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
-  };
-
-  return (
-    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${styles[status]}`}>
-      {STATUS_LABELS[status]}
-    </span>
-  );
-}
-
 function formatDate(date: Date | string | null | undefined) {
-  if (!date) return '-';
-  return new Date(date).toLocaleDateString('es-ES', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
+  if (!date) return "-";
+  return new Date(date).toLocaleDateString("es-ES", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
   });
 }
 
-function formatBudget(min: number | null | undefined, max: number | null | undefined) {
-  if (!min && !max) return '-';
+function formatBudget(
+  min: number | null | undefined,
+  max: number | null | undefined,
+) {
+  if (!min && !max) return "-";
   if (min && max) return `$${min.toLocaleString()} - $${max.toLocaleString()}`;
   if (min) return `Desde $${min.toLocaleString()}`;
   if (max) return `Hasta $${max.toLocaleString()}`;
-  return '-';
+  return "-";
 }
 
-export function HomeContent({ tripRequests, pendingCount, usersCount, stats, error, session }: HomeContentProps) {
+export function HomeContent({
+  tripRequests,
+  pendingCount,
+  usersCount,
+  stats,
+  error,
+  session,
+}: HomeContentProps) {
   return (
     <div className="p-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-8">
-          <h2 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+          <h2 className="text-3xl font-bold tracking-tight text-foreground">
             Bienvenido al Panel de Administración
           </h2>
-          <p className="mt-2 text-zinc-600 dark:text-zinc-400">
-            Gestiona solicitudes de viaje, itinerarios y configuración desde aquí.
+          <p className="mt-2 text-muted-foreground">
+            Gestiona solicitudes de viaje, itinerarios y configuración desde
+            aquí.
           </p>
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-8">
-          <div className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-            <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+          <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
+            <h3 className="text-lg font-semibold text-foreground">
               Solicitudes Pendientes
             </h3>
-            <p className="mt-2 text-3xl font-bold text-zinc-900 dark:text-zinc-100">
+            <p className="mt-2 text-3xl font-bold text-foreground">
               {pendingCount}
             </p>
-            <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+            <p className="mt-1 text-sm text-muted-foreground">
               Esperando aprobación
             </p>
           </div>
 
-          <div className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-            <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+          <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
+            <h3 className="text-lg font-semibold text-foreground">
               Itinerarios Activos
             </h3>
-            <p className="mt-2 text-3xl font-bold text-zinc-900 dark:text-zinc-100">
+            <p className="mt-2 text-3xl font-bold text-foreground">
               {stats.activeItinerariesCount}
             </p>
-            <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-              En progreso
-            </p>
+            <p className="mt-1 text-sm text-muted-foreground">En progreso</p>
           </div>
 
-          <div className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-            <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+          <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
+            <h3 className="text-lg font-semibold text-foreground">
               Total de Usuarios
             </h3>
-            <p className="mt-2 text-3xl font-bold text-zinc-900 dark:text-zinc-100">
+            <p className="mt-2 text-3xl font-bold text-foreground">
               {usersCount}
             </p>
-            <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+            <p className="mt-1 text-sm text-muted-foreground">
               Registrados en el sistema
             </p>
           </div>
         </div>
 
         <div className="mb-8">
-          <h3 className="mb-4 text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+          <h3 className="mb-4 text-lg font-semibold text-foreground">
             Desglose y actividad reciente
           </h3>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5 mb-4">
             {STATUS_ORDER.map((status) => (
               <div
                 key={status}
-                className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+                className="rounded-lg border border-border bg-card p-4 shadow-sm"
               >
-                <p className="text-sm text-zinc-600 dark:text-zinc-400">{STATUS_LABELS[status]}</p>
-                <p className="mt-1 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+                <p className="text-sm text-muted-foreground">
+                  {STATUS_LABELS[status]}
+                </p>
+                <p className="mt-1 text-2xl font-bold text-foreground">
                   {stats.requestsByStatus[status]}
                 </p>
               </div>
             ))}
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-              <p className="text-sm text-zinc-600 dark:text-zinc-400">Nuevas solicitudes (7 días)</p>
-              <p className="mt-1 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+            <div className="rounded-lg border border-border bg-card p-4 shadow-sm">
+              <p className="text-sm text-muted-foreground">
+                Nuevas solicitudes (7 días)
+              </p>
+              <p className="mt-1 text-2xl font-bold text-foreground">
                 {stats.newRequestsLast7Days}
               </p>
             </div>
-            <div className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-              <p className="text-sm text-zinc-600 dark:text-zinc-400">Nuevos usuarios (7 días)</p>
-              <p className="mt-1 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+            <div className="rounded-lg border border-border bg-card p-4 shadow-sm">
+              <p className="text-sm text-muted-foreground">
+                Nuevos usuarios (7 días)
+              </p>
+              <p className="mt-1 text-2xl font-bold text-foreground">
                 {stats.newUsersLast7Days}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="rounded-lg border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-          <div className="border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
-            <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+        <div className="rounded-lg border border-border bg-card shadow-sm">
+          <div className="border-b border-border px-6 py-4">
+            <h3 className="text-lg font-semibold text-foreground">
               Últimas Solicitudes
             </h3>
-            <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+            <p className="mt-1 text-sm text-muted-foreground">
               Las 5 solicitudes más recientes
             </p>
           </div>
 
           {error ? (
             <div className="px-6 py-8 text-center">
-              <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+              <p className="text-sm text-destructive">{error}</p>
             </div>
           ) : tripRequests.length === 0 ? (
             <div className="px-6 py-8 text-center">
-              <p className="text-sm text-zinc-600 dark:text-zinc-400">
+              <p className="text-sm text-muted-foreground">
                 No hay solicitudes disponibles
               </p>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-zinc-50 dark:bg-zinc-800/50">
+                <thead className="bg-secondary/60">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                       ID
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                       Origen
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                       Destino
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                       Fechas
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                       Personas
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                       Presupuesto
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                       Estado
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
+                <tbody className="divide-y divide-border">
                   {tripRequests.map((request) => (
-                    <tr key={request.id} className="hover:bg-zinc-50 dark:hover:bg-zinc-800/50">
-                      <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-zinc-900 dark:text-zinc-100">
+                    <tr key={request.id} className="hover:bg-secondary/60">
+                      <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-foreground">
                         {request.id.substring(0, 8)}
                       </td>
-                      <td className="whitespace-nowrap px-6 py-4 text-sm text-zinc-700 dark:text-zinc-300">
-                        {request.origin || '-'}
+                      <td className="whitespace-nowrap px-6 py-4 text-sm text-foreground">
+                        {request.origin || "-"}
                       </td>
-                      <td className="whitespace-nowrap px-6 py-4 text-sm text-zinc-700 dark:text-zinc-300">
-                        {request.destination || '-'}
+                      <td className="whitespace-nowrap px-6 py-4 text-sm text-foreground">
+                        {request.destination || "-"}
                       </td>
-                      <td className="whitespace-nowrap px-6 py-4 text-sm text-zinc-700 dark:text-zinc-300">
-                        {formatDate(request.startDate)} - {formatDate(request.endDate)}
+                      <td className="whitespace-nowrap px-6 py-4 text-sm text-foreground">
+                        {formatDate(request.startDate)} -{" "}
+                        {formatDate(request.endDate)}
                       </td>
-                      <td className="whitespace-nowrap px-6 py-4 text-sm text-zinc-700 dark:text-zinc-300">
-                        {request.numberOfPeople ?? '-'}
+                      <td className="whitespace-nowrap px-6 py-4 text-sm text-foreground">
+                        {request.numberOfPeople ?? "-"}
                       </td>
-                      <td className="whitespace-nowrap px-6 py-4 text-sm text-zinc-700 dark:text-zinc-300">
+                      <td className="whitespace-nowrap px-6 py-4 text-sm text-foreground">
                         {formatBudget(request.budgetMin, request.budgetMax)}
                       </td>
                       <td className="whitespace-nowrap px-6 py-4 text-sm">
-                        {getStatusBadge(request.status)}
+                        <StatusBadge status={request.status} />
                       </td>
                     </tr>
                   ))}

@@ -47,7 +47,7 @@ export function ClientLoginForm({ callbackUrl = '/client/dashboard' }: Props) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="email" className="block text-sm font-medium text-foreground">
           {t('emailLabel')}
         </label>
         <input
@@ -56,13 +56,13 @@ export function ClientLoginForm({ callbackUrl = '/client/dashboard' }: Props) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2.5 text-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+          className="mt-1 block w-full border border-input bg-background px-3 py-2.5 text-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
           placeholder={t('emailPlaceholder')}
         />
       </div>
 
       <div>
-        <label htmlFor="password" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="password" className="block text-sm font-medium text-foreground">
           {t('passwordLabel')}
         </label>
         <div className="relative">
@@ -72,13 +72,13 @@ export function ClientLoginForm({ callbackUrl = '/client/dashboard' }: Props) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2.5 pr-11 text-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+            className="mt-1 block w-full border border-input bg-background px-3 py-2.5 pr-11 text-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
             placeholder="••••••••"
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 mt-0.5 -translate-y-1/2 text-zinc-400 hover:text-zinc-600"
+            className="absolute right-3 top-1/2 mt-0.5 -translate-y-1/2 text-muted-foreground hover:text-foreground"
             tabIndex={-1}
           >
             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -89,7 +89,7 @@ export function ClientLoginForm({ callbackUrl = '/client/dashboard' }: Props) {
       <button
         type="submit"
         disabled={isLoading}
-        className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-brand to-brand-accent px-4 py-3 text-sm font-medium text-white transition-all hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
+        className="flex w-full items-center justify-center gap-2 border border-primary bg-primary px-4 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isLoading ? (
           <>

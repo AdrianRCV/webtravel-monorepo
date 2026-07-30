@@ -23,22 +23,23 @@ export function ClientHeader({ active }: ClientHeaderProps) {
 
   const navLinkClass = (key: 'dashboard' | 'settings') =>
     key === active
-      ? 'text-blue-600 font-medium'
-      : 'text-gray-600 hover:text-gray-900 transition';
+      ? 'text-brand font-medium'
+      : 'text-muted-foreground hover:text-foreground transition-colors';
 
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
+    <header className="bg-card border-b border-border sticky top-0 z-40">
+      <div className="h-1 airmail-stripe" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-3">
-            <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+            <div className="font-heading text-xl text-foreground">
               YourAgencyToday
             </div>
           </div>
 
           <div className="hidden md:flex items-center gap-6">
             <nav className="flex gap-6">
-              <LocaleLink href="/chat" className="text-gray-600 hover:text-gray-900 transition">
+              <LocaleLink href="/chat" className="text-muted-foreground hover:text-foreground transition-colors">
                 {t('chatLink')}
               </LocaleLink>
               <LocaleLink href="/client/dashboard" className={navLinkClass('dashboard')}>
@@ -50,7 +51,7 @@ export function ClientHeader({ active }: ClientHeaderProps) {
             </nav>
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition"
+              className="flex items-center gap-2 px-4 py-2 text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
             >
               <LogOut className="h-5 w-5" />
               {t('logout')}
@@ -66,8 +67,8 @@ export function ClientHeader({ active }: ClientHeaderProps) {
         </div>
 
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 py-4 space-y-4">
-            <LocaleLink href="/chat" className="block text-gray-600 hover:text-gray-900">
+          <div className="md:hidden border-t border-border py-4 space-y-4">
+            <LocaleLink href="/chat" className="block text-muted-foreground hover:text-foreground">
               {t('chatLink')}
             </LocaleLink>
             <LocaleLink href="/client/dashboard" className={`block ${navLinkClass('dashboard')}`}>
@@ -78,7 +79,7 @@ export function ClientHeader({ active }: ClientHeaderProps) {
             </LocaleLink>
             <button
               onClick={handleLogout}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2 text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
             >
               <LogOut className="h-5 w-5" />
               {t('logout')}

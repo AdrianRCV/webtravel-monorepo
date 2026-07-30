@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { Link as LocaleLink } from '@/i18n/navigation';
 import { CheckCircle2, XCircle, Plane } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
+import { AuthShell } from '@/components/auth/auth-shell';
 
 type VerificationState = 'loading' | 'success' | 'error';
 
@@ -61,50 +62,37 @@ function VerifyEmailContent() {
     verify();
   }, [token]);
 
+  const icon = state === 'success' ? CheckCircle2 : state === 'error' ? XCircle : Plane;
+  const title =
+    state === 'success' ? t('successTitle') : state === 'error' ? t('errorTitle') : t('loading');
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 via-white to-cyan-50 px-4">
-      <div className="w-full max-w-md space-y-6 rounded-2xl border border-zinc-200 bg-white/80 backdrop-blur-sm p-10 text-center shadow-2xl">
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg">
-          <Plane className="h-8 w-8 text-white" />
-        </div>
+    <AuthShell icon={icon} title={title}>
+      {state === 'loading' && <Spinner size="lg" className="mx-auto text-muted-foreground" />}
 
-        {state === 'loading' && (
-          <>
-            <Spinner size="lg" className="mx-auto text-blue-600" />
-            <p className="text-zinc-600">{t('loading')}</p>
-          </>
-        )}
+      {state === 'success' && (
+        <>
+          <p className="text-center text-muted-foreground">{t('successMessage')}</p>
+          <LocaleLink
+            href="/client/dashboard"
+            className="block w-full border border-primary bg-primary px-4 py-3 text-center text-primary-foreground font-medium transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          >
+            {t('goToDashboard')}
+          </LocaleLink>
+        </>
+      )}
 
-        {state === 'success' && (
-          <>
-            <CheckCircle2 className="mx-auto h-12 w-12 text-green-500" />
-            <h1 className="text-2xl font-bold text-zinc-900">{t('successTitle')}</h1>
-            <p className="text-zinc-600">
-              {t('successMessage')}
-            </p>
-            <LocaleLink
-              href="/client/dashboard"
-              className="inline-block w-full rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 px-4 py-3 text-white font-medium transition-all hover:shadow-lg"
-            >
-              {t('goToDashboard')}
-            </LocaleLink>
-          </>
-        )}
-
-        {state === 'error' && (
-          <>
-            <XCircle className="mx-auto h-12 w-12 text-red-500" />
-            <h1 className="text-2xl font-bold text-zinc-900">{t('errorTitle')}</h1>
-            <p className="text-zinc-600">{errorMessage}</p>
-            <LocaleLink
-              href="/login"
-              className="inline-block w-full rounded-lg border border-zinc-300 px-4 py-3 text-zinc-700 font-medium transition-colors hover:bg-zinc-50"
-            >
-              {t('backToLogin')}
-            </LocaleLink>
-          </>
-        )}
-      </div>
-    </div>
+      {state === 'error' && (
+        <>
+          <p className="text-center text-muted-foreground">{errorMessage}</p>
+          <LocaleLink
+            href="/login"
+            className="block w-full border border-input px-4 py-3 text-center text-foreground font-medium transition-colors hover:bg-accent"
+          >
+            {t('backToLogin')}
+          </LocaleLink>
+        </>
+      )}
+    </AuthShell>
   );
 }

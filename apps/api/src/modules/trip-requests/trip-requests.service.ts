@@ -3,34 +3,18 @@ import {
   NotFoundException,
   ForbiddenException,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../../prisma/prisma.service';
 import { TripStatus } from '@prisma/client';
 import { NotificationsService } from '../notifications/notifications.service';
 import { normalizeLocale, INTL_LOCALE } from '../../common/locale';
+import { CurrentUserData } from '../auth/current-user.decorator';
 
 @Injectable()
 export class TripRequestsService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly notificationsService: NotificationsService,
-    private readonly jwtService: JwtService,
   ) {}
-
-  extractUser(authHeader?: string): { id: string; role: string } | undefined {
-    if (!authHeader?.startsWith('Bearer ')) {
-      return undefined;
-    }
-
-    try {
-      const payload = this.jwtService.verify<{ sub: string; role: string }>(
-        authHeader.slice('Bearer '.length),
-      );
-      return { id: payload.sub, role: payload.role };
-    } catch {
-      return undefined;
-    }
-  }
 
   async findAll(status: TripStatus | undefined, user: { id: string; role: string }) {
     if (user.role !== 'ADMIN') {
@@ -90,7 +74,7 @@ export class TripRequestsService {
     };
   }
 
-  async findOne(id: string, user?: { id: string; role: string } | null) {
+  async findOne(id: string, user: CurrentUserData | null, token?: string) {
     const tripRequest = await this.prisma.tripRequest.findUnique({
       where: { id },
       include: {
@@ -99,7 +83,9 @@ export class TripRequestsService {
             messages: {
               orderBy: { createdAt: 'asc' },
             },
-            user: true,
+            user: {
+              select: { id: true, name: true, email: true, image: true },
+            },
           },
         },
         itineraries: {
@@ -132,22 +118,22 @@ export class TripRequestsService {
       return tripRequest;
     }
 
-    if (!user) {
-      throw new ForbiddenException(
-        'No tienes permiso para ver esta solicitud',
-      );
+    if (user) {
+      const isOwner =
+        user.role !== 'CLIENT' || tripRequest.chatSession?.userId === user.id;
+
+      if (isOwner) {
+        return tripRequest;
+      }
     }
 
-    if (
-      user.role === 'CLIENT' &&
-      tripRequest.chatSession?.userId !== user.id
-    ) {
-      throw new ForbiddenException(
-        'No tienes permiso para ver esta solicitud',
-      );
+    if (token && token === tripRequest.viewToken) {
+      return tripRequest;
     }
 
-    return tripRequest;
+    throw new ForbiddenException(
+      'No tienes permiso para ver esta solicitud',
+    );
   }
 
   async updateStatus(id: string, status: TripStatus, user: { id: string; role: string }) {
