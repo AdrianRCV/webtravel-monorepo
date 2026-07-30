@@ -53,15 +53,15 @@ export function DeleteAccountSection() {
   };
 
   return (
-    <div className="rounded-lg border border-red-200 bg-red-50 p-6">
-      <h3 className="text-sm font-semibold text-red-900">{t('dangerZoneTitle')}</h3>
-      <p className="mt-2 text-sm text-red-700">
+    <div className="border border-destructive/30 bg-destructive/5 p-6">
+      <h3 className="text-sm font-semibold text-destructive">{t('dangerZoneTitle')}</h3>
+      <p className="mt-2 text-sm text-destructive/90">
         {t('warning')}
       </p>
 
       <button
         onClick={() => setOpen(true)}
-        className="mt-4 rounded-lg border border-red-300 bg-white px-4 py-2 text-sm font-medium text-red-700 hover:bg-red-100 transition-colors"
+        className="mt-4 border border-destructive/40 bg-card px-4 py-2 text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors"
       >
         {t('deleteButton')}
       </button>
@@ -80,20 +80,20 @@ export function DeleteAccountSection() {
             value={confirmation}
             onChange={(e) => setConfirmation(e.target.value)}
             placeholder={t('confirmPlaceholder')}
-            className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-red-400 focus:outline-none focus:ring-2 focus:ring-red-200"
+            className="w-full border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 focus:border-destructive focus:outline-none focus:ring-2 focus:ring-destructive/20"
           />
 
           <DialogFooter>
             <button
               onClick={() => setOpen(false)}
-              className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+              className="border border-input px-4 py-2 text-sm font-medium text-foreground hover:bg-accent transition-colors"
             >
               {t('cancel')}
             </button>
             <button
               onClick={handleDelete}
               disabled={isLoading || !confirmation}
-              className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 transition-colors disabled:cursor-not-allowed disabled:opacity-60"
+              className="bg-destructive px-4 py-2 text-sm font-medium text-destructive-foreground hover:bg-destructive/90 transition-colors disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isLoading ? (
                 <>

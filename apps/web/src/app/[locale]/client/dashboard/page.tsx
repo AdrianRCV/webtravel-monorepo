@@ -67,24 +67,24 @@ export default function DashboardPage() {
   }, [status, session, router]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
+    <div className="min-h-screen bg-background">
       <ClientHeader active="dashboard" />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900">{t('title')}</h1>
-          <p className="mt-2 text-gray-600">{t('subtitle')}</p>
+          <h1 className="font-heading text-4xl text-foreground">{t('title')}</h1>
+          <p className="mt-2 text-muted-foreground">{t('subtitle')}</p>
         </div>
 
         {error && (
-          <div className="rounded-lg bg-red-50 p-4 text-red-700 border border-red-200 mb-6">
+          <div className="bg-destructive/5 p-4 text-destructive border border-destructive/30 mb-6">
             {error}
           </div>
         )}
 
         {isLoading ? (
           <div className="flex items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
           </div>
         ) : session?.accessToken ? (
           requests.length === 0 ? (

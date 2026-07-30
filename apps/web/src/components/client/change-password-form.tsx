@@ -55,7 +55,7 @@ export function ChangePasswordForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="currentPassword" className="block text-sm font-medium text-foreground">
           {t('currentPasswordLabel')}
         </label>
         <input
@@ -63,12 +63,12 @@ export function ChangePasswordForm() {
           type="password"
           value={currentPassword}
           onChange={(e) => setCurrentPassword(e.target.value)}
-          className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+          className="mt-2 w-full border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/30"
         />
       </div>
 
       <div>
-        <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="newPassword" className="block text-sm font-medium text-foreground">
           {t('newPasswordLabel')}
         </label>
         <input
@@ -76,13 +76,13 @@ export function ChangePasswordForm() {
           type="password"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
-          className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+          className="mt-2 w-full border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/30"
           placeholder={t('newPasswordPlaceholder')}
         />
       </div>
 
       <div>
-        <label htmlFor="newPasswordConfirm" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="newPasswordConfirm" className="block text-sm font-medium text-foreground">
           {t('confirmPasswordLabel')}
         </label>
         <input
@@ -90,14 +90,14 @@ export function ChangePasswordForm() {
           type="password"
           value={newPasswordConfirm}
           onChange={(e) => setNewPasswordConfirm(e.target.value)}
-          className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+          className="mt-2 w-full border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/30"
         />
       </div>
 
       <button
         type="submit"
         disabled={isLoading || !isValid}
-        className="rounded-lg bg-gradient-to-r from-brand to-brand-accent px-4 py-3 text-white font-medium transition-all hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
+        className="border border-primary bg-primary px-4 py-3 text-primary-foreground font-medium transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isLoading ? (
           <>

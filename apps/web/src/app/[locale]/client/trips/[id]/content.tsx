@@ -21,7 +21,7 @@ export function TripItineraryContent({ tripRequest, itinerary }: Props) {
   }, [tripRequest.destination, t]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
+    <div className="min-h-screen bg-background">
       <div className="print:hidden">
         <ClientHeader active="dashboard" />
       </div>
@@ -30,7 +30,7 @@ export function TripItineraryContent({ tripRequest, itinerary }: Props) {
         <div className="mb-8 flex items-center justify-between print:hidden">
           <LocaleLink
             href="/client/dashboard"
-            className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="h-4 w-4" />
             {t('backLink')}
@@ -38,7 +38,7 @@ export function TripItineraryContent({ tripRequest, itinerary }: Props) {
 
           <button
             onClick={() => window.print()}
-            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-brand to-brand-accent px-4 py-2 text-white font-medium transition-all hover:shadow-lg"
+            className="inline-flex items-center gap-2 border border-primary bg-primary px-4 py-2 text-primary-foreground font-medium transition-colors hover:bg-primary/90"
           >
             <Download className="h-4 w-4" />
             {t('downloadPdf')}

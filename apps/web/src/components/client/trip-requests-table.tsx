@@ -8,6 +8,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { DATE_LOCALES } from '@/i18n/date-locales';
 import { TripRequestDetailModal } from './trip-request-detail-modal';
 import { TripRequestEditForm } from './trip-request-edit-form';
+import { ClientStatusBadge } from './status-badge';
 import { DeleteConversationDialog } from '@/components/shared/delete-conversation-dialog';
 
 interface TripRequestWithChat extends TripRequest {
@@ -23,17 +24,8 @@ interface Props {
   onUpdate?: () => void;
 }
 
-const STATUS_COLORS: Record<string, string> = {
-  PENDING: 'bg-yellow-100 text-yellow-800',
-  IN_PROGRESS: 'bg-blue-100 text-blue-800',
-  PROPOSED: 'bg-purple-100 text-purple-800',
-  APPROVED: 'bg-green-100 text-green-800',
-  REJECTED: 'bg-red-100 text-red-800',
-};
-
 export function TripRequestsTable({ requests, token, onUpdate }: Props) {
   const t = useTranslations('Client.TripRequestsTable');
-  const tStatus = useTranslations('Client.Status');
   const locale = useLocale();
   const dateLocale = DATE_LOCALES[locale] ?? 'es-ES';
   const [selectedRequest, setSelectedRequest] = useState<TripRequestWithChat | null>(null);
@@ -63,54 +55,54 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
 
   return (
     <>
-      <div className="overflow-x-auto rounded-lg border border-gray-200">
+      <div className="overflow-x-auto border border-border">
         <table className="w-full">
-          <thead className="bg-gray-50 border-b border-gray-200">
+          <thead className="bg-secondary/60 border-b border-border">
             <tr>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
                 {t('colOrigin')}
               </th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
                 {t('colDestination')}
               </th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
                 {t('colDates')}
               </th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
                 {t('colPeople')}
               </th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
                 {t('colBudget')}
               </th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+              <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
                 {t('colStatus')}
               </th>
-              <th className="px-6 py-3 text-right text-sm font-semibold text-gray-900">
+              <th className="px-6 py-3 text-right text-sm font-semibold text-foreground">
                 {t('colActions')}
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-border">
             {requests.map(request => (
-              <tr key={request.id} className="hover:bg-gray-50 transition-colors">
+              <tr key={request.id} className="hover:bg-accent/40 transition-colors">
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-2">
-                    <Plane className="h-5 w-5 text-gray-400" />
-                    <span className="font-medium text-gray-900">
+                    <Plane className="h-5 w-5 text-muted-foreground" />
+                    <span className="font-medium text-foreground">
                       {request.origin || t('notSpecified')}
                     </span>
                   </div>
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-2">
-                    <MapPin className="h-5 w-5 text-gray-400" />
-                    <span className="font-medium text-gray-900">
+                    <MapPin className="h-5 w-5 text-muted-foreground" />
+                    <span className="font-medium text-foreground">
                       {request.destination || t('notSpecified')}
                     </span>
                   </div>
                 </td>
                 <td className="px-6 py-4">
-                  <div className="flex items-center gap-2 text-gray-600">
+                  <div className="flex items-center gap-2 text-muted-foreground">
                     <Calendar className="h-4 w-4" />
                     <span className="text-sm">
                       {request.startDate
@@ -126,7 +118,7 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
                   </div>
                 </td>
                 <td className="px-6 py-4">
-                  <div className="flex items-center gap-2 text-gray-600">
+                  <div className="flex items-center gap-2 text-muted-foreground">
                     <Users className="h-4 w-4" />
                     <span className="text-sm">
                       {request.numberOfPeople ?? '-'}
@@ -134,7 +126,7 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
                   </div>
                 </td>
                 <td className="px-6 py-4">
-                  <div className="flex items-center gap-2 text-gray-600">
+                  <div className="flex items-center gap-2 text-muted-foreground">
                     <DollarSign className="h-4 w-4" />
                     <span className="text-sm">
                       {request.budgetMin || request.budgetMax ? (
@@ -148,21 +140,7 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
                   </div>
                 </td>
                 <td className="px-6 py-4">
-                  <span
-                    className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
-                      STATUS_COLORS[request.status]
-                    }`}
-                  >
-                    {
-                      {
-                        PENDING: tStatus('pending'),
-                        IN_PROGRESS: tStatus('inProgress'),
-                        PROPOSED: tStatus('proposed'),
-                        APPROVED: tStatus('approved'),
-                        REJECTED: tStatus('rejected'),
-                      }[request.status]
-                    }
-                  </span>
+                  <ClientStatusBadge status={request.status as 'PENDING' | 'IN_PROGRESS' | 'PROPOSED' | 'APPROVED' | 'REJECTED'} />
                 </td>
                 <td className="px-6 py-4 text-right">
                   <div className="flex justify-end gap-2">
@@ -171,7 +149,7 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
                         e.currentTarget.blur();
                         setSelectedRequest(request);
                       }}
-                      className="p-2 hover:bg-blue-100 rounded-lg transition-colors text-blue-600"
+                      className="p-2 hover:bg-accent transition-colors text-brand-accent"
                       title={t('viewDetails')}
                     >
                       <MessageCircle className="h-5 w-5" />
@@ -181,7 +159,7 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
                         e.currentTarget.blur();
                         setEditingRequest(request);
                       }}
-                      className="p-2 hover:bg-gray-200 rounded-lg transition-colors text-gray-600"
+                      className="p-2 hover:bg-accent transition-colors text-muted-foreground"
                       title={t('editRequest')}
                     >
                       <Edit2 className="h-5 w-5" />
@@ -191,7 +169,7 @@ export function TripRequestsTable({ requests, token, onUpdate }: Props) {
                         e.currentTarget.blur();
                         setDeletingRequest(request);
                       }}
-                      className="p-2 hover:bg-red-100 rounded-lg transition-colors text-red-600"
+                      className="p-2 hover:bg-destructive/10 transition-colors text-destructive"
                       title={t('deleteConversation')}
                     >
                       <Trash2 className="h-5 w-5" />

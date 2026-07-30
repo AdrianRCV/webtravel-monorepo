@@ -45,14 +45,14 @@ export function LocalePreferenceForm() {
   return (
     <form onSubmit={handleSubmit} className="flex items-end gap-4">
       <div className="flex-1">
-        <label htmlFor="localePreference" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="localePreference" className="block text-sm font-medium text-foreground">
           {t('label')}
         </label>
         <select
           id="localePreference"
           value={locale}
           onChange={(e) => setLocale(e.target.value)}
-          className="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+          className="mt-2 w-full border border-input bg-background px-4 py-3 text-foreground focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/30"
         >
           {routing.locales.map((l) => (
             <option key={l} value={l}>
@@ -65,7 +65,7 @@ export function LocalePreferenceForm() {
       <button
         type="submit"
         disabled={isLoading}
-        className="rounded-lg bg-gradient-to-r from-brand to-brand-accent px-4 py-3 text-white font-medium transition-all hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
+        className="border border-primary bg-primary px-4 py-3 text-primary-foreground font-medium transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isLoading ? (
           <>
