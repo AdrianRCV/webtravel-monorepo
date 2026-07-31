@@ -246,7 +246,7 @@ export function ChatInterface() {
             </div>
           )}
 
-          {messages.length === 0 && !isSessionLoading ? (
+          {initError && !sessionId ? null : messages.length === 0 && !isSessionLoading ? (
             <div className="flex-1 flex items-center justify-center px-4">
               <div className="text-center text-muted-foreground">
                 <svg
