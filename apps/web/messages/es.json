@@ -145,6 +145,7 @@
       "helpLink": "¿No encontraste lo que buscabas? Escribinos",
       "newConversationTooltip": "Nueva conversación",
       "initError": "No se pudo iniciar la sesión de chat. Por favor, recarga la página.",
+      "limitReachedError": "Llegaste al máximo de 10 conversaciones. Borrá alguna para crear una nueva.",
       "sendError": "No se pudo enviar el mensaje.",
       "deleteError": "No se pudo borrar la conversación.",
       "renameError": "No se pudo renombrar la conversación.",

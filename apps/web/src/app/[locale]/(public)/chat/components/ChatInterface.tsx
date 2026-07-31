@@ -91,7 +91,8 @@ export function ChatInterface() {
       localStorage.setItem('chatSessionId', session.id);
       setHistoryRefreshKey((k) => k + 1);
     } catch (err) {
-      setInitError(t('initError'));
+      const status = (err as { status?: number }).status;
+      setInitError(status === 403 ? t('limitReachedError') : t('initError'));
       console.error('Error initializing session:', err);
     } finally {
       setIsSessionLoading(false);
@@ -245,7 +246,7 @@ export function ChatInterface() {
             </div>
           )}
 
-          {messages.length === 0 && !isSessionLoading ? (
+          {initError && !sessionId ? null : messages.length === 0 && !isSessionLoading ? (
             <div className="flex-1 flex items-center justify-center px-4">
               <div className="text-center text-muted-foreground">
                 <svg

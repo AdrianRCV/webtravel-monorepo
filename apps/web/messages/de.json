@@ -145,6 +145,7 @@
       "helpLink": "Nicht gefunden, wonach du gesucht hast? Schreib uns",
       "newConversationTooltip": "Neue Unterhaltung",
       "initError": "Die Chat-Sitzung konnte nicht gestartet werden. Bitte lade die Seite neu.",
+      "limitReachedError": "Du hast das Maximum von 10 Unterhaltungen erreicht. Lösche eine, um eine neue zu starten.",
       "sendError": "Die Nachricht konnte nicht gesendet werden.",
       "deleteError": "Die Unterhaltung konnte nicht gelöscht werden.",
       "renameError": "Die Unterhaltung konnte nicht umbenannt werden.",

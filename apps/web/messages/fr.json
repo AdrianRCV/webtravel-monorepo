@@ -145,6 +145,7 @@
       "helpLink": "Vous n'avez pas trouvé ce que vous cherchiez ? Écrivez-nous",
       "newConversationTooltip": "Nouvelle conversation",
       "initError": "Impossible de démarrer la session de chat. Veuillez recharger la page.",
+      "limitReachedError": "Vous avez atteint la limite de 10 conversations. Supprimez-en une pour en créer une nouvelle.",
       "sendError": "Impossible d'envoyer le message.",
       "deleteError": "Impossible de supprimer la conversation.",
       "renameError": "Impossible de renommer la conversation.",

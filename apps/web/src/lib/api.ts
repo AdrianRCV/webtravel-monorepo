@@ -41,7 +41,10 @@ async function fetchAPI<T>(
     });
 
     if (!response.ok) {
-      throw new Error(`Error HTTP: ${response.status} ${response.statusText}`);
+      throw Object.assign(
+        new Error(`Error HTTP: ${response.status} ${response.statusText}`),
+        { status: response.status },
+      );
     }
 
     return await response.json();
