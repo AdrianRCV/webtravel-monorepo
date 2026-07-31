@@ -20,6 +20,8 @@ interface ExtractedIntent {
   hasIntent: boolean;
 }
 
+const MAX_CHAT_SESSIONS_PER_USER = 10;
+
 @Injectable()
 export class ChatService {
   constructor(
@@ -43,6 +45,17 @@ export class ChatService {
   }
 
   async createChatSession(userId?: string) {
+    if (userId) {
+      const sessionCount = await this.prisma.chatSession.count({
+        where: { userId },
+      });
+      if (sessionCount >= MAX_CHAT_SESSIONS_PER_USER) {
+        throw new ForbiddenException(
+          `Llegaste al máximo de ${MAX_CHAT_SESSIONS_PER_USER} conversaciones. Borrá alguna para crear una nueva.`,
+        );
+      }
+    }
+
     return this.prisma.chatSession.create({
       data: {
         status: 'OPEN',
